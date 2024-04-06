@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DA5FDF072BB4CEAA00D091B2 /* wetherAlarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF062BB4CEAA00D091B2 /* wetherAlarmApp.swift */; };
+		DA5FDF092BB4CEAA00D091B2 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF082BB4CEAA00D091B2 /* TopView.swift */; };
+		DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5FDF0A2BB4CEAC00D091B2 /* Assets.xcassets */; };
+		DA5FDF0E2BB4CEAC00D091B2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5FDF0D2BB4CEAC00D091B2 /* Preview Assets.xcassets */; };
+		DA5FDF102BB4CEAC00D091B2 /* AlarmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF0F2BB4CEAC00D091B2 /* AlarmData.swift */; };
+		DA5FDF1D2BB677C500D091B2 /* AddAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF1C2BB677C500D091B2 /* AddAlarmView.swift */; };
+		DA5FDF202BB910BD00D091B2 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF1F2BB910BD00D091B2 /* Style.swift */; };
+		DA5FDF222BBA65D300D091B2 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF212BBA65D300D091B2 /* Alarm.swift */; };
+		DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wetherAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5FDF062BB4CEAA00D091B2 /* wetherAlarmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wetherAlarmApp.swift; sourceTree = "<group>"; };
+		DA5FDF082BB4CEAA00D091B2 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		DA5FDF0A2BB4CEAC00D091B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA5FDF0D2BB4CEAC00D091B2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DA5FDF0F2BB4CEAC00D091B2 /* AlarmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmData.swift; sourceTree = "<group>"; };
+		DA5FDF1C2BB677C500D091B2 /* AddAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmView.swift; sourceTree = "<group>"; };
+		DA5FDF1F2BB910BD00D091B2 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		DA5FDF212BBA65D300D091B2 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA5FDF002BB4CEAA00D091B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DA5FDEFA2BB4CEAA00D091B2 = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF052BB4CEAA00D091B2 /* wetherAlarm */,
+				DA5FDF042BB4CEAA00D091B2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA5FDF042BB4CEAA00D091B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA5FDF052BB4CEAA00D091B2 /* wetherAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF1E2BB910AD00D091B2 /* Style */,
+				DA5FDF1A2BB4CED300D091B2 /* Model */,
+				DA5FDF192BB4CEC800D091B2 /* View */,
+				DA5FDF062BB4CEAA00D091B2 /* wetherAlarmApp.swift */,
+				DA5FDF0A2BB4CEAC00D091B2 /* Assets.xcassets */,
+				DA5FDF0C2BB4CEAC00D091B2 /* Preview Content */,
+			);
+			path = wetherAlarm;
+			sourceTree = "<group>";
+		};
+		DA5FDF0C2BB4CEAC00D091B2 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF0D2BB4CEAC00D091B2 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DA5FDF192BB4CEC800D091B2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF082BB4CEAA00D091B2 /* TopView.swift */,
+				DA5FDF1C2BB677C500D091B2 /* AddAlarmView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DA5FDF1A2BB4CED300D091B2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF0F2BB4CEAC00D091B2 /* AlarmData.swift */,
+				DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */,
+				DA5FDF212BBA65D300D091B2 /* Alarm.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DA5FDF1E2BB910AD00D091B2 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				DA5FDF1F2BB910BD00D091B2 /* Style.swift */,
+			);
+			path = Style;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DA5FDF022BB4CEAA00D091B2 /* wetherAlarm */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA5FDF162BB4CEAC00D091B2 /* Build configuration list for PBXNativeTarget "wetherAlarm" */;
+			buildPhases = (
+				DA5FDEFF2BB4CEAA00D091B2 /* Sources */,
+				DA5FDF002BB4CEAA00D091B2 /* Frameworks */,
+				DA5FDF012BB4CEAA00D091B2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wetherAlarm;
+			productName = wetherAlarm;
+			productReference = DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DA5FDEFB2BB4CEAA00D091B2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					DA5FDF022BB4CEAA00D091B2 = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = DA5FDEFE2BB4CEAA00D091B2 /* Build configuration list for PBXProject "wetherAlarm" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DA5FDEFA2BB4CEAA00D091B2;
+			productRefGroup = DA5FDF042BB4CEAA00D091B2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DA5FDF022BB4CEAA00D091B2 /* wetherAlarm */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DA5FDF012BB4CEAA00D091B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5FDF0E2BB4CEAC00D091B2 /* Preview Assets.xcassets in Resources */,
+				DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DA5FDEFF2BB4CEAA00D091B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5FDF1D2BB677C500D091B2 /* AddAlarmView.swift in Sources */,
+				DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */,
+				DA5FDF202BB910BD00D091B2 /* Style.swift in Sources */,
+				DA5FDF102BB4CEAC00D091B2 /* AlarmData.swift in Sources */,
+				DA5FDF092BB4CEAA00D091B2 /* TopView.swift in Sources */,
+				DA5FDF072BB4CEAA00D091B2 /* wetherAlarmApp.swift in Sources */,
+				DA5FDF222BBA65D300D091B2 /* Alarm.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DA5FDF142BB4CEAC00D091B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DA5FDF152BB4CEAC00D091B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DA5FDF172BB4CEAC00D091B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"wetherAlarm/Preview Content\"";
+				DEVELOPMENT_TEAM = 2YZ2G5T53G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DA5FDF182BB4CEAC00D091B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"wetherAlarm/Preview Content\"";
+				DEVELOPMENT_TEAM = 2YZ2G5T53G;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DA5FDEFE2BB4CEAA00D091B2 /* Build configuration list for PBXProject "wetherAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5FDF142BB4CEAC00D091B2 /* Debug */,
+				DA5FDF152BB4CEAC00D091B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA5FDF162BB4CEAC00D091B2 /* Build configuration list for PBXNativeTarget "wetherAlarm" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5FDF172BB4CEAC00D091B2 /* Debug */,
+				DA5FDF182BB4CEAC00D091B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DA5FDEFB2BB4CEAA00D091B2 /* Project object */;
+}
