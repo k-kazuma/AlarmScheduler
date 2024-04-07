@@ -13,8 +13,6 @@ struct AddAlarmView: View {
     @Environment(\.modelContext) private var context
     
     @State var date = Date()
-    @State var hour:Int = 0
-    @State var minute:Int = 0
     
     var body: some View {
         ZStack{
@@ -41,7 +39,7 @@ struct AddAlarmView: View {
                         let alarm = Alarm(id: id, hour: res.0, minute: res.1)
                         context.insert(alarm)
                         // UserNotificationへアラームを設置
-                        NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute)
+                        await NotificationManager.instance.sendNotification(id: id, hour: res.0, minute: res.1)
                         // 前の画面に戻る
                         dismiss()
                     }

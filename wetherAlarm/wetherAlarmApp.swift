@@ -20,13 +20,45 @@ struct wetherAlarmApp: App {
         }
     }
     
-    class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-        
-        func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-            debugPrint("application:didFinishLaunchingWithOptions:")
-            NotificationManager.instance.requestPermission()
-            UNUserNotificationCenter.current().delegate = self
-            return true
+}
+
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
+            if granted {
+                UNUserNotificationCenter.current().delegate = self
+            }
         }
+        return true
     }
 }
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            completionHandler([[.banner, .list, .sound]])
+        }
+}
+//}
+//
+//
+//class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+//    
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+//        debugPrint("application:didFinishLaunchingWithOptions:")
+//        NotificationManager.instance.requestPermission()
+//        UNUserNotificationCenter.current().delegate = self
+//        return true
+//    }
+//}
+//
+//extension AppDelegate: UNUserNotificationCenterDelegate {
+//    func userNotificationCenter(
+//        _ center: UNUserNotificationCenter,
+//        willPresent notification: UNNotification,
+//        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//            completionHandler([[.banner, .list, .sound]])
+//        }
+//}

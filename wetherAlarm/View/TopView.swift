@@ -22,6 +22,11 @@ struct TopView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 0) {
+                    Button("test"){
+                        Task {
+                            await NotificationManager.instance.notification()
+                        }
+                    }
                     HStack{
                         Text("アラーム")
                             .modifier(TitleModifier())
