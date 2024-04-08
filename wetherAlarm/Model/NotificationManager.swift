@@ -38,8 +38,6 @@ final class NotificationManager {
     
     func sendNotification(id:UUID ,hour: Int, minute: Int) async {
         
-        print(id,hour,minute)
-        
         do{
             let content = UNMutableNotificationContent()
             content.title = "Notification Title"
@@ -56,5 +54,9 @@ final class NotificationManager {
         } catch {
             print(error)
         }
+    }
+    
+    func removeNotification(id:UUID) async {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(id)"])
     }
 }

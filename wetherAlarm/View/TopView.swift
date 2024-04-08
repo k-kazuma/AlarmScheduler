@@ -42,21 +42,26 @@ struct TopView: View {
                     } else {
                         List(alarts) { alarm in
                             
-                            HStack{
-                                Text("\(alarm.hour)時\(alarm.minute)分")
-                                    .swipeActions(edge: .trailing) {
-                                        Button(action: {
-                                            print("選択したアラームを削除")
-                                            context.delete(alarm)
-                                        }){
-                                            Text("削除")
-                                        }
-                                    }.tint(.red)
-                                
-                                Spacer()
-                                
-                                Toggle(isOn: Bindable(alarm).isActive) {}
-                                    .labelsHidden()
+                            NavigationLink(destination: EditView()){
+                                HStack{
+                                    Text("\(alarm.hour)時\(alarm.minute)分")
+                                        .swipeActions(edge: .trailing) {
+                                            Button(action: {
+                                                Task{
+                                                    print("選択したアラームを削除")
+                                                    await NotificationManager.instance.removeNotification(id: alarm.id)
+                                                    context.delete(alarm)
+                                                }
+                                            }){
+                                                Text("削除")
+                                            }
+                                        }.tint(.red)
+                                    
+                                    Spacer()
+                                    
+                                    Toggle(isOn: Bindable(alarm).isActive) {}
+                                        .labelsHidden()
+                                }
                             }
                             .modifier(ListStyle())
                             
@@ -66,25 +71,25 @@ struct TopView: View {
                     }
                     
                     // AddButton
-                    Button(action: {
-                        print("Button")
-                        
-                    }) {
-                        NavigationLink(destination: AddAlarmView()){
-                            HStack{
-                                Spacer()
-                                Text("+")
-                                    .bold()
-                                    .frame(width: 82, height: 82)
-                                    .font(.system(size: 55))
-                                    .foregroundColor(fontOrenge)
-                                    .background(backGroundGlay)
-                                    .clipShape(Circle())
-                                Spacer()
-                                    .frame(width: 15)
-                            }
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            print("Button")
                             
+                        }) {
+                            NavigationLink(destination: AddAlarmView()){
+                                Text("+")
+                            }
                         }
+                        .bold()
+                        .frame(width: 82, height: 82)
+                        .font(.system(size: 55))
+                        .foregroundColor(fontOrenge)
+                        .background(backGroundGlay)
+                        .clipShape(Circle())
+                        .buttonStyle(.plain)
+                        Spacer()
+                            .frame(width: 25)
                     }
                 }
             }
