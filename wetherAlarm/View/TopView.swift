@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct TopView: View {
     
@@ -22,11 +23,37 @@ struct TopView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 0) {
-                    Button("test"){
-                        Task {
-                            await NotificationManager.instance.notification()
+                    
+                    
+                    // 開発用ボタン
+                    Button("getAlarm"){
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            let alarmes = alarts.map {$0.id}
+                            print(res)
+                            print(alarmes)
+                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
+                            print("####################")
+                            print(a)
+                            print(a[0].content.title, a[0].content.subtitle)
                         }
                     }
+                    Button("reset") {
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            for r in res {
+                                NotificationManager.instance.removeNotification(id: r)
+                            }
+                            let alarmes = alarts.map {$0.id}
+                            for a in alarmes {
+                                print(alarts.first(where: {$0.id == a})!)
+                                context.delete(alarts.first(where: {$0.id == a})!)
+                            }
+                        }
+                        
+                    }
+                    // 開発用ボタン
+                    
                     HStack{
                         Text("アラーム")
                             .modifier(TitleModifier())
@@ -41,15 +68,14 @@ struct TopView: View {
                         Spacer()
                     } else {
                         List(alarts) { alarm in
-                            
-                            NavigationLink(destination: EditView()){
+                            NavigationLink(destination: EditView(alarm: alarm)){
                                 HStack{
                                     Text("\(alarm.hour)時\(alarm.minute)分")
                                         .swipeActions(edge: .trailing) {
                                             Button(action: {
                                                 Task{
                                                     print("選択したアラームを削除")
-                                                    await NotificationManager.instance.removeNotification(id: alarm.id)
+                                                    NotificationManager.instance.removeNotification(id: "\(alarm.id)")
                                                     context.delete(alarm)
                                                 }
                                             }){
@@ -96,6 +122,17 @@ struct TopView: View {
             
             
         }
+    }
+    
+    func checkDataNotification() -> Bool {
+        
+        Task{
+            let res = await NotificationManager.instance.getPendingNotifications()
+            let alarmes = alarts.map {$0.id}
+            
+            print(res, alarmes)
+        }
+        return true
     }
 }
 

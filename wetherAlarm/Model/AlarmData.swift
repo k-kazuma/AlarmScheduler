@@ -1,6 +1,7 @@
 
 import Foundation
 import SwiftData
+import UserNotifications
 
 @Model
 final class Alarm {
@@ -16,3 +17,5 @@ final class Alarm {
         self.isActive = true
     }
 }
+
+

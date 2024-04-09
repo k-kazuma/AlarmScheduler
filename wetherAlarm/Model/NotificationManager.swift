@@ -36,7 +36,7 @@ final class NotificationManager {
         }
     }
     
-    func sendNotification(id:UUID ,hour: Int, minute: Int) async {
+    func sendNotification(id:UUID ,hour: Int, minute: Int) async throws {
         
         do{
             let content = UNMutableNotificationContent()
@@ -52,11 +52,20 @@ final class NotificationManager {
             let request = UNNotificationRequest(identifier: "\(id)", content: content, trigger: trigger)
             try await UNUserNotificationCenter.current().add(request)
         } catch {
-            print(error)
+            throw error
         }
     }
     
-    func removeNotification(id:UUID) async {
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["\(id)"])
+    func removeNotification(id:String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
+    func getPendingNotifications() async -> [String] {
+        return await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                let pendingIdentifiers = requests.map { $0.identifier }
+                continuation.resume(returning: pendingIdentifiers)
+            }
+        }
     }
 }

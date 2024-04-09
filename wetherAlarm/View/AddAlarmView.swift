@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct AddAlarmView: View {
     
@@ -31,17 +32,22 @@ struct AddAlarmView: View {
                 Button("追加する"){
                     print("【AddAlarmView:29】アラームを追加する処理")
                     Task{
-                        // date型をIntのタプルへして返す
-                        let res = await addAlarm(time: date)
-                        // SwiftDataとUserNotificationの共有する一意の値
-                        let id = UUID()
-                        // SwiftDataにアラームを保存
-                        let alarm = Alarm(id: id, hour: res.0, minute: res.1)
-                        context.insert(alarm)
-                        // UserNotificationへアラームを設置
-                        await NotificationManager.instance.sendNotification(id: id, hour: res.0, minute: res.1)
-                        // 前の画面に戻る
-                        dismiss()
+                        
+                        do{
+                            // date型をIntのタプルへして返す
+                            let res = await addAlarm(time: date)
+                            // SwiftDataとUserNotificationの共有する一意の値
+                            let id = UUID()
+                            // SwiftDataにアラームを保存
+                            let alarm = Alarm(id: id, hour: res.0, minute: res.1)
+                            context.insert(alarm)
+                            // UserNotificationへアラームを設置
+                            try await NotificationManager.instance.sendNotification(id: id, hour: res.0, minute: res.1)
+                            // 前の画面に戻る
+                            dismiss()
+                        }catch {
+                            print(error)
+                        }
                     }
                 }
                 .buttonStyle(mainButtonStyle())
@@ -55,8 +61,4 @@ struct AddAlarmView: View {
             }
         }.navigationBarBackButtonHidden(true)
     }
-}
-
-#Preview {
-    AddAlarmView()
 }
