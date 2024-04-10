@@ -35,14 +35,14 @@ struct AddAlarmView: View {
                         
                         do{
                             // date型をIntのタプルへして返す
-                            let res = await addAlarm(time: date)
+                            let (hour, minute) = await addAlarm(time: date)
                             // SwiftDataとUserNotificationの共有する一意の値
                             let id = UUID()
-                            // SwiftDataにアラームを保存
-                            let alarm = Alarm(id: id, hour: res.0, minute: res.1)
-                            context.insert(alarm)
                             // UserNotificationへアラームを設置
-                            try await NotificationManager.instance.sendNotification(id: id, hour: res.0, minute: res.1)
+                            try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute)
+                            // SwiftDataにアラームを保存
+                            let alarm = Alarm(id: id, hour: hour, minute: minute)
+                            context.insert(alarm)
                             // 前の画面に戻る
                             dismiss()
                         }catch {

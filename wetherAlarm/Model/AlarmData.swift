@@ -16,6 +16,23 @@ final class Alarm {
         self.minute = minute
         self.isActive = true
     }
+    
+    func editAlarm(id: UUID, hour: Int, minute: Int) async throws {
+        Task{
+            do{
+                try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute)
+                self.hour = hour
+                self.minute = minute
+            }catch {
+                throw error
+            }
+        }
+    }
+    
+    func deleteAlarm() {
+        NotificationManager.instance.removeNotification(id: "\(self.id)")
+        self.modelContext?.delete(self)
+    }
 }
 
 

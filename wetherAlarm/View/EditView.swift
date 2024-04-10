@@ -45,12 +45,9 @@ struct EditView: View {
                     Task{
                         do {
                             // date型をIntのタプルへして返す
-                            let res = await addAlarm(time: date)
-                            // SwiftDataを更新
-                            alarm.hour = res.0
-                            alarm.minute = res.1
-                            // アラームを更新
-                            try await NotificationManager.instance.sendNotification(id: alarm.id, hour: res.0, minute: res.1)
+                            let (hour, minute) = await addAlarm(time: date)
+                            // SwiftDataとNotificationを更新
+                            try await alarm.editAlarm(id: alarm.id, hour: hour, minute: minute)
                             // 前の画面に戻る
                             dismiss()
                         } catch {

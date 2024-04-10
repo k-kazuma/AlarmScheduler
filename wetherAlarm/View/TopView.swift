@@ -12,7 +12,7 @@ import UserNotifications
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
-    @Query private var alarts: [Alarm]
+    @Query(sort: \Alarm.hour) private var alarts: [Alarm]
     @State var on = true
     @State var activeList: [[String : Bool]] = []
     
@@ -29,9 +29,13 @@ struct TopView: View {
                     Button("getAlarm"){
                         Task{
                             let res = await NotificationManager.instance.getPendingNotifications()
-                            let alarmes = alarts.map {$0.id}
+                            guard !alarts.isEmpty else {
+                                print("アラームなし")
+                                return
+                            }
+                            let alarms = alarts.map {$0.id}
                             print(res)
-                            print(alarmes)
+                            print(alarms)
                             let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
                             print("####################")
                             print(a)
@@ -50,7 +54,9 @@ struct TopView: View {
                                 context.delete(alarts.first(where: {$0.id == a})!)
                             }
                         }
-                        
+                    }
+                    Button("削除"){
+                        NotificationManager.instance.removeNotification(id: "alkfjo")
                     }
                     // 開発用ボタン
                     
@@ -75,8 +81,7 @@ struct TopView: View {
                                             Button(action: {
                                                 Task{
                                                     print("選択したアラームを削除")
-                                                    NotificationManager.instance.removeNotification(id: "\(alarm.id)")
-                                                    context.delete(alarm)
+                                                    alarm.deleteAlarm()
                                                 }
                                             }){
                                                 Text("削除")
