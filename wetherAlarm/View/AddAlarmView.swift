@@ -14,6 +14,7 @@ struct AddAlarmView: View {
     @Environment(\.modelContext) private var context
     
     @State var date = Date()
+    @State var sound = "初期値"
     
     var body: some View {
         ZStack{
@@ -26,6 +27,20 @@ struct AddAlarmView: View {
                     .colorInvert()
                     .colorMultiply(.white)
                     .padding(.top, 100)
+                
+                Spacer()
+                NavigationLink(destination: soundView(sound: $sound)){
+                    Text("サウンド")
+                    Spacer()
+                    Text(sound)
+                }
+                .frame(width: width * 0.6)
+                .font(.system(size: 24))
+                .fontWeight(.bold)
+                .padding()
+                .background(backGroundGlay)
+                .foregroundColor(Color.white)
+                .cornerRadius(10)
                 
                 Spacer()
                 
