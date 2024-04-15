@@ -18,6 +18,9 @@
 		DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */; };
 		DACD34BA2BC3A1480077F923 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34B92BC3A1480077F923 /* EditView.swift */; };
 		DACD34BE2BC789EF0077F923 /* soundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34BD2BC789EF0077F923 /* soundView.swift */; };
+		DACD34C12BC8901C0077F923 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34C02BC8901C0077F923 /* Sound.swift */; };
+		DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 24ctu.mp3 */; };
+		DACD34C82BCCC2290077F923 /* noisy-phone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C72BCCC2290077F923 /* noisy-phone.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		DACD34B92BC3A1480077F923 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DACD34BD2BC789EF0077F923 /* soundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundView.swift; sourceTree = "<group>"; };
+		DACD34C02BC8901C0077F923 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = ../Model/Sound.swift; sourceTree = "<group>"; };
+		DACD34C52BCA442D0077F923 /* 24ctu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 24ctu.mp3; path = ../../../../Downloads/24ctu.mp3; sourceTree = "<group>"; };
+		DACD34C72BCCC2290077F923 /* noisy-phone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "noisy-phone.mp3"; path = "../../../../Downloads/noisy-phone.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +71,7 @@
 		DA5FDF052BB4CEAA00D091B2 /* wetherAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				DACD34C22BCA437A0077F923 /* Sounds */,
 				DA5FDF1E2BB910AD00D091B2 /* Style */,
 				DA5FDF1A2BB4CED300D091B2 /* Model */,
 				DA5FDF192BB4CEC800D091B2 /* View */,
@@ -110,6 +117,16 @@
 				DA5FDF1F2BB910BD00D091B2 /* Style.swift */,
 			);
 			path = Style;
+			sourceTree = "<group>";
+		};
+		DACD34C22BCA437A0077F923 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				DACD34C02BC8901C0077F923 /* Sound.swift */,
+				DACD34C72BCCC2290077F923 /* noisy-phone.mp3 */,
+				DACD34C52BCA442D0077F923 /* 24ctu.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +188,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5FDF0E2BB4CEAC00D091B2 /* Preview Assets.xcassets in Resources */,
+				DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */,
+				DACD34C82BCCC2290077F923 /* noisy-phone.mp3 in Resources */,
 				DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +206,7 @@
 				DACD34BA2BC3A1480077F923 /* EditView.swift in Sources */,
 				DA5FDF202BB910BD00D091B2 /* Style.swift in Sources */,
 				DA5FDF102BB4CEAC00D091B2 /* AlarmData.swift in Sources */,
+				DACD34C12BC8901C0077F923 /* Sound.swift in Sources */,
 				DA5FDF092BB4CEAA00D091B2 /* TopView.swift in Sources */,
 				DA5FDF072BB4CEAA00D091B2 /* wetherAlarmApp.swift in Sources */,
 				DA5FDF222BBA65D300D091B2 /* Alarm.swift in Sources */,

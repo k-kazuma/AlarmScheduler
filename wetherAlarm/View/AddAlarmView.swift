@@ -29,7 +29,7 @@ struct AddAlarmView: View {
                     .padding(.top, 100)
                 
                 Spacer()
-                NavigationLink(destination: soundView(sound: $sound)){
+                NavigationLink(destination: soundView()){
                     Text("サウンド")
                     Spacer()
                     Text(sound)

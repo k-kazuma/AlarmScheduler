@@ -9,12 +9,21 @@ import SwiftUI
 import AVFoundation
 
 struct soundView: View {
-    @Binding var sound: String
-//    let musicData = NSDataAsset()!.data
-    var musicPlayer: AVAudioPlayer!
+    
+    let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
+    
     var body: some View {
         Button("再生"){
-            
+            Task{
+                do{
+                    try await PlaySound(soundName: "24ctu")
+                }catch {
+                    print(error)
+                }
+            }
+        }
+        Button("停止"){
+            stopMusic()
         }
     }
 }

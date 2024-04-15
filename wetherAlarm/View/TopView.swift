@@ -58,6 +58,13 @@ struct TopView: View {
                     Button("削除"){
                         NotificationManager.instance.removeNotification(id: "alkfjo")
                     }
+                    
+                    
+                    Button("paths"){
+                        Task{
+                            print(try await getSoundList())
+                        }
+                    }
                     // 開発用ボタン
                     
                     HStack{
