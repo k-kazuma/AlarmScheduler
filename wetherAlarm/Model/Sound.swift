@@ -25,8 +25,10 @@ func PlaySound (soundName: String) async throws {
     }
 }
 
-func stopMusic() {
-    musicPlayer.stop()
+func stopMusic() async {
+    if musicPlayer != nil {
+        musicPlayer.stop()
+    }
 }
 
 func getSoundList() async throws -> [String] {

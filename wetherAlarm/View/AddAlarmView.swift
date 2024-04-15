@@ -29,7 +29,7 @@ struct AddAlarmView: View {
                     .padding(.top, 100)
                 
                 Spacer()
-                NavigationLink(destination: soundView()){
+                NavigationLink(destination: soundView(pickSound: $sound)){
                     Text("サウンド")
                     Spacer()
                     Text(sound)
@@ -47,16 +47,11 @@ struct AddAlarmView: View {
                 Button("追加する"){
                     print("【AddAlarmView:29】アラームを追加する処理")
                     Task{
-                        
                         do{
                             // date型をIntのタプルへして返す
                             let (hour, minute) = await addAlarm(time: date)
-                            // SwiftDataとUserNotificationの共有する一意の値
-                            let id = UUID()
-                            // UserNotificationへアラームを設置
-                            try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute)
-                            // SwiftDataにアラームを保存
-                            let alarm = Alarm(id: id, hour: hour, minute: minute)
+                            // DataModelに値を渡す。
+                            let alarm = try await Alarm(hour: hour, minute: minute, sound: sound)
                             context.insert(alarm)
                             // 前の画面に戻る
                             dismiss()
@@ -68,7 +63,6 @@ struct AddAlarmView: View {
                 .buttonStyle(mainButtonStyle())
                 Button("キャンセル"){
                     dismiss()
-                    print("【AddAlarmView:35】前のページに戻る処理")
                 }
                 .buttonStyle(mainButtonStyle())
                 Spacer()

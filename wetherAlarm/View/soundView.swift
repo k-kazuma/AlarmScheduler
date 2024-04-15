@@ -11,19 +11,54 @@ import AVFoundation
 struct soundView: View {
     
     let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
+    @State var soundList: [String] = [""]
+    @Binding var pickSound: String
+    
     
     var body: some View {
-        Button("再生"){
+        
+        VStack{
+            List{
+                Picker("", selection: $pickSound) {
+                    ForEach(soundList, id: \.self){ sound in
+                        Text(sound).tag(sound)
+                            
+                    }
+                }
+                .pickerStyle(.inline)
+                .onChange(of: pickSound) {
+                    Task{
+                        do{
+                            await stopMusic()
+                            try await PlaySound(soundName: pickSound)
+                        } catch{
+                            print(error)
+                        }
+                    }
+                    print(pickSound)
+                    
+                }
+            }
+            
+            Button("停止"){
+                Task{
+                    await stopMusic()
+                }
+            }
+        }
+        .onAppear(){
             Task{
                 do{
-                    try await PlaySound(soundName: "24ctu")
-                }catch {
+                    soundList = try await getSoundList()
+                } catch{
                     print(error)
                 }
             }
         }
-        Button("停止"){
-            stopMusic()
-        }
     }
+        
 }
+//
+//#Preview {
+//    soundView()
+//}

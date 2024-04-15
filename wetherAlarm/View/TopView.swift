@@ -87,8 +87,12 @@ struct TopView: View {
                                         .swipeActions(edge: .trailing) {
                                             Button(action: {
                                                 Task{
-                                                    print("選択したアラームを削除")
-                                                    alarm.deleteAlarm()
+                                                    do{
+                                                        print("選択したアラームを削除")
+                                                        try alarm.deleteAlarm(id: alarm.id)
+                                                    } catch{
+                                                        print(error)
+                                                    }
                                                 }
                                             }){
                                                 Text("削除")

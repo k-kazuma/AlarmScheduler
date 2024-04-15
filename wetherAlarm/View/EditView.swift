@@ -19,7 +19,7 @@ struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
     @State var date = Date()
-    @State var Uid = UUID()
+    @State var sound = ""
     
     var alarm: Alarm
     
@@ -36,6 +36,7 @@ struct EditView: View {
                     .padding(.top, 100)
                     .onAppear(){
                         date = Date(hour: alarm.hour, minute: alarm.minute)
+                        sound = alarm.sound
                     }
                 
                 Spacer()
@@ -47,7 +48,7 @@ struct EditView: View {
                             // date型をIntのタプルへして返す
                             let (hour, minute) = await addAlarm(time: date)
                             // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, hour: hour, minute: minute)
+                            try await alarm.editAlarm(id: alarm.id, hour: hour, minute: minute, sound: sound)
                             // 前の画面に戻る
                             dismiss()
                         } catch {
