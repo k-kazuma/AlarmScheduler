@@ -26,7 +26,7 @@ final class NotificationManager {
             content.title = "Notification Title"
             content.body = "Local Notification Test"
 //            content.sound = UNNotificationSound.default
-            content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: "24ctu.mp3"))
+            content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
             var dateComponents = DateComponents()
             dateComponents.hour = hour

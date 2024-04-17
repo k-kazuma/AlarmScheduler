@@ -14,7 +14,7 @@ struct AddAlarmView: View {
     @Environment(\.modelContext) private var context
     
     @State var date = Date()
-    @State var sound = "初期値"
+    @State var sound = "24ctu"
     
     var body: some View {
         ZStack{

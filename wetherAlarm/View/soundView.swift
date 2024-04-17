@@ -29,8 +29,9 @@ struct soundView: View {
                 .onChange(of: pickSound) {
                     Task{
                         do{
+                            print("onChange" + pickSound)
                             await stopMusic()
-                            try await PlaySound(soundName: pickSound)
+                            try await PlaySound(fileName: pickSound)
                         } catch{
                             print(error)
                         }

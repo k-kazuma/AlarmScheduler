@@ -12,17 +12,16 @@ import AVFoundation
 
 var musicPlayer: AVAudioPlayer!
 
-func PlaySound (soundName: String) async throws {
-    do{
-        guard let music = NSDataAsset(name: soundName) else {
-            return
+func PlaySound (fileName: String) async throws {
+    if let path = Bundle.main.path(forResource: fileName, ofType: "mp3") {
+            let url = URL(fileURLWithPath: path)
+            do {
+                musicPlayer = try AVAudioPlayer(contentsOf: url)
+                musicPlayer?.play()
+            } catch {
+                print("音楽ファイルの再生に失敗しました")
+            }
         }
-        let musicData = music.data
-        musicPlayer = try AVAudioPlayer(data: musicData)
-        musicPlayer.play()
-    }catch {
-        throw error
-    }
 }
 
 func stopMusic() async {
