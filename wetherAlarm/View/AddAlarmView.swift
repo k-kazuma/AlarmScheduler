@@ -34,13 +34,14 @@ struct AddAlarmView: View {
                     Spacer()
                     Text(sound)
                 }
-                .frame(width: width * 0.6)
+                .frame(width: width * 0.8)
                 .font(.system(size: 24))
                 .fontWeight(.bold)
                 .padding()
                 .background(backGroundGlay)
                 .foregroundColor(Color.white)
                 .cornerRadius(10)
+                
                 
                 Spacer()
                 

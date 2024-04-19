@@ -11,53 +11,72 @@ import AVFoundation
 struct soundView: View {
     
     let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
+    @Environment(\.dismiss) var dismiss
     @State var soundList: [String] = [""]
     @Binding var pickSound: String
     
-    
     var body: some View {
         
-        VStack{
-            List{
-                Picker("", selection: $pickSound) {
-                    ForEach(soundList, id: \.self){ sound in
-                        Text(sound).tag(sound)
-                            
-                    }
+        ZStack{
+            backGroundBlack
+                .edgesIgnoringSafeArea(.all)
+            VStack{
+                HStack{
+                    Text("アラーム音を選択")
+                        .modifier(TitleModifier())
+                    Spacer()
                 }
-                .pickerStyle(.inline)
-                .onChange(of: pickSound) {
-                    Task{
-                        do{
-                            print("onChange" + pickSound)
-                            await stopMusic()
-                            try await PlaySound(fileName: pickSound)
-                        } catch{
-                            print(error)
+                List{
+                    Picker("", selection: $pickSound) {
+                        ForEach(soundList, id: \.self){ sound in
+                            Text(sound).tag(sound)
+                            
                         }
                     }
-                    print(pickSound)
+                    .modifier(ListStyle())
+                    .font(.system(size: 25))
+                    .padding(0)
+                    .pickerStyle(.inline)
+                    .onChange(of: pickSound) {
+                        Task{
+                            do{
+                                print("onChange" + pickSound)
+                                await stopMusic()
+                                try await PlaySound(fileName: pickSound)
+                            } catch{
+                                print(error)
+                            }
+                        }
+                        print(pickSound)
+                        
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                
+                Button("戻る"){
+                    Task{
+                        await stopMusic()
+                        dismiss()
+                    }
                     
                 }
+                .buttonStyle(mainButtonStyle())
+                Spacer()
+                    .frame(height: 1)
             }
-            
-            Button("停止"){
+            .navigationBarBackButtonHidden(true)
+            .onAppear(){
                 Task{
-                    await stopMusic()
-                }
-            }
-        }
-        .onAppear(){
-            Task{
-                do{
-                    soundList = try await getSoundList()
-                } catch{
-                    print(error)
+                    do{
+                        soundList = try await getSoundList()
+                    } catch{
+                        print(error)
+                    }
                 }
             }
         }
     }
-        
+    
 }
 //
 //#Preview {

@@ -12,6 +12,7 @@ final class Alarm {
     var isActive: Bool
     
     init(id: UUID = UUID(), hour: Int, minute: Int, sound: String) async throws {
+        print("AlarmInit")
         Task{
             do{
                 try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute, sound: sound)

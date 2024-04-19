@@ -25,7 +25,6 @@ final class NotificationManager {
             let content = UNMutableNotificationContent()
             content.title = "Notification Title"
             content.body = "Local Notification Test"
-//            content.sound = UNNotificationSound.default
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
             var dateComponents = DateComponents()

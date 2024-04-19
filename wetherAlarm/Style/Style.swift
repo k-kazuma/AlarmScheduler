@@ -19,7 +19,7 @@ let height = bounds.height
 struct mainButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .frame(width: width * 0.6)
+            .frame(width: width * 0.8)
             .font(.system(size: 24))
             .fontWeight(.bold)
             .padding()
