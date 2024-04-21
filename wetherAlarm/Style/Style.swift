@@ -43,9 +43,9 @@ struct ListStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.system(size: 30))
-            .padding(10)
             .listRowBackground(backGroundBlack)
             .foregroundColor(.white)
             .listRowSeparatorTint(backGroundGlay)
+            .padding(10)
     }
 }

@@ -106,8 +106,6 @@ struct TopView: View {
                                 }
                             }
                             .modifier(ListStyle())
-                            
-                            
                         }
                         .scrollContentBackground(.hidden)
                     }

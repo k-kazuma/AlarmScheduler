@@ -26,32 +26,42 @@ struct soundView: View {
                         .modifier(TitleModifier())
                     Spacer()
                 }
-                List{
-                    Picker("", selection: $pickSound) {
-                        ForEach(soundList, id: \.self){ sound in
-                            Text(sound).tag(sound)
+                Form{
+                    Section{
+                        Picker("", selection: $pickSound) {
+                            ForEach(soundList, id: \.self){ sound in
+                                Text(sound).tag(sound)
+                                
+                            }
+                        }
+                        .labelsHidden()
+                        .listRowBackground(backGroundGlay)
+                        .foregroundColor(.white)
+                        .listRowSeparatorTint(backGroundGlay)
+                        .padding(10)
+                        .font(.system(size: 25))
+                        .pickerStyle(.inline)
+                        .onChange(of: pickSound) {
+                            Task{
+                                do{
+                                    print("onChange" + pickSound)
+                                    await stopMusic()
+                                    try await PlaySound(fileName: pickSound)
+                                } catch{
+                                    print(error)
+                                }
+                            }
+                            print(pickSound)
                             
                         }
                     }
-                    .modifier(ListStyle())
-                    .font(.system(size: 25))
                     .padding(0)
-                    .pickerStyle(.inline)
-                    .onChange(of: pickSound) {
-                        Task{
-                            do{
-                                print("onChange" + pickSound)
-                                await stopMusic()
-                                try await PlaySound(fileName: pickSound)
-                            } catch{
-                                print(error)
-                            }
-                        }
-                        print(pickSound)
-                        
-                    }
+                    .frame(width: width*0.8)
+                    .background(backGroundGlay)
                 }
+                .padding(0)
                 .scrollContentBackground(.hidden)
+                .background(backGroundBlack)
                 
                 Button("戻る"){
                     Task{
