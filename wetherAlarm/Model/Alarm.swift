@@ -9,7 +9,7 @@ import Foundation
 
 
 
-func addAlarm(time: Date) async ->  (Int, Int)  {
+func dateConversion(time: Date) async ->  (Int, Int)  {
     
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ja_JP")

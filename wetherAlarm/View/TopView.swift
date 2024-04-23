@@ -9,12 +9,21 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 
+
+
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
-    @Query(sort: \Alarm.hour) private var alarts: [Alarm]
+    @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
     @State var activeList: [[String : Bool]] = []
+    
+    let f = DateFormatter()
+    
+    init(){
+        f.dateStyle = .none
+        f.timeStyle = .short
+    }
     
     var body: some View {
         NavigationView{
@@ -26,45 +35,45 @@ struct TopView: View {
                     
                     
                     // 開発用ボタン
-                    Button("getAlarm"){
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            guard !alarts.isEmpty else {
-                                print("アラームなし")
-                                return
-                            }
-                            let alarms = alarts.map {$0.id}
-                            print(res)
-                            print(alarms)
-                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
-                            print("####################")
-                            print(a)
-                            print(a[0].content.title, a[0].content.subtitle)
-                        }
-                    }
-                    Button("reset") {
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            for r in res {
-                                NotificationManager.instance.removeNotification(id: r)
-                            }
-                            let alarmes = alarts.map {$0.id}
-                            for a in alarmes {
-                                print(alarts.first(where: {$0.id == a})!)
-                                context.delete(alarts.first(where: {$0.id == a})!)
-                            }
-                        }
-                    }
-                    Button("削除"){
-                        NotificationManager.instance.removeNotification(id: "alkfjo")
-                    }
-                    
-                    
-                    Button("paths"){
-                        Task{
-                            print(try await getSoundList())
-                        }
-                    }
+//                    Button("getAlarm"){
+//                        Task{
+//                            let res = await NotificationManager.instance.getPendingNotifications()
+//                            guard !alarts.isEmpty else {
+//                                print("アラームなし")
+//                                return
+//                            }
+//                            let alarms = alarts.map {$0.id}
+//                            print(res)
+//                            print(alarms)
+//                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
+//                            print("####################")
+//                            print(a)
+//                            print(a[0].content.title, a[0].content.subtitle)
+//                        }
+//                    }
+//                    Button("reset") {
+//                        Task{
+//                            let res = await NotificationManager.instance.getPendingNotifications()
+//                            for r in res {
+//                                NotificationManager.instance.removeNotification(id: r)
+//                            }
+//                            let alarmes = alarts.map {$0.id}
+//                            for a in alarmes {
+//                                print(alarts.first(where: {$0.id == a})!)
+//                                context.delete(alarts.first(where: {$0.id == a})!)
+//                            }
+//                        }
+//                    }
+//                    Button("削除"){
+//                        NotificationManager.instance.removeNotification(id: "alkfjo")
+//                    }
+//                    
+//                    
+//                    Button("paths"){
+//                        Task{
+//                            print(try await getSoundList())
+//                        }
+//                    }
                     // 開発用ボタン
                     
                     HStack{
@@ -83,7 +92,7 @@ struct TopView: View {
                         List(alarts) { alarm in
                             NavigationLink(destination: EditView(alarm: alarm)){
                                 HStack{
-                                    Text("\(alarm.hour)時\(alarm.minute)分")
+                                    Text(f.string(from: alarm.time))
                                         .swipeActions(edge: .trailing) {
                                             Button(action: {
                                                 Task{
@@ -106,6 +115,8 @@ struct TopView: View {
                                 }
                             }
                             .modifier(ListStyle())
+                            .font(.system(size: 30))
+                            
                         }
                         .scrollContentBackground(.hidden)
                     }

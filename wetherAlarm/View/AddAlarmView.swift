@@ -13,8 +13,9 @@ struct AddAlarmView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
     
-    @State var date = Date()
+    @State var date = Date(year: 1999, month: 1, day: 1)
     @State var sound = "24ctu"
+    @State var repetition = []
     
     var body: some View {
         ZStack{
@@ -29,30 +30,44 @@ struct AddAlarmView: View {
                     .padding(.top, 100)
                 
                 Spacer()
-                NavigationLink(destination: soundView(pickSound: $sound)){
-                    Text("サウンド")
-                    Spacer()
-                    Text(sound)
+                VStack{
+                    NavigationLink(destination: soundView(pickSound: $sound)){
+                        HStack{
+                            Text("サウンド")
+                            Spacer()
+                            Text(sound)
+                        }
+                        .padding(10)
+                        
+                    }
+                    
+                    Rectangle()
+                          .frame(height: 1)
+                          .foregroundColor(backGroundBlack)
+                          .opacity(0.8)
+                    
+                    NavigationLink(destination: soundView(pickSound: $sound)){
+                        HStack{
+                            Text("繰り返し")
+                            Spacer()
+                            Text("\(repetition.isEmpty ? "しない" : repetition[0])")
+                        }
+                        .padding(10)
+                    }
                 }
-                .frame(width: width * 0.8)
+                .frame(width: width*0.9)
+                .foregroundColor(.white)
                 .font(.system(size: 24))
-                .fontWeight(.bold)
-                .padding()
                 .background(backGroundGlay)
-                .foregroundColor(Color.white)
                 .cornerRadius(10)
-                
-                
                 Spacer()
                 
                 Button("追加する"){
                     print("【AddAlarmView:29】アラームを追加する処理")
                     Task{
                         do{
-                            // date型をIntのタプルへして返す
-                            let (hour, minute) = await addAlarm(time: date)
                             // DataModelに値を渡す。
-                            let alarm = try await Alarm(hour: hour, minute: minute, sound: sound)
+                            let alarm = try await Alarm(time: date, sound: sound)
                             context.insert(alarm)
                             // 前の画面に戻る
                             dismiss()

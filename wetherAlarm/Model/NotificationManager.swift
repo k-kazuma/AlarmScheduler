@@ -19,7 +19,7 @@ final class NotificationManager {
             }
     }
     
-    func sendNotification(id:UUID ,hour: Int, minute: Int, sound: String) async throws {
+    func sendNotification(id:UUID , time:Date, sound: String) async throws {
         
         do{
             let content = UNMutableNotificationContent()
@@ -28,6 +28,7 @@ final class NotificationManager {
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
             var dateComponents = DateComponents()
+            let (hour, minute) = await dateConversion(time: time)
             dateComponents.hour = hour
             dateComponents.minute = minute
             

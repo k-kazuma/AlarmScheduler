@@ -42,10 +42,13 @@ struct TitleModifier: ViewModifier {
 struct ListStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 30))
-            .listRowBackground(backGroundBlack)
-            .foregroundColor(.white)
-            .listRowSeparatorTint(backGroundGlay)
+            .frame(width: width * 0.9)
+            .cornerRadius(3.0)
             .padding(10)
+            .listRowBackground(backGroundBlack)
+            .listRowSeparatorTint(backGroundGlay)
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            
     }
 }

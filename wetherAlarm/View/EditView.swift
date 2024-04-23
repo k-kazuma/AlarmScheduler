@@ -7,21 +7,19 @@
 
 import SwiftUI
 
-extension Date {
-    init(hour: Int, minute: Int) {
-        let calendar = Calendar.current
-        let components = DateComponents(hour: hour, minute: minute)
-        self = calendar.date(from: components)!
-    }
-}
-
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
-    @State var date = Date()
-    @State var sound = ""
+    @State var date: Date
+    @State var sound: String
     
     var alarm: Alarm
+    
+    init(alarm: Alarm) {
+        self.alarm = alarm
+        _date = State(initialValue: alarm.time)
+        _sound = State(initialValue: alarm.sound)
+    }
     
     var body: some View {
         ZStack{
@@ -34,10 +32,6 @@ struct EditView: View {
                     .colorInvert()
                     .colorMultiply(.white)
                     .padding(.top, 100)
-                    .onAppear(){
-                        date = Date(hour: alarm.hour, minute: alarm.minute)
-                        sound = alarm.sound
-                    }
                 
                 Spacer()
                 
@@ -45,10 +39,8 @@ struct EditView: View {
                     print("【AddAlarmView:29】アラームを編集する処理")
                     Task{
                         do {
-                            // date型をIntのタプルへして返す
-                            let (hour, minute) = await addAlarm(time: date)
                             // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, hour: hour, minute: minute, sound: sound)
+                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound)
                             // 前の画面に戻る
                             dismiss()
                         } catch {

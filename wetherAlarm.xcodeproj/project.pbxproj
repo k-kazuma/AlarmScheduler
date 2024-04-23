@@ -21,6 +21,7 @@
 		DACD34C12BC8901C0077F923 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34C02BC8901C0077F923 /* Sound.swift */; };
 		DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 24ctu.mp3 */; };
 		DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */; };
+		DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34CB2BD76BF60077F923 /* WeekPickView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		DACD34C02BC8901C0077F923 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = ../Model/Sound.swift; sourceTree = "<group>"; };
 		DACD34C52BCA442D0077F923 /* 24ctu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 24ctu.mp3; path = ../../../../Downloads/24ctu.mp3; sourceTree = "<group>"; };
 		DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bird-chirping-ringtone.mp3"; path = "../../../../Downloads/bird-chirping-ringtone.mp3"; sourceTree = "<group>"; };
+		DACD34CB2BD76BF60077F923 /* WeekPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPickView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 			children = (
 				DA5FDF082BB4CEAA00D091B2 /* TopView.swift */,
 				DA5FDF1C2BB677C500D091B2 /* AddAlarmView.swift */,
+				DACD34CB2BD76BF60077F923 /* WeekPickView.swift */,
 				DACD34B92BC3A1480077F923 /* EditView.swift */,
 				DACD34BD2BC789EF0077F923 /* soundView.swift */,
 			);
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */,
 				DA5FDF1D2BB677C500D091B2 /* AddAlarmView.swift in Sources */,
 				DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */,
 				DACD34BA2BC3A1480077F923 /* EditView.swift in Sources */,

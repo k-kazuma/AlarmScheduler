@@ -6,33 +6,30 @@ import UserNotifications
 @Model
 final class Alarm {
     var id: UUID
-    var hour: Int
-    var minute: Int
+    var time: Date
     var sound: String
     var isActive: Bool
     
-    init(id: UUID = UUID(), hour: Int, minute: Int, sound: String) async throws {
+    init(id: UUID = UUID(), time: Date, sound: String) async throws {
         print("AlarmInit")
         Task{
             do{
-                try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute, sound: sound)
+                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound)
             } catch{
                 throw error
             }
         }
         self.id = id
-        self.hour = hour
-        self.minute = minute
+        self.time = time
         self.sound = sound
         self.isActive = true
     }
     
-    func editAlarm(id: UUID, hour: Int, minute: Int, sound: String) async throws {
+    func editAlarm(id: UUID, time: Date, sound: String) async throws {
         Task{
             do{
-                try await NotificationManager.instance.sendNotification(id: id, hour: hour, minute: minute, sound: sound)
-                self.hour = hour
-                self.minute = minute
+                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound)
+                self.time = time
                 self.sound = sound
             }catch {
                 throw error

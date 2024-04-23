@@ -56,7 +56,7 @@ struct soundView: View {
                         }
                     }
                     .padding(0)
-                    .frame(width: width*0.8)
+                    .frame(width: width*0.9)
                     .background(backGroundGlay)
                 }
                 .padding(0)

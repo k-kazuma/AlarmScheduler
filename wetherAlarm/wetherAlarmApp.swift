@@ -41,6 +41,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             completionHandler([[.banner, .list, .sound]])
         }
 }
+
+extension Date {
+    init(hour: Int, minute: Int) {
+        let calendar = Calendar.current
+        let components = DateComponents(hour: hour, minute: minute)
+        self = calendar.date(from: components)!
+    }
+}
+
+extension Date {
+    init(year: Int, month: Int, day: Int) {
+        let calendar = Calendar.current
+        let components = DateComponents(year: year, month: month, day: day)
+        self = calendar.date(from: components)!
+    }
+}
 //}
 //
 //
