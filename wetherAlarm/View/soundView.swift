@@ -10,10 +10,10 @@ import AVFoundation
 
 struct soundView: View {
     
-    let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
+//    let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
     @Environment(\.dismiss) var dismiss
-    @State var soundList: [String] = [""]
     @Binding var pickSound: String
+    @StateObject var musicPlayer = MusicPlayer()
     
     var body: some View {
         
@@ -29,11 +29,32 @@ struct soundView: View {
                 Form{
                     Section{
                         Picker("", selection: $pickSound) {
-                            ForEach(soundList, id: \.self){ sound in
-                                Text(sound).tag(sound)
-                                
+                            ForEach(musicPlayer.soundList, id: \.self){ sound in
+                                HStack{
+                                    Text(sound).tag(sound)
+                                    Spacer()
+                                    if musicPlayer.playingSoundName == sound {
+                                        Button("▫️"){
+                                            musicPlayer.stopMusic()
+                                        }
+                                    } else {
+                                        Button("▶︎"){
+                                            Task{
+                                                do{
+                                                    musicPlayer.stopMusic()
+                                                    try await musicPlayer.PlaySound(fileName: sound)
+                                                    pickSound = sound
+                                                } catch{
+                                                    print(error)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
                             }
                         }
+                        .accentColor(fontOrenge)
                         .labelsHidden()
                         .listRowBackground(backGroundGlay)
                         .foregroundColor(.white)
@@ -44,15 +65,12 @@ struct soundView: View {
                         .onChange(of: pickSound) {
                             Task{
                                 do{
-                                    print("onChange" + pickSound)
-                                    await stopMusic()
-                                    try await PlaySound(fileName: pickSound)
+                                    musicPlayer.stopMusic()
+                                    try await musicPlayer.PlaySound(fileName: pickSound)
                                 } catch{
                                     print(error)
                                 }
                             }
-                            print(pickSound)
-                            
                         }
                     }
                     .padding(0)
@@ -65,7 +83,7 @@ struct soundView: View {
                 
                 Button("戻る"){
                     Task{
-                        await stopMusic()
+                        musicPlayer.stopMusic()
                         dismiss()
                     }
                     
@@ -75,15 +93,6 @@ struct soundView: View {
                     .frame(height: 1)
             }
             .navigationBarBackButtonHidden(true)
-            .onAppear(){
-                Task{
-                    do{
-                        soundList = try await getSoundList()
-                    } catch{
-                        print(error)
-                    }
-                }
-            }
         }
     }
     

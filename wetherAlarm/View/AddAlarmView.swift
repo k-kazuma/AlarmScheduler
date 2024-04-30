@@ -46,7 +46,7 @@ struct AddAlarmView: View {
                           .foregroundColor(backGroundBlack)
                           .opacity(0.8)
                     
-                    NavigationLink(destination: soundView(pickSound: $sound)){
+                    NavigationLink(destination: WeekPickView()){
                         HStack{
                             Text("繰り返し")
                             Spacer()
