@@ -13,9 +13,10 @@ struct AddAlarmView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
     
-    @State var date = Date(year: 1999, month: 1, day: 1)
+    @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = "24ctu"
-    @State var repetition = []
+    @State var repeats = false
+    @State var repetition: [String]?
     
     var body: some View {
         ZStack{
@@ -50,7 +51,7 @@ struct AddAlarmView: View {
                         HStack{
                             Text("繰り返し")
                             Spacer()
-                            Text("\(repetition.isEmpty ? "しない" : repetition[0])")
+                            Text("\(repeats ? "する" : "しない")")
                         }
                         .padding(10)
                     }
@@ -67,7 +68,7 @@ struct AddAlarmView: View {
                     Task{
                         do{
                             // DataModelに値を渡す。
-                            let alarm = try await Alarm(time: date, sound: sound)
+                            let alarm = try await Alarm(time: date, sound: sound, repeats: repeats)
                             context.insert(alarm)
                             // 前の画面に戻る
                             dismiss()

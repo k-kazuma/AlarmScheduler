@@ -12,6 +12,8 @@ struct EditView: View {
     @Environment(\.modelContext) private var context
     @State var date: Date
     @State var sound: String
+    @State var repeats = false
+    @State var repetition = []
     
     var alarm: Alarm
     
@@ -35,12 +37,45 @@ struct EditView: View {
                 
                 Spacer()
                 
+                VStack{
+                    NavigationLink(destination: soundView(pickSound: $sound)){
+                        HStack{
+                            Text("サウンド")
+                            Spacer()
+                            Text(sound)
+                        }
+                        .padding(10)
+                        
+                    }
+                    
+                    Rectangle()
+                          .frame(height: 1)
+                          .foregroundColor(backGroundBlack)
+                          .opacity(0.8)
+                    
+                    NavigationLink(destination: WeekPickView()){
+                        HStack{
+                            Text("繰り返し")
+                            Spacer()
+                            Text("\(repetition.isEmpty ? "しない" : repetition[0])")
+                        }
+                        .padding(10)
+                    }
+                }
+                .frame(width: width*0.9)
+                .foregroundColor(.white)
+                .font(.system(size: 24))
+                .background(backGroundGlay)
+                .cornerRadius(10)
+                
+                Spacer()
+                
                 Button("保存する"){
                     print("【AddAlarmView:29】アラームを編集する処理")
                     Task{
                         do {
                             // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound)
+                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, repeats: repeats)
                             // 前の画面に戻る
                             dismiss()
                         } catch {
