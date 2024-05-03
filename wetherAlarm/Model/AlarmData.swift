@@ -10,11 +10,11 @@ final class Alarm {
     var sound: String
     var isActive: Bool
     
-    init(id: UUID = UUID(), time: Date, sound: String) async throws {
+    init(id: UUID = UUID(), time: Date, sound: String, repeats: Bool) async throws {
         print("AlarmInit")
         Task{
             do{
-                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound)
+                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, repeats: repeats)
             } catch{
                 throw error
             }
@@ -25,10 +25,10 @@ final class Alarm {
         self.isActive = true
     }
     
-    func editAlarm(id: UUID, time: Date, sound: String) async throws {
+    func editAlarm(id: UUID, time: Date, sound: String, repeats: Bool) async throws {
         Task{
             do{
-                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound)
+                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, repeats: repeats)
                 self.time = time
                 self.sound = sound
             }catch {

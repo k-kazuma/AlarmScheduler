@@ -51,9 +51,9 @@ extension Date {
 }
 
 extension Date {
-    init(year: Int, month: Int, day: Int) {
+    init(year: Int, month: Int, day: Int, hour: Int) {
         let calendar = Calendar.current
-        let components = DateComponents(year: year, month: month, day: day)
+        let components = DateComponents(year: year, month: month, day: day, hour: hour)
         self = calendar.date(from: components)!
     }
 }

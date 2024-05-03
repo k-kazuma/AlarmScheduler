@@ -19,7 +19,7 @@ final class NotificationManager {
             }
     }
     
-    func sendNotification(id:UUID , time:Date, sound: String) async throws {
+    func sendNotification(id:UUID , time:Date, sound: String, repeats: Bool) async throws {
         
         do{
             let content = UNMutableNotificationContent()
@@ -32,7 +32,7 @@ final class NotificationManager {
             dateComponents.hour = hour
             dateComponents.minute = minute
             
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: repeats)
             let request = UNNotificationRequest(identifier: "\(id)", content: content, trigger: trigger)
             try await UNUserNotificationCenter.current().add(request)
         } catch {
