@@ -16,7 +16,7 @@ struct AddAlarmView: View {
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = "24ctu"
     @State var repeats = false
-    @State var repetition: [String]?
+    @State var weekDay: [Int]?
     
     var body: some View {
         ZStack{
@@ -68,7 +68,7 @@ struct AddAlarmView: View {
                     Task{
                         do{
                             // DataModelに値を渡す。
-                            let alarm = try await Alarm(time: date, sound: sound, repeats: repeats)
+                            let alarm = try await Alarm(time: date, sound: sound, weekDay: weekDay)
                             context.insert(alarm)
                             // 前の画面に戻る
                             dismiss()

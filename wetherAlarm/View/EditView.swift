@@ -13,7 +13,7 @@ struct EditView: View {
     @State var date: Date
     @State var sound: String
     @State var repeats = false
-    @State var repetition = []
+    @State var weekDay: [Int]?
     
     var alarm: Alarm
     
@@ -21,6 +21,7 @@ struct EditView: View {
         self.alarm = alarm
         _date = State(initialValue: alarm.time)
         _sound = State(initialValue: alarm.sound)
+        _weekDay = State(initialValue: alarm.weekDay)
     }
     
     var body: some View {
@@ -57,7 +58,7 @@ struct EditView: View {
                         HStack{
                             Text("繰り返し")
                             Spacer()
-                            Text("\(repetition.isEmpty ? "しない" : repetition[0])")
+                            Text("")
                         }
                         .padding(10)
                     }
@@ -75,7 +76,7 @@ struct EditView: View {
                     Task{
                         do {
                             // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, repeats: repeats)
+                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, weekDay: weekDay)
                             // 前の画面に戻る
                             dismiss()
                         } catch {
