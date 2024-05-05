@@ -44,7 +44,9 @@ struct aaa: View {
                     if dayOfWeek[i].isActive == true {
                         weeks.append(dayOfWeek[i].index)
                     } else {
-                        weeks.remove(dayOfWeek[i].index)
+                        if let index = weeks.firstIndex(where: {$0 == dayOfWeek[i].index}){
+                            weeks.remove(at: index)
+                        }
                     }
                     print(weeks)
                 }
