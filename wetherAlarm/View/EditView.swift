@@ -54,7 +54,7 @@ struct EditView: View {
                           .foregroundColor(backGroundBlack)
                           .opacity(0.8)
                     
-                    NavigationLink(destination: WeekPickView()){
+                    NavigationLink(destination: WeekPickView(weekDay: $weekDay)){
                         HStack{
                             Text("繰り返し")
                             Spacer()
