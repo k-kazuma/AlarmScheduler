@@ -8,10 +8,10 @@ final class Alarm {
     var id: UUID
     var time: Date
     var sound: String
-    var weekDay: [Int]?
+    var weekDay: [Int]
     var isActive: Bool
     
-    init(id: UUID = UUID(), time: Date, sound: String, weekDay: [Int]?) async throws {
+    init(id: UUID = UUID(), time: Date, sound: String, weekDay: [Int]) async throws {
         print("AlarmInit")
         Task{
             do{
@@ -27,7 +27,7 @@ final class Alarm {
         self.isActive = true
     }
     
-    func editAlarm(id: UUID, time: Date, sound: String, weekDay: [Int]?) async throws {
+    func editAlarm(id: UUID, time: Date, sound: String, weekDay: [Int]) async throws {
         Task{
             do{
                 try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)

@@ -15,7 +15,7 @@ struct AddAlarmView: View {
     
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = "24ctu"
-    @State var weekDay: [Int]?
+    @State var weekDay: [Int] = []
     
     var body: some View {
         ZStack{
@@ -46,7 +46,7 @@ struct AddAlarmView: View {
                           .foregroundColor(backGroundBlack)
                           .opacity(0.8)
                     
-                    NavigationLink(destination: WeekPickView(weekDay: $weekDay)){
+                    NavigationLink(destination: WeekPickView(weeks: $weekDay)){
                         HStack{
                             Text("繰り返し")
                             Spacer()

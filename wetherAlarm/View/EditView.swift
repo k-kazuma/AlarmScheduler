@@ -13,7 +13,7 @@ struct EditView: View {
     @State var date: Date
     @State var sound: String
     @State var repeats = false
-    @State var weekDay: [Int]?
+    @State var weekDay: [Int] = []
     
     var alarm: Alarm
     
@@ -54,7 +54,7 @@ struct EditView: View {
                           .foregroundColor(backGroundBlack)
                           .opacity(0.8)
                     
-                    NavigationLink(destination: WeekPickView(weekDay: $weekDay)){
+                    NavigationLink(destination: WeekPickView(weeks: $weekDay)){
                         HStack{
                             Text("繰り返し")
                             Spacer()

@@ -22,7 +22,6 @@
 		DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 24ctu.mp3 */; };
 		DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */; };
 		DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34CB2BD76BF60077F923 /* WeekPickView.swift */; };
-		DACD34CE2BE73DBB0077F923 /* aaa.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34CD2BE73DBB0077F923 /* aaa.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +41,6 @@
 		DACD34C52BCA442D0077F923 /* 24ctu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 24ctu.mp3; path = ../../../../Downloads/24ctu.mp3; sourceTree = "<group>"; };
 		DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bird-chirping-ringtone.mp3"; path = "../../../../Downloads/bird-chirping-ringtone.mp3"; sourceTree = "<group>"; };
 		DACD34CB2BD76BF60077F923 /* WeekPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPickView.swift; sourceTree = "<group>"; };
-		DACD34CD2BE73DBB0077F923 /* aaa.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aaa.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,6 @@
 				DA5FDF082BB4CEAA00D091B2 /* TopView.swift */,
 				DA5FDF1C2BB677C500D091B2 /* AddAlarmView.swift */,
 				DACD34CB2BD76BF60077F923 /* WeekPickView.swift */,
-				DACD34CD2BE73DBB0077F923 /* aaa.swift */,
 				DACD34B92BC3A1480077F923 /* EditView.swift */,
 				DACD34BD2BC789EF0077F923 /* soundView.swift */,
 			);
@@ -218,7 +215,6 @@
 				DA5FDF072BB4CEAA00D091B2 /* wetherAlarmApp.swift in Sources */,
 				DA5FDF222BBA65D300D091B2 /* Alarm.swift in Sources */,
 				DACD34BE2BC789EF0077F923 /* soundView.swift in Sources */,
-				DACD34CE2BE73DBB0077F923 /* aaa.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
