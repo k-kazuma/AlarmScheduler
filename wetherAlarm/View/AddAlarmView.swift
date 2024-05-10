@@ -50,10 +50,13 @@ struct AddAlarmView: View {
                         HStack{
                             Text("繰り返し")
                             Spacer()
-                            if let week = weekDay {
-                                Text("\(week)")
-                            } else{
+                            if weekDay.isEmpty {
                                 Text("しない")
+                                
+                            } else{
+                                List(weekDay, id:\.self) {week in
+                                    Text("\(week)")
+                                }
                             }
                         }
                         .padding(10)

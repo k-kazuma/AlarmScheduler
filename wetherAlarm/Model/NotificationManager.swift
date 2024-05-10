@@ -19,7 +19,7 @@ final class NotificationManager {
             }
     }
     
-    func sendNotification(id:UUID , time:Date, sound: String, weekDay: [Int]?) async throws {
+    func sendNotification(id:UUID , time:Date, sound: String, weekDay: [Int]) async throws {
         
         do{
             let content = UNMutableNotificationContent()
@@ -27,7 +27,7 @@ final class NotificationManager {
             content.body = "Local Notification Test"
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
-            if let weekDay {
+            if !weekDay.isEmpty {
                 for week in weekDay{
                     var dateComponents = DateComponents()
                     let (hour, minute) = await dateConversion(time: time)
