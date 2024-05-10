@@ -6,9 +6,9 @@ struct weekPicker {
     var dayOfWeek: String
     var isActive: Bool
     
-    mutating func toggle() {
-        self.isActive.toggle()
-    }
+//    mutating func toggle() {
+//        self.isActive.toggle()
+//    }
 }
 
 struct WeekPickView: View {
@@ -31,7 +31,7 @@ struct WeekPickView: View {
         
         List(index, id: \.self) { i in
             Button(action: {
-                dayOfWeek[i].toggle()
+                dayOfWeek[i].isActive.toggle()
             }, label: {
                 HStack{
                     Text(dayOfWeek[i].dayOfWeek)
@@ -46,7 +46,7 @@ struct WeekPickView: View {
                         weeks.append(dayOfWeek[i].index)
                         
                     } else {
-                        weeks.firstIndex(where: {$0 == dayOfWeek[i].index}){
+                        if let index = weeks.firstIndex(where: {$0 == dayOfWeek[i].index}) {
                             weeks.remove(at: index)
                         }
                     }

@@ -53,10 +53,8 @@ struct AddAlarmView: View {
                             if weekDay.isEmpty {
                                 Text("しない")
                                 
-                            } else{
-                                List(weekDay, id:\.self) {week in
-                                    Text("\(week)")
-                                }
+                            }else {
+                                Text("する")
                             }
                         }
                         .padding(10)
