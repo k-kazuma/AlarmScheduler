@@ -47,6 +47,23 @@ final class Alarm {
         NotificationManager.instance.removeNotification(id: "\(self.id)")
         self.modelContext?.delete(self)
     }
+    
+    func toggleAlarm(id: UUID) throws {
+        guard id == self.id else {
+            throw checkNotification.not("アラームが存在しません")
+        }
+        if self.isActive == true {
+            Task{
+                do{
+                    try await NotificationManager.instance.sendNotification(id: self.id, time: self.time, sound: self.sound, weekDay: self.weekDay)
+                } catch {
+                    throw error
+                }
+            }
+        } else {
+            NotificationManager.instance.removeNotification(id: "\(self.id)")
+        }
+    }
 }
 
 enum checkNotification: Error {
