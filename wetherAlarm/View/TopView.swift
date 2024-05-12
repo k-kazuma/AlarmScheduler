@@ -35,45 +35,58 @@ struct TopView: View {
                     
                     
                     // 開発用ボタン
-//                    Button("getAlarm"){
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            guard !alarts.isEmpty else {
-//                                print("アラームなし")
-//                                return
-//                            }
-//                            let alarms = alarts.map {$0.id}
-//                            print(res)
-//                            print(alarms)
-//                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
-//                            print("####################")
-//                            print(a)
-//                            print(a[0].content.title, a[0].content.subtitle)
-//                        }
-//                    }
-//                    Button("reset") {
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            for r in res {
-//                                NotificationManager.instance.removeNotification(id: r)
-//                            }
-//                            let alarmes = alarts.map {$0.id}
-//                            for a in alarmes {
-//                                print(alarts.first(where: {$0.id == a})!)
-//                                context.delete(alarts.first(where: {$0.id == a})!)
-//                            }
-//                        }
-//                    }
-//                    Button("削除"){
-//                        NotificationManager.instance.removeNotification(id: "alkfjo")
-//                    }
-//                    
-//                    
-//                    Button("paths"){
-//                        Task{
-//                            print(try await getSoundList())
-//                        }
-//                    }
+                    Button("getAlarm"){
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            guard !alarts.isEmpty else {
+                                print("アラームなし")
+                                return
+                            }
+                            
+                            var alarms:[String] = []
+                            
+                            for alarm in alarts {
+                                if alarm.isActive{
+                                    if alarm.weekDay.isEmpty{
+                                        alarms.append("\(alarm.id)")
+                                    }else {
+                                        for week in alarm.weekDay {
+                                            alarms.append("\(alarm.id)-\(week)")
+                                        }
+                                    }
+                                }
+                            } 
+                            print(res)
+                            print(alarms)
+                            //                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
+                            //                            print("####################")
+                            //                            print(a)
+                            //                            print(a[0].content.title, a[0].content.subtitle)
+                        }
+                    }
+                    //                    Button("reset") {
+                    //                        Task{
+                    //                            let res = await NotificationManager.instance.getPendingNotifications()
+                    //                            for r in res {
+                    //                                NotificationManager.instance.removeNotification(id: r)
+                    //                            }
+                    //                            let alarmes = alarts.map {$0.id}
+                    //                            for a in alarmes {
+                    //                                print(alarts.first(where: {$0.id == a})!)
+                    //                                context.delete(alarts.first(where: {$0.id == a})!)
+                    //                            }
+                    //                        }
+                    //                    }
+                    //                    Button("削除"){
+                    //                        NotificationManager.instance.removeNotification(id: "alkfjo")
+                    //                    }
+                    //
+                    //
+                    //                    Button("paths"){
+                    //                        Task{
+                    //                            print(try await getSoundList())
+                    //                        }
+                    //                    }
                     // 開発用ボタン
                     
                     HStack{
@@ -112,6 +125,13 @@ struct TopView: View {
                                     
                                     Toggle(isOn: Bindable(alarm).isActive) {}
                                         .labelsHidden()
+                                        .onChange(of: alarm.isActive){
+                                            do{
+                                                try alarm.toggleAlarm(id: alarm.id)
+                                            } catch{
+                                                print(error)
+                                            }
+                                        }
                                 }
                             }
                             .modifier(ListStyle())

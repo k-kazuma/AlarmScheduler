@@ -55,13 +55,21 @@ final class Alarm {
         if self.isActive == true {
             Task{
                 do{
+                    print("アラーム設置")
                     try await NotificationManager.instance.sendNotification(id: self.id, time: self.time, sound: self.sound, weekDay: self.weekDay)
                 } catch {
                     throw error
                 }
             }
         } else {
-            NotificationManager.instance.removeNotification(id: "\(self.id)")
+            print("アラーム削除")
+            if self.weekDay.isEmpty {
+                NotificationManager.instance.removeNotification(id: "\(self.id)")
+            } else {
+                for week in self.weekDay {
+                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                }
+            }
         }
     }
 }
