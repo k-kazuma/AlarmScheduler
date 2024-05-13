@@ -56,8 +56,18 @@ struct TopView: View {
                                     }
                                 }
                             } 
+                            let difference = checkDataNotification(date: alarms, notification: res)
+                            print(difference)
                             print(res)
-                            print(alarms)
+                            
+                            for alarm in alarts {
+                                for dif in difference {
+                                    if "\(alarm.id)" == dif {
+                                        alarm.isActive = false
+                                    }
+                                }
+                            }
+                            
                             //                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
                             //                            print("####################")
                             //                            print(a)
@@ -163,21 +173,47 @@ struct TopView: View {
                             .frame(width: 25)
                     }
                 }
+            }.onAppear() {
+                Task{
+                    let res = await NotificationManager.instance.getPendingNotifications()
+                    guard !alarts.isEmpty else {
+                        print("アラームなし")
+                        return
+                    }
+                    
+                    var alarms:[String] = []
+                    
+                    for alarm in alarts {
+                        if alarm.isActive{
+                            if alarm.weekDay.isEmpty{
+                                alarms.append("\(alarm.id)")
+                            }else {
+                                for week in alarm.weekDay {
+                                    alarms.append("\(alarm.id)-\(week)")
+                                }
+                            }
+                        }
+                    }
+                    let difference = checkDataNotification(date: alarms, notification: res)
+                    print(difference)
+                    print(res)
+                    
+                    for alarm in alarts {
+                        for dif in difference {
+                            if "\(alarm.id)" == dif {
+                                alarm.isActive = false
+                            }
+                        }
+                    }
+                }
             }
             
             
         }
     }
     
-    func checkDataNotification() -> Bool {
-        
-        Task{
-            let res = await NotificationManager.instance.getPendingNotifications()
-            let alarmes = alarts.map {$0.id}
-            
-            print(res, alarmes)
-        }
-        return true
+    func checkDataNotification(date: [String], notification: [String]) -> [String] {
+        date.filter{ !notification.contains($0)}
     }
 }
 

@@ -44,7 +44,16 @@ final class Alarm {
         guard  id == self.id else {
             throw checkNotification.not("アラームが存在しません")
         }
-        NotificationManager.instance.removeNotification(id: "\(self.id)")
+        // 起動中であれば削除
+        if self.isActive == true {
+            if self.weekDay.isEmpty {
+                NotificationManager.instance.removeNotification(id: "\(self.id)")
+            } else {
+                for week in self.weekDay {
+                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                }
+            }
+        }
         self.modelContext?.delete(self)
     }
     
