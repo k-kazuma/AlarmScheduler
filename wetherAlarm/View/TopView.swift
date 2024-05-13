@@ -55,15 +55,25 @@ struct TopView: View {
                                         }
                                     }
                                 }
-                            } 
-                            let difference = alarms.filter{ !res.contains($0)}
-                            print(difference)
-                            print(res)
+                            }
+                            // SwiftDataとNotificationに差がないか確認
+                            let differenceA = alarms.filter{ !res.contains($0)}
+                            let differenceB = res.filter{ !alarms.contains($0)}
+                            print("SwiftDataとNotificationに差がないか確認します")
+                            print("SwiftData",differenceA)
+                            print("Notification",differenceB)
                             
                             for alarm in alarts {
-                                for dif in difference {
+                                for dif in differenceA {
                                     if "\(alarm.id)" == dif {
                                         alarm.isActive = false
+                                    }
+                                }
+                            }
+                            for r in res {
+                                for dif in differenceB {
+                                    if r == dif {
+                                        NotificationManager.instance.removeNotification(id: dif)
                                     }
                                 }
                             }
@@ -202,14 +212,23 @@ struct TopView: View {
                     }
                 }
             }
-            let difference = alarms.filter{ !res.contains($0)}
-            print(difference)
-            print(res)
+            let differenceA = alarms.filter{ !res.contains($0)}
+            let differenceB = res.filter{ !alarms.contains($0)}
+            print("SwiftDataとNotificationに差がないか確認します")
+            print("SwiftData",differenceA)
+            print("Notification",differenceB)
             
             for alarm in alarts {
-                for dif in difference {
+                for dif in differenceA {
                     if "\(alarm.id)" == dif {
                         alarm.isActive = false
+                    }
+                }
+            }
+            for r in res {
+                for dif in differenceB {
+                    if r == dif {
+                        NotificationManager.instance.removeNotification(id: dif)
                     }
                 }
             }
@@ -217,8 +236,8 @@ struct TopView: View {
     }
     
 }
-
-#Preview {
-    TopView()
-        .modelContainer(for: Alarm.self)
-}
+//
+//#Preview {
+//    TopView()
+//        .modelContainer(for: Alarm.self)
+//}

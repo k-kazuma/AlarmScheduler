@@ -34,6 +34,7 @@ final class Alarm {
                 self.time = time
                 self.sound = sound
                 self.weekDay = weekDay
+                self.isActive = true
             }catch {
                 throw error
             }
