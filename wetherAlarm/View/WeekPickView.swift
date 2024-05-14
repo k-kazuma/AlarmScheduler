@@ -24,6 +24,7 @@ struct WeekPickView: View {
         weekPicker(id: 6, dayOfWeek: "土曜日", isActive: false)
     ]
     
+    
     var body: some View {
         
         ZStack{
@@ -120,6 +121,10 @@ struct WeekPickView: View {
                     .frame(height: 1)
             }
             .navigationBarBackButtonHidden(true)
+        }.onAppear(){
+            for week in weeks {
+                dayOfWeek[week].isActive = true
+            }
         }
     }
 }

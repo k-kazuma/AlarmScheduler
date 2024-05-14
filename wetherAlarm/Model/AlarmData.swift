@@ -12,14 +12,8 @@ final class Alarm {
     var isActive: Bool
     
     init(id: UUID = UUID(), time: Date, sound: String, weekDay: [Int]) async throws {
-        print("AlarmInit")
-        Task{
-            do{
-                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)
-            } catch{
-                throw error
-            }
-        }
+        try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)
+        
         self.id = id
         self.time = time
         self.sound = sound
@@ -28,17 +22,15 @@ final class Alarm {
     }
     
     func editAlarm(id: UUID, time: Date, sound: String, weekDay: [Int]) async throws {
-        Task{
-            do{
-                try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)
-                self.time = time
-                self.sound = sound
-                self.weekDay = weekDay
-                self.isActive = true
-            }catch {
-                throw error
-            }
+        self.time = time
+        self.sound = sound
+        self.weekDay = weekDay
+        self.isActive = true
+        let difference = self.weekDay.filter{!weekDay.contains($0)}
+        for dif in difference {
+            NotificationManager.instance.removeNotification(id: "\(self.id)-\(dif)")
         }
+        try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)
     }
     
     func deleteAlarm(id: UUID) throws {

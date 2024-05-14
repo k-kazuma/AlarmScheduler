@@ -36,53 +36,7 @@ struct TopView: View {
                     
                     // 開発用ボタン
                     Button("getAlarm"){
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            guard !alarts.isEmpty else {
-                                print("アラームなし")
-                                return
-                            }
-                            
-                            var alarms:[String] = []
-                            
-                            for alarm in alarts {
-                                if alarm.isActive{
-                                    if alarm.weekDay.isEmpty{
-                                        alarms.append("\(alarm.id)")
-                                    }else {
-                                        for week in alarm.weekDay {
-                                            alarms.append("\(alarm.id)-\(week)")
-                                        }
-                                    }
-                                }
-                            }
-                            // SwiftDataとNotificationに差がないか確認
-                            let differenceA = alarms.filter{ !res.contains($0)}
-                            let differenceB = res.filter{ !alarms.contains($0)}
-                            print("SwiftDataとNotificationに差がないか確認します")
-                            print("SwiftData",differenceA)
-                            print("Notification",differenceB)
-                            
-                            for alarm in alarts {
-                                for dif in differenceA {
-                                    if "\(alarm.id)" == dif {
-                                        alarm.isActive = false
-                                    }
-                                }
-                            }
-                            for r in res {
-                                for dif in differenceB {
-                                    if r == dif {
-                                        NotificationManager.instance.removeNotification(id: dif)
-                                    }
-                                }
-                            }
-                            
-                            //                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
-                            //                            print("####################")
-                            //                            print(a)
-                            //                            print(a[0].content.title, a[0].content.subtitle)
-                        }
+                        updateView()
                     }
                     //                    Button("reset") {
                     //                        Task{
@@ -194,24 +148,12 @@ struct TopView: View {
     func updateView () {
         Task{
             let res = await NotificationManager.instance.getPendingNotifications()
-            guard !alarts.isEmpty else {
-                print("アラームなし")
-                return
-            }
+            let alarms:[String] = await getAlarms()
             
-            var alarms:[String] = []
+            print(res)
+            print(alarms)
+            print("#########################")
             
-            for alarm in alarts {
-                if alarm.isActive{
-                    if alarm.weekDay.isEmpty{
-                        alarms.append("\(alarm.id)")
-                    }else {
-                        for week in alarm.weekDay {
-                            alarms.append("\(alarm.id)-\(week)")
-                        }
-                    }
-                }
-            }
             let differenceA = alarms.filter{ !res.contains($0)}
             let differenceB = res.filter{ !alarms.contains($0)}
             print("SwiftDataとNotificationに差がないか確認します")
@@ -228,11 +170,28 @@ struct TopView: View {
             for r in res {
                 for dif in differenceB {
                     if r == dif {
+                        print("削除", dif)
                         NotificationManager.instance.removeNotification(id: dif)
                     }
                 }
             }
         }
+    }
+    
+    func getAlarms() async -> [String] {
+        var resArray: [String] = []
+        for alarm in alarts {
+            if alarm.isActive{
+                if alarm.weekDay.isEmpty{
+                    resArray.append("\(alarm.id)")
+                }else {
+                    for week in alarm.weekDay {
+                        resArray.append("\(alarm.id)-\(week)")
+                    }
+                }
+            }
+        }
+        return resArray
     }
     
 }
