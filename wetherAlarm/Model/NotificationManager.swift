@@ -19,7 +19,7 @@ final class NotificationManager {
             }
     }
     
-    func sendNotification(id:UUID , time:Date, sound: String, repeats: Bool) async throws {
+    func sendNotification(id:UUID , time:Date, sound: String, weekDay: [Int]) async throws {
         
         do{
             let content = UNMutableNotificationContent()
@@ -27,14 +27,28 @@ final class NotificationManager {
             content.body = "Local Notification Test"
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
-            var dateComponents = DateComponents()
-            let (hour, minute) = await dateConversion(time: time)
-            dateComponents.hour = hour
-            dateComponents.minute = minute
-            
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: repeats)
-            let request = UNNotificationRequest(identifier: "\(id)", content: content, trigger: trigger)
-            try await UNUserNotificationCenter.current().add(request)
+            if !weekDay.isEmpty {
+                for week in weekDay{
+                    var dateComponents = DateComponents()
+                    let (hour, minute) = await dateConversion(time: time)
+                    dateComponents.weekday = week
+                    dateComponents.hour = hour
+                    dateComponents.minute = minute
+                    
+                    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+                    let request = UNNotificationRequest(identifier: "\(id)-\(week)", content: content, trigger: trigger)
+                    try await UNUserNotificationCenter.current().add(request)
+                }
+            } else {
+                var dateComponents = DateComponents()
+                let (hour, minute) = await dateConversion(time: time)
+                dateComponents.hour = hour
+                dateComponents.minute = minute
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                let request = UNNotificationRequest(identifier: "\(id)", content: content, trigger: trigger)
+                try await UNUserNotificationCenter.current().add(request)
+            }
         } catch {
             throw error
         }

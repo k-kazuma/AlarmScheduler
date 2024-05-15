@@ -35,45 +35,32 @@ struct TopView: View {
                     
                     
                     // 開発用ボタン
-//                    Button("getAlarm"){
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            guard !alarts.isEmpty else {
-//                                print("アラームなし")
-//                                return
-//                            }
-//                            let alarms = alarts.map {$0.id}
-//                            print(res)
-//                            print(alarms)
-//                            let a = await UNUserNotificationCenter.current().pendingNotificationRequests()
-//                            print("####################")
-//                            print(a)
-//                            print(a[0].content.title, a[0].content.subtitle)
-//                        }
-//                    }
-//                    Button("reset") {
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            for r in res {
-//                                NotificationManager.instance.removeNotification(id: r)
-//                            }
-//                            let alarmes = alarts.map {$0.id}
-//                            for a in alarmes {
-//                                print(alarts.first(where: {$0.id == a})!)
-//                                context.delete(alarts.first(where: {$0.id == a})!)
-//                            }
-//                        }
-//                    }
-//                    Button("削除"){
-//                        NotificationManager.instance.removeNotification(id: "alkfjo")
-//                    }
-//                    
-//                    
-//                    Button("paths"){
-//                        Task{
-//                            print(try await getSoundList())
-//                        }
-//                    }
+                    Button("getAlarm"){
+                        updateView()
+                    }
+                    //                    Button("reset") {
+                    //                        Task{
+                    //                            let res = await NotificationManager.instance.getPendingNotifications()
+                    //                            for r in res {
+                    //                                NotificationManager.instance.removeNotification(id: r)
+                    //                            }
+                    //                            let alarmes = alarts.map {$0.id}
+                    //                            for a in alarmes {
+                    //                                print(alarts.first(where: {$0.id == a})!)
+                    //                                context.delete(alarts.first(where: {$0.id == a})!)
+                    //                            }
+                    //                        }
+                    //                    }
+                    //                    Button("削除"){
+                    //                        NotificationManager.instance.removeNotification(id: "alkfjo")
+                    //                    }
+                    //
+                    //
+                    //                    Button("paths"){
+                    //                        Task{
+                    //                            print(try await getSoundList())
+                    //                        }
+                    //                    }
                     // 開発用ボタン
                     
                     HStack{
@@ -112,6 +99,13 @@ struct TopView: View {
                                     
                                     Toggle(isOn: Bindable(alarm).isActive) {}
                                         .labelsHidden()
+                                        .onChange(of: alarm.isActive){
+                                            do{
+                                                try alarm.toggleAlarm(id: alarm.id)
+                                            } catch{
+                                                print(error)
+                                            }
+                                        }
                                 }
                             }
                             .modifier(ListStyle())
@@ -143,25 +137,66 @@ struct TopView: View {
                             .frame(width: 25)
                     }
                 }
+            }.onAppear() {
+                updateView()
             }
             
             
         }
     }
     
-    func checkDataNotification() -> Bool {
-        
+    func updateView () {
         Task{
             let res = await NotificationManager.instance.getPendingNotifications()
-            let alarmes = alarts.map {$0.id}
+            let alarms:[String] = await getAlarms()
             
-            print(res, alarmes)
+            print(res)
+            print(alarms)
+            print("#########################")
+            
+            let differenceA = alarms.filter{ !res.contains($0)}
+            let differenceB = res.filter{ !alarms.contains($0)}
+            print("SwiftDataとNotificationに差がないか確認します")
+            print("SwiftData",differenceA)
+            print("Notification",differenceB)
+            
+            for alarm in alarts {
+                for dif in differenceA {
+                    if "\(alarm.id)" == dif {
+                        alarm.isActive = false
+                    }
+                }
+            }
+            for r in res {
+                for dif in differenceB {
+                    if r == dif {
+                        print("削除", dif)
+                        NotificationManager.instance.removeNotification(id: dif)
+                    }
+                }
+            }
         }
-        return true
     }
+    
+    func getAlarms() async -> [String] {
+        var resArray: [String] = []
+        for alarm in alarts {
+            if alarm.isActive{
+                if alarm.weekDay.isEmpty{
+                    resArray.append("\(alarm.id)")
+                }else {
+                    for week in alarm.weekDay {
+                        resArray.append("\(alarm.id)-\(week)")
+                    }
+                }
+            }
+        }
+        return resArray
+    }
+    
 }
-
-#Preview {
-    TopView()
-        .modelContainer(for: Alarm.self)
-}
+//
+//#Preview {
+//    TopView()
+//        .modelContainer(for: Alarm.self)
+//}
