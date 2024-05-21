@@ -96,7 +96,7 @@ final class Alarm {
                 self.skipData = [next: self.time]
                 break
             }else{
-                if weekDay == 7 {
+                if weekDay == 6 {
                     i = 0
                 } else{
                     i += 1
