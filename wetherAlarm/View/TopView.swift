@@ -79,22 +79,60 @@ struct TopView: View {
                         List(alarts) { alarm in
                             NavigationLink(destination: EditView(alarm: alarm)){
                                 HStack{
-                                    Text(f.string(from: alarm.time))
-                                        .swipeActions(edge: .trailing) {
-                                            Button(action: {
-                                                Task{
-                                                    do{
-                                                        print("選択したアラームを削除")
-                                                        try alarm.deleteAlarm(id: alarm.id)
-                                                    } catch{
-                                                        print(error)
+                                    VStack{
+                                        HStack{
+                                            Text(f.string(from: alarm.time))
+                                                .swipeActions(edge: .trailing) {
+                                                    Button(action: {
+                                                        Task{
+                                                            do{
+                                                                print("選択したアラームを削除")
+                                                                try alarm.deleteAlarm(id: alarm.id)
+                                                            } catch{
+                                                                print(error)
+                                                            }
+                                                        }
+                                                    }){
+                                                        Text("削除")
+                                                    }
+                                                }.tint(.red)
+                                            Spacer()
+                                        }
+                                        HStack{
+                                            if alarm.weekDay.isEmpty {
+                                                Text("繰り返しなし")
+                                                
+                                            }else if alarm.weekDay == [0,1,2,3,4,5,6] {
+                                                Text("毎日")
+                                            } else if alarm.weekDay == [1,2,3,4,5] {
+                                                Text("平日")
+                                            } else {
+                                                ForEach(alarm.weekDay, id: \.self) { week in
+                                                    switch week {
+                                                    case 0:
+                                                        Text("日")
+                                                    case 1:
+                                                        Text("月")
+                                                    case 2:
+                                                        Text("火")
+                                                    case 3:
+                                                        Text("水")
+                                                    case 4:
+                                                        Text("木")
+                                                    case 5:
+                                                        Text("金")
+                                                    case 6:
+                                                        Text("土")
+                                                    default:
+                                                        Text("?")
                                                     }
                                                 }
-                                            }){
-                                                Text("削除")
                                             }
-                                        }.tint(.red)
-                                    
+                                            Spacer()
+                                        }
+                                        .font(.system(size: 15))
+                                        
+                                    }
                                     Spacer()
                                     
                                     Toggle(isOn: Bindable(alarm).isActive) {}
@@ -200,3 +238,4 @@ struct TopView: View {
 //    TopView()
 //        .modelContainer(for: Alarm.self)
 //}
+    
