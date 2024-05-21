@@ -14,7 +14,7 @@ struct EditView: View {
     @State var sound: String
     @State var repeats = false
     @State var weekDay: [Int] = []
-    
+        
     var alarm: Alarm
     
     init(alarm: Alarm) {
@@ -100,8 +100,21 @@ struct EditView: View {
                 
                 Spacer()
                 
+                Button("スキップ"){
+                    print("【EditView:104】次回アラームをスキップ")
+                    
+                    let cal = Calendar.current
+                    let now = Date()
+                    if let nowWeekDay = cal.dateComponents([.weekday], from: now).weekday {
+                        print(nowWeekDay)
+                    }
+                    
+                    
+                }
+                .buttonStyle(mainButtonStyle())
+                
                 Button("保存する"){
-                    print("【AddAlarmView:29】アラームを編集する処理")
+                    print("【EditView:118】アラームを編集する処理")
                     Task{
                         do {
                             // SwiftDataとNotificationを更新
@@ -116,7 +129,7 @@ struct EditView: View {
                 .buttonStyle(mainButtonStyle())
                 Button("キャンセル"){
                     dismiss()
-                    print("【AddAlarmView:35】前のページに戻る処理")
+                    print("【EditView:133】前のページに戻る処理")
                 }
                 .buttonStyle(mainButtonStyle())
                 Spacer()

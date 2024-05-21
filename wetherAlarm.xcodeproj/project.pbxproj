@@ -22,7 +22,36 @@
 		DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 24ctu.mp3 */; };
 		DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */; };
 		DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34CB2BD76BF60077F923 /* WeekPickView.swift */; };
+		DADD503C2BF71E0F00B270EB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD503B2BF71E0F00B270EB /* UserNotifications.framework */; };
+		DADD503E2BF71E0F00B270EB /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD503D2BF71E0F00B270EB /* UserNotificationsUI.framework */; };
+		DADD50412BF71E0F00B270EB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD50402BF71E0F00B270EB /* NotificationViewController.swift */; };
+		DADD50442BF71E0F00B270EB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DADD50432BF71E0F00B270EB /* Base */; };
+		DADD50482BF71E0F00B270EB /* NotificationContentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DADD50462BF71E0F00B270EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA5FDEFB2BB4CEAA00D091B2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DADD50382BF71E0F00B270EB;
+			remoteInfo = NotificationContentExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DADD50492BF71E0F00B270EB /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DADD50482BF71E0F00B270EB /* NotificationContentExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wetherAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +70,12 @@
 		DACD34C52BCA442D0077F923 /* 24ctu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 24ctu.mp3; path = ../../../../Downloads/24ctu.mp3; sourceTree = "<group>"; };
 		DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bird-chirping-ringtone.mp3"; path = "../../../../Downloads/bird-chirping-ringtone.mp3"; sourceTree = "<group>"; };
 		DACD34CB2BD76BF60077F923 /* WeekPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPickView.swift; sourceTree = "<group>"; };
+		DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DADD503B2BF71E0F00B270EB /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		DADD503D2BF71E0F00B270EB /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		DADD50402BF71E0F00B270EB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		DADD50432BF71E0F00B270EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		DADD50452BF71E0F00B270EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +86,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DADD50362BF71E0F00B270EB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DADD503E2BF71E0F00B270EB /* UserNotificationsUI.framework in Frameworks */,
+				DADD503C2BF71E0F00B270EB /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -58,6 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				DA5FDF052BB4CEAA00D091B2 /* wetherAlarm */,
+				DADD503F2BF71E0F00B270EB /* NotificationContentExtension */,
+				DADD503A2BF71E0F00B270EB /* Frameworks */,
 				DA5FDF042BB4CEAA00D091B2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */,
+				DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +179,25 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		DADD503A2BF71E0F00B270EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DADD503B2BF71E0F00B270EB /* UserNotifications.framework */,
+				DADD503D2BF71E0F00B270EB /* UserNotificationsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DADD503F2BF71E0F00B270EB /* NotificationContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				DADD50402BF71E0F00B270EB /* NotificationViewController.swift */,
+				DADD50422BF71E0F00B270EB /* MainInterface.storyboard */,
+				DADD50452BF71E0F00B270EB /* Info.plist */,
+			);
+			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,15 +208,34 @@
 				DA5FDEFF2BB4CEAA00D091B2 /* Sources */,
 				DA5FDF002BB4CEAA00D091B2 /* Frameworks */,
 				DA5FDF012BB4CEAA00D091B2 /* Resources */,
+				DADD50492BF71E0F00B270EB /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DADD50472BF71E0F00B270EB /* PBXTargetDependency */,
 			);
 			name = wetherAlarm;
 			productName = wetherAlarm;
 			productReference = DA5FDF032BB4CEAA00D091B2 /* wetherAlarm.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DADD50382BF71E0F00B270EB /* NotificationContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DADD504C2BF71E0F00B270EB /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */;
+			buildPhases = (
+				DADD50352BF71E0F00B270EB /* Sources */,
+				DADD50362BF71E0F00B270EB /* Frameworks */,
+				DADD50372BF71E0F00B270EB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationContentExtension;
+			productName = NotificationContentExtension;
+			productReference = DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -159,11 +244,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					DA5FDF022BB4CEAA00D091B2 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					DADD50382BF71E0F00B270EB = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -181,6 +269,7 @@
 			projectRoot = "";
 			targets = (
 				DA5FDF022BB4CEAA00D091B2 /* wetherAlarm */,
+				DADD50382BF71E0F00B270EB /* NotificationContentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -194,6 +283,14 @@
 				DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */,
 				DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */,
 				DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DADD50372BF71E0F00B270EB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DADD50442BF71E0F00B270EB /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,7 +315,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DADD50352BF71E0F00B270EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DADD50412BF71E0F00B270EB /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DADD50472BF71E0F00B270EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DADD50382BF71E0F00B270EB /* NotificationContentExtension */;
+			targetProxy = DADD50462BF71E0F00B270EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DADD50422BF71E0F00B270EB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DADD50432BF71E0F00B270EB /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DA5FDF142BB4CEAC00D091B2 /* Debug */ = {
@@ -343,6 +467,7 @@
 		DA5FDF172BB4CEAC00D091B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -372,6 +497,7 @@
 		DA5FDF182BB4CEAC00D091B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -398,6 +524,58 @@
 			};
 			name = Release;
 		};
+		DADD504A2BF71E0F00B270EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2YZ2G5T53G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm.NotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DADD504B2BF71E0F00B270EB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2YZ2G5T53G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm.NotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -415,6 +593,15 @@
 			buildConfigurations = (
 				DA5FDF172BB4CEAC00D091B2 /* Debug */,
 				DA5FDF182BB4CEAC00D091B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DADD504C2BF71E0F00B270EB /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DADD504A2BF71E0F00B270EB /* Debug */,
+				DADD504B2BF71E0F00B270EB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

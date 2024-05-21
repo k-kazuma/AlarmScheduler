@@ -10,6 +10,7 @@ final class Alarm {
     var sound: String
     var weekDay: [Int]
     var isActive: Bool
+    var skipData: [Int : Date]?
     
     init(id: UUID = UUID(), time: Date, sound: String, weekDay: [Int]) async throws {
         try await NotificationManager.instance.sendNotification(id: id, time: time, sound: sound, weekDay: weekDay)
@@ -19,6 +20,7 @@ final class Alarm {
         self.sound = sound
         self.weekDay = weekDay
         self.isActive = true
+        self.skipData = nil
     }
     
     func editAlarm(id: UUID, time: Date, sound: String, weekDay: [Int]) async throws {
@@ -70,6 +72,34 @@ final class Alarm {
             } else {
                 for week in self.weekDay {
                     NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                }
+            }
+        }
+    }
+    
+    func skipAlarm(id: UUID, weekDay: Int) throws {
+        guard  id == self.id else {
+            throw checkNotification.not("アラームが存在しません")
+        }
+        // weekDayは１〜７の整数（日〜土）
+        var i = weekDay
+        if weekDay == 7 {
+            i = 0
+        }
+        // 条件を満たすまでループ
+        while true {
+            if let next = self.weekDay.firstIndex(of: i) {
+                // 一致する曜日が見つかれば削除
+                print("削除-\(next)")
+                NotificationManager.instance.removeNotification(id: "\(self.id)-\(next)")
+                // スキップしている曜日時間をSwiftDataで管理する
+                self.skipData = [next: self.time]
+                break
+            }else{
+                if weekDay == 6 {
+                    i = 0
+                } else{
+                    i += 1
                 }
             }
         }
