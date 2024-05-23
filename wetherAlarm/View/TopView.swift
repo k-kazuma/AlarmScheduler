@@ -232,6 +232,19 @@ struct TopView: View {
         return resArray
     }
     
+    func checkSkip() {
+        let calender = Calendar.current
+        let now = calender.dateComponents([.weekday], from: Date()).weekday! - 1
+        for alarm in alarts {
+            if let skipIndex = alarm.skipWeek {
+                if now  == 1 {
+                    
+                }
+                
+            }
+        }
+    }
+    
 }
 //
 //#Preview {
