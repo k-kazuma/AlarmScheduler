@@ -96,14 +96,17 @@ final class Alarm {
             while true {
                 print(i)
                 if let next = self.weekDay.firstIndex(of: i) {
+                    let weekIndex = self.weekDay[next]
                     // 何日後がスキップされた日なのかを取得
-                    guard let nextWeekday = getNextWeekday(nextIndex: next, hour: hour, minute: minute) else {
+                    
+                    guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
+                        print("guard")
                         return
                     }
                     
                     // 一致する曜日が見つかれば削除
-                    print("削除-\(next)")
-                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(next)")
+                    print("削除-\(weekIndex)")
+                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
                     
                     // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
                     for i in [7, 14, 21, 28] {
@@ -118,7 +121,7 @@ final class Alarm {
                     self.skipDate = nextWeekday
                     break
                 } else{
-                    if todayWeekDay == 6 {
+                    if i == 6 {
                         i = 0
                     } else{
                         i += 1

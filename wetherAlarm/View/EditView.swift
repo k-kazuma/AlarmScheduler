@@ -102,14 +102,12 @@ struct EditView: View {
                 
                 Button("スキップ"){
                     print("【EditView:104】次回アラームをスキップ")
-                    
-                    let cal = Calendar.current
-                    let now = Date()
-                    if let nowWeekDay = cal.dateComponents([.weekday], from: now).weekday {
-                        print(nowWeekDay)
+                    do{
+                        try alarm.skipAlarm(id: alarm.id)
+                        dismiss()
+                    } catch{
+                        print(error)
                     }
-                    
-                    
                 }
                 .buttonStyle(mainButtonStyle())
                 

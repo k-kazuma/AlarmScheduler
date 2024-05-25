@@ -176,7 +176,10 @@ struct TopView: View {
                     }
                 }
             }.onAppear() {
-                updateView()
+                Task {
+                    try await checkSkip()
+                    updateView()
+                }
             }
             
             
@@ -205,9 +208,14 @@ struct TopView: View {
                     }
                 }
             }
+            // なぜresをループしているかわからんあとで確認
             for r in res {
                 for dif in differenceB {
                     if r == dif {
+                        // スキップ機能で設置したアラームを削除しないようコンティニューする
+                        if dif.contains("skip") {
+                            continue
+                        }
                         print("削除", dif)
                         NotificationManager.instance.removeNotification(id: dif)
                     }
@@ -232,15 +240,34 @@ struct TopView: View {
         return resArray
     }
     
-    func checkSkip() {
-        let calender = Calendar.current
-        let now = calender.dateComponents([.weekday], from: Date()).weekday! - 1
+    func checkSkip() async throws {
         for alarm in alarts {
-            if let skipIndex = alarm.skipWeek {
-                if now  == 1 {
-                    
-                }
+            if let skipDate = alarm.skipDate {
+                let now = Date()
                 
+                if skipDate < now {
+                    
+                    do {
+                        // 一度全て削除して再設置する
+                        //削除
+                        if alarm.weekDay.isEmpty {
+                            NotificationManager.instance.removeNotification(id: "\(alarm.id)")
+                        } else {
+                            for week in alarm.weekDay {
+                                NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
+                            }
+                        }
+                        
+                        //設置
+                        try await NotificationManager.instance.sendNotification(id: alarm.id, time: alarm.time, sound: alarm.sound, weekDay: alarm.weekDay)
+                    } catch {
+                        throw error
+                    }
+                } else {
+                    print("まだスキップした日時を越えていないよ")
+                }
+            } else{
+                print("スキップ中のアラームないよ")
             }
         }
     }
