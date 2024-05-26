@@ -81,7 +81,7 @@ final class Alarm {
             throw checkNotification.not("アラームが存在しません")
         }
         Task{
-            var calendar = Calendar.current
+            let calendar = Calendar.current
             let today = Date()
             let todayWeekDay = calendar.component(.weekday, from: today)
             let (hour, minute) = await dateConversion(time: self.time)
@@ -96,14 +96,17 @@ final class Alarm {
             while true {
                 print(i)
                 if let next = self.weekDay.firstIndex(of: i) {
+                    let weekIndex = self.weekDay[next]
                     // 何日後がスキップされた日なのかを取得
-                    guard let nextWeekday = getNextWeekday(nextIndex: next, hour: hour, minute: minute) else {
+                    
+                    guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
+                        print("guard")
                         return
                     }
                     
                     // 一致する曜日が見つかれば削除
-                    print("削除-\(next)")
-                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(next)")
+                    print("削除-\(weekIndex)")
+                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
                     
                     // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
                     for i in [7, 14, 21, 28] {
@@ -118,7 +121,7 @@ final class Alarm {
                     self.skipDate = nextWeekday
                     break
                 } else{
-                    if todayWeekDay == 6 {
+                    if i == 6 {
                         i = 0
                     } else{
                         i += 1
@@ -140,7 +143,7 @@ func getNextWeekday(nextIndex: Int, hour: Int, minute: Int) -> Date? {
     let today = Date()
     
     // カレンダーを取得
-    var calendar = Calendar.current
+    let calendar = Calendar.current
     
     // 今日の曜日を取得
     let todayWeekday = calendar.component(.weekday, from: today)
