@@ -38,19 +38,19 @@ struct TopView: View {
                     Button("getAlarm"){
                         updateView()
                     }
-                    //                    Button("reset") {
-                    //                        Task{
-                    //                            let res = await NotificationManager.instance.getPendingNotifications()
-                    //                            for r in res {
-                    //                                NotificationManager.instance.removeNotification(id: r)
-                    //                            }
-                    //                            let alarmes = alarts.map {$0.id}
-                    //                            for a in alarmes {
-                    //                                print(alarts.first(where: {$0.id == a})!)
-                    //                                context.delete(alarts.first(where: {$0.id == a})!)
-                    //                            }
-                    //                        }
-                    //                    }
+                    Button("reset") {
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            for r in res {
+                                NotificationManager.instance.removeNotification(id: r)
+                            }
+                            let alarmes = alarts.map {$0.id}
+                            for a in alarmes {
+                                print(alarts.first(where: {$0.id == a})!)
+                                context.delete(alarts.first(where: {$0.id == a})!)
+                            }
+                        }
+                    }
                     //                    Button("削除"){
                     //                        NotificationManager.instance.removeNotification(id: "alkfjo")
                     //                    }
@@ -78,77 +78,84 @@ struct TopView: View {
                     } else {
                         List(alarts) { alarm in
                             NavigationLink(destination: EditView(alarm: alarm)){
-                                HStack{
-                                    VStack{
-                                        HStack{
-                                            Text(f.string(from: alarm.time))
-                                                .swipeActions(edge: .trailing) {
-                                                    Button(action: {
-                                                        Task{
-                                                            do{
-                                                                print("選択したアラームを削除")
-                                                                try alarm.deleteAlarm(id: alarm.id)
-                                                            } catch{
-                                                                print(error)
+                                ZStack{
+                                    HStack{
+                                        VStack{
+                                            HStack{
+                                                Text(f.string(from: alarm.time))
+                                                    .swipeActions(edge: .trailing) {
+                                                        Button(action: {
+                                                            Task{
+                                                                do{
+                                                                    print("選択したアラームを削除")
+                                                                    try alarm.deleteAlarm(id: alarm.id)
+                                                                } catch{
+                                                                    print(error)
+                                                                }
                                                             }
+                                                        }){
+                                                            Text("削除")
                                                         }
-                                                    }){
-                                                        Text("削除")
-                                                    }
-                                                }.tint(.red)
-                                            Spacer()
-                                        }
-                                        HStack{
-                                            if alarm.weekDay.isEmpty {
-                                                Text("繰り返しなし")
-                                                
-                                            }else if alarm.weekDay == [0,1,2,3,4,5,6] {
-                                                Text("毎日")
-                                            } else if alarm.weekDay == [1,2,3,4,5] {
-                                                Text("平日")
-                                            } else {
-                                                ForEach(alarm.weekDay, id: \.self) { week in
-                                                    switch week {
-                                                    case 0:
-                                                        Text("日")
-                                                    case 1:
-                                                        Text("月")
-                                                    case 2:
-                                                        Text("火")
-                                                    case 3:
-                                                        Text("水")
-                                                    case 4:
-                                                        Text("木")
-                                                    case 5:
-                                                        Text("金")
-                                                    case 6:
-                                                        Text("土")
-                                                    default:
-                                                        Text("?")
+                                                    }.tint(.red)
+                                                Spacer()
+                                            }
+                                            HStack{
+                                                if alarm.weekDay.isEmpty {
+                                                    Text("繰り返しなし")
+                                                    
+                                                }else if alarm.weekDay == [0,1,2,3,4,5,6] {
+                                                    Text("毎日")
+                                                } else if alarm.weekDay == [1,2,3,4,5] {
+                                                    Text("平日")
+                                                } else {
+                                                    ForEach(alarm.weekDay, id: \.self) { week in
+                                                        switch week {
+                                                        case 0:
+                                                            Text("日")
+                                                        case 1:
+                                                            Text("月")
+                                                        case 2:
+                                                            Text("火")
+                                                        case 3:
+                                                            Text("水")
+                                                        case 4:
+                                                            Text("木")
+                                                        case 5:
+                                                            Text("金")
+                                                        case 6:
+                                                            Text("土")
+                                                        default:
+                                                            Text("?")
+                                                        }
                                                     }
                                                 }
+                                                Spacer()
                                             }
-                                            Spacer()
+                                            .font(.system(size: 15))
+                                            
                                         }
-                                        .font(.system(size: 15))
+                                        Spacer()
                                         
-                                    }
-                                    Spacer()
-                                    
-                                    Toggle(isOn: Bindable(alarm).isActive) {}
-                                        .labelsHidden()
-                                        .onChange(of: alarm.isActive){
-                                            do{
-                                                try alarm.toggleAlarm(id: alarm.id)
-                                            } catch{
-                                                print(error)
+                                        Toggle(isOn: Bindable(alarm).isActive) {}
+                                            .labelsHidden()
+                                            .onChange(of: alarm.isActive){
+                                                do{
+                                                    try alarm.toggleAlarm(id: alarm.id)
+                                                } catch{
+                                                    print(error)
+                                                }
                                             }
+                                    }
+                                    if alarm.skipWeek != nil {
+                                        HStack{
+                                            Text("スキップ中")
                                         }
+                                        .background(Color.black)
+                                    }
                                 }
                             }
                             .modifier(ListStyle())
                             .font(.system(size: 30))
-                            
                         }
                         .scrollContentBackground(.hidden)
                     }
@@ -256,7 +263,12 @@ struct TopView: View {
                             for week in alarm.weekDay {
                                 NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
                             }
+                            for num in [7, 14, 21, 28] {
+                                NotificationManager.instance.removeNotification(id: "\(alarm.id)-akip\(num)")
+                            }
                         }
+                        alarm.skipWeek = nil
+                        alarm.skipDate = nil
                         
                         //設置
                         try await NotificationManager.instance.sendNotification(id: alarm.id, time: alarm.time, sound: alarm.sound, weekDay: alarm.weekDay)
@@ -273,9 +285,9 @@ struct TopView: View {
     }
     
 }
-//
-//#Preview {
-//    TopView()
-//        .modelContainer(for: Alarm.self)
-//}
-    
+
+#Preview {
+    TopView()
+        .modelContainer(for: Alarm.self)
+}
+

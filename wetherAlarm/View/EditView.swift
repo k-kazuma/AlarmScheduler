@@ -100,16 +100,45 @@ struct EditView: View {
                 
                 Spacer()
                 
-                Button("スキップ"){
-                    print("【EditView:104】次回アラームをスキップ")
-                    do{
-                        try alarm.skipAlarm(id: alarm.id)
-                        dismiss()
-                    } catch{
-                        print(error)
+                if alarm.skipDate == nil {
+                    Button("スキップ"){
+                        do{
+                            try alarm.skipAlarm(id: alarm.id)
+                            dismiss()
+                        } catch{
+                            print(error)
+                        }
                     }
+                    .buttonStyle(mainButtonStyle())
+                } else {
+                    Button("スキップ解除"){
+                        Task{
+                            do {
+                                // 一度全て削除して再設置する
+                                //削除
+                                if alarm.weekDay.isEmpty {
+                                    NotificationManager.instance.removeNotification(id: "\(alarm.id)")
+                                } else {
+                                    for week in alarm.weekDay {
+                                        NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
+                                    }
+                                    for num in [7, 14, 21, 28] {
+                                        NotificationManager.instance.removeNotification(id: "\(alarm.id)-skip\(num)")
+                                    }
+                                }
+                                alarm.skipWeek = nil
+                                alarm.skipDate = nil
+                                
+                                //設置
+                                try await NotificationManager.instance.sendNotification(id: alarm.id, time: alarm.time, sound: alarm.sound, weekDay: alarm.weekDay)
+                                dismiss()
+                            } catch {
+                                throw error
+                            }
+                        }
+                    }
+                    .buttonStyle(mainButtonStyle())
                 }
-                .buttonStyle(mainButtonStyle())
                 
                 Button("保存する"){
                     print("【EditView:118】アラームを編集する処理")

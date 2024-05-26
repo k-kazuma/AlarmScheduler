@@ -81,7 +81,7 @@ final class Alarm {
             throw checkNotification.not("アラームが存在しません")
         }
         Task{
-            var calendar = Calendar.current
+            let calendar = Calendar.current
             let today = Date()
             let todayWeekDay = calendar.component(.weekday, from: today)
             let (hour, minute) = await dateConversion(time: self.time)
@@ -143,7 +143,7 @@ func getNextWeekday(nextIndex: Int, hour: Int, minute: Int) -> Date? {
     let today = Date()
     
     // カレンダーを取得
-    var calendar = Calendar.current
+    let calendar = Calendar.current
     
     // 今日の曜日を取得
     let todayWeekday = calendar.component(.weekday, from: today)

@@ -64,7 +64,7 @@ final class NotificationManager {
             content.body = "Local Notification Test"
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
-            var dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
+            let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: dateComponents), repeats: false)
             let request = UNNotificationRequest(identifier: "\(id)-skip\(day)", content: content, trigger: trigger)
