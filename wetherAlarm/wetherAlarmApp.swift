@@ -12,7 +12,7 @@ import NotificationCenter
 @main
 struct wetherAlarmApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
     var body: some Scene {
         WindowGroup {
             TopView()
@@ -61,7 +61,9 @@ extension Date {
 extension Date {
     init(year: Int, month: Int, day: Int) {
         let calendar = Calendar.current
-        let components = DateComponents(year: year, month: month, day: day)
+        let now = Date()
+        let currentComponents = calendar.dateComponents([.hour, .minute], from: now)
+        let components = DateComponents(year: year, month: month, day: day, hour: currentComponents.hour, minute: currentComponents.minute)
         self = calendar.date(from: components)!
     }
 }
@@ -70,7 +72,7 @@ extension Date {
 //
 //
 //class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-//    
+//
 //    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 //        debugPrint("application:didFinishLaunchingWithOptions:")
 //        NotificationManager.instance.requestPermission()

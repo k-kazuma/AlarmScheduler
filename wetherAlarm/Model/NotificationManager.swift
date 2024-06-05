@@ -63,7 +63,6 @@ final class NotificationManager {
             content.title = "Notification Title"
             content.body = "Local Notification Test"
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
-            
             let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: dateComponents), repeats: false)

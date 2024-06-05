@@ -19,10 +19,18 @@ struct TopView: View {
     @State var activeList: [[String : Bool]] = []
     
     let f = DateFormatter()
+    let f2 = DateFormatter()
+    let calendar = Calendar.current
+    
+    @State var nextTime: Alarm?
+    @State var nextDayIndex: Int = 0
+    @State var nextAlarmDay: Date = Date()
     
     init(){
         f.dateStyle = .none
         f.timeStyle = .short
+        
+        f2.dateFormat = "M月d日"
     }
     
     var body: some View {
@@ -68,12 +76,29 @@ struct TopView: View {
                             .modifier(TitleModifier())
                         Spacer()
                     }
+                    VStack{
+                        Text("次のアラーム")
+                        if let next = nextTime {
+                            HStack{
+                                Text(f2.string(from: nextAlarmDay))
+                                Text(f.string(from: next.time))
+                            }
+                        } else {
+                            Text("起動中のアラームはありません")
+                        }
+                        
+        
+                    }
+                    .onAppear(){
+                        (nextTime, nextDayIndex) = getNextAlarm()
+                        nextAlarmDay = Date()
+                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                    }
                     
                     // 設定済みのアラームがあればListを返し、なければTextを返す
                     if alarts.isEmpty {
                         Spacer()
                         Text("アラームなし")
-                            .foregroundColor(.white)
                         Spacer()
                     } else {
                         List(alarts) { alarm in
@@ -191,6 +216,7 @@ struct TopView: View {
             
             
         }
+        .foregroundColor(.white)
     }
     
     func updateView () {
@@ -245,6 +271,67 @@ struct TopView: View {
             }
         }
         return resArray
+    }
+    
+    // 編集中
+    func getNextAlarm() -> (Alarm?, Int) {
+        
+        //現在の曜日を取得
+        let today = Date()
+        var todayWeekDay = calendar.component(.weekday, from: today) - 1
+        // 比較用の時分を取得
+        let nowHourMinute = Date(year: 1999, month: 1, day: 1)
+        var getNextAlarm = false
+        
+        // 現在の曜日で設置されているアラームがあれば、現在時刻より後の時分か確認し値を返す
+        for alarm in alarts {
+            if alarm.weekDay.contains(todayWeekDay) && alarm.isActive && nowHourMinute < alarm.time || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute < alarm.time {
+                getNextAlarm = true
+                print(f.string(from: nowHourMinute))
+                print(f.string(from: alarm.time))
+                print("return today", alarm)
+                return (alarm, 0)
+            }
+        }
+        
+        // 次の日
+        if todayWeekDay == 6 {
+            todayWeekDay = 0
+        } else {
+            todayWeekDay += 1
+        }
+        
+        for alarm in alarts {
+            if alarm.weekDay.contains(todayWeekDay) && alarm.isActive || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute > alarm.time {
+                getNextAlarm = true
+                print("return tommor", alarm)
+                return (alarm, 1)
+            }
+        }
+        
+        // todayActiveAlarmがfalseなら本日アクティブなアラームは存在しない
+        if !getNextAlarm {
+            var n = 0
+            
+            // 本日のアラームはないため明日一致するか初めに一致したものが次回アラームとなる
+            while n < 7 {
+                print(n)
+                for alarm in alarts {
+                    if alarm.weekDay.contains(todayWeekDay) && alarm.isActive {
+                        print("return", alarm)
+                        return (alarm, n + 1)
+                    }
+                }
+                if todayWeekDay == 6 {
+                    todayWeekDay = 0
+                } else {
+                    todayWeekDay += 1
+                }
+                n += 1
+            }
+        }
+        print("retuen nil")
+        return (nil, 0)
     }
     
     func checkSkip() async throws {
