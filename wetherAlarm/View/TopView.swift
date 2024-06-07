@@ -175,7 +175,9 @@ struct TopView: View {
                                         HStack{
                                             Text("スキップ中")
                                         }
+                                        .frame(width: 330, height: 65)
                                         .background(Color.black)
+                                        .opacity(0.7)
                                     }
                                 }
                             }
@@ -273,7 +275,6 @@ struct TopView: View {
         return resArray
     }
     
-    // 編集中
     func getNextAlarm() -> (Alarm?, Int) {
         
         //現在の曜日を取得
@@ -285,6 +286,9 @@ struct TopView: View {
         
         // 現在の曜日で設置されているアラームがあれば、現在時刻より後の時分か確認し値を返す
         for alarm in alarts {
+            if alarm.skipDate != nil {
+                continue
+            }
             if alarm.weekDay.contains(todayWeekDay) && alarm.isActive && nowHourMinute < alarm.time || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute < alarm.time {
                 getNextAlarm = true
                 print(f.string(from: nowHourMinute))
@@ -302,6 +306,9 @@ struct TopView: View {
         }
         
         for alarm in alarts {
+            if alarm.skipDate != nil {
+                continue
+            }
             if alarm.weekDay.contains(todayWeekDay) && alarm.isActive || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute > alarm.time {
                 getNextAlarm = true
                 print("return tommor", alarm)
@@ -317,6 +324,9 @@ struct TopView: View {
             while n < 7 {
                 print(n)
                 for alarm in alarts {
+                    if alarm.skipDate != nil {
+                        continue
+                    }
                     if alarm.weekDay.contains(todayWeekDay) && alarm.isActive {
                         print("return", alarm)
                         return (alarm, n + 1)
