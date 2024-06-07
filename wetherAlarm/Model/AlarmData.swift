@@ -65,12 +65,31 @@ final class Alarm {
                 }
             }
         } else {
-            print("アラーム削除")
-            if self.weekDay.isEmpty {
-                NotificationManager.instance.removeNotification(id: "\(self.id)")
+            
+            if self.skipDate != nil {
+                
+                if self.weekDay.isEmpty {
+                    NotificationManager.instance.removeNotification(id: "\(self.id)")
+                } else {
+                    for week in self.weekDay {
+                        NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                        for num in [7, 14, 21, 28] {
+                            NotificationManager.instance.removeNotification(id: "\(self.id)-akip\(num)")
+                        }
+                    }
+                    self.skipWeek = nil
+                    self.skipDate = nil
+                    
+                    
+                }
             } else {
-                for week in self.weekDay {
-                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                print("アラーム削除")
+                if self.weekDay.isEmpty {
+                    NotificationManager.instance.removeNotification(id: "\(self.id)")
+                } else {
+                    for week in self.weekDay {
+                        NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
+                    }
                 }
             }
         }
