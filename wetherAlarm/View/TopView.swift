@@ -44,7 +44,9 @@ struct TopView: View {
                     
                     // 開発用ボタン
                     Button("getAlarm"){
-                        updateView()
+                        Task{
+                            await updateView()
+                        }
                     }
                     Button("reset") {
                         Task{
@@ -164,10 +166,13 @@ struct TopView: View {
                                         Toggle(isOn: Bindable(alarm).isActive) {}
                                             .labelsHidden()
                                             .onChange(of: alarm.isActive){
-                                                do{
-                                                    try alarm.toggleAlarm(id: alarm.id)
-                                                } catch{
-                                                    print(error)
+                                                Task{
+                                                    do{
+                                                        try await alarm.toggleAlarm(id: alarm.id)
+                                                        await updateView()
+                                                    } catch{
+                                                        print(error)
+                                                    }
                                                 }
                                             }
                                     }
@@ -212,7 +217,7 @@ struct TopView: View {
             }.onAppear() {
                 Task {
                     try await checkSkip()
-                    updateView()
+                    await updateView()
                 }
             }
             
@@ -221,7 +226,7 @@ struct TopView: View {
         .foregroundColor(.white)
     }
     
-    func updateView () {
+    func updateView () async {
         Task{
             let res = await NotificationManager.instance.getPendingNotifications()
             let alarms:[String] = await getAlarms()
@@ -236,6 +241,7 @@ struct TopView: View {
             print("SwiftData",differenceA)
             print("Notification",differenceB)
             
+            // ActiveなアラームがUserNotificationに登録されていなければisActiveをfalseにする。
             for alarm in alarts {
                 for dif in differenceA {
                     if "\(alarm.id)" == dif {
@@ -243,7 +249,8 @@ struct TopView: View {
                     }
                 }
             }
-            // なぜresをループしているかわからんあとで確認
+            
+            // SwiftData上にないアラームがNotificationに登録されていれば削除
             for r in res {
                 for dif in differenceB {
                     if r == dif {
@@ -256,6 +263,12 @@ struct TopView: View {
                     }
                 }
             }
+            // 次のアラーム時間を更新
+            
+            (nextTime, nextDayIndex) = getNextAlarm()
+            nextAlarmDay = Date()
+            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+            
         }
     }
     

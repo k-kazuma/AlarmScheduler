@@ -51,7 +51,7 @@ final class Alarm {
         self.modelContext?.delete(self)
     }
     
-    func toggleAlarm(id: UUID) throws {
+    func toggleAlarm(id: UUID) async throws {
         guard id == self.id else {
             throw checkNotification.not("アラームが存在しません")
         }
