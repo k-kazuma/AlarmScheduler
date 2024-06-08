@@ -169,7 +169,9 @@ struct TopView: View {
                                                 Task{
                                                     do{
                                                         try await alarm.toggleAlarm(id: alarm.id)
-                                                        await updateView()
+                                                        (nextTime, nextDayIndex) = getNextAlarm()
+                                                        nextAlarmDay = Date()
+                                                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
                                                     } catch{
                                                         print(error)
                                                     }
@@ -245,6 +247,7 @@ struct TopView: View {
             for alarm in alarts {
                 for dif in differenceA {
                     if "\(alarm.id)" == dif {
+                        print("isFalse")
                         alarm.isActive = false
                     }
                 }
