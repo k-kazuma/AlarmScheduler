@@ -95,7 +95,7 @@ final class Alarm {
         }
     }
     
-    func skipAlarm(id: UUID) throws {
+    func skipAlarm(id: UUID) async throws {
         guard  id == self.id else {
             throw checkNotification.not("アラームが存在しません")
         }
@@ -136,7 +136,7 @@ final class Alarm {
                         }
                     }
                     // スキップしている曜日時間をSwiftDataで管理する
-                    self.skipWeek = next
+                    self.skipWeek = weekIndex
                     self.skipDate = nextWeekday
                     break
                 } else{
