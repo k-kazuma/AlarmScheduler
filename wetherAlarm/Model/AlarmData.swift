@@ -40,9 +40,17 @@ final class Alarm {
         }
         // 起動中であれば削除
         if self.isActive == true {
+            // 繰り返しが設定されているか分岐
             if self.weekDay.isEmpty {
                 NotificationManager.instance.removeNotification(id: "\(self.id)")
             } else {
+                // スキップ時に設置したアラームがあれば削除
+                if self.skipWeek != nil {
+                    for num in [7, 14, 21, 28] {
+                        NotificationManager.instance.removeNotification(id: "\(self.id)-skip\(num)")
+                    }
+                }
+                // 繰り返しが設定されているアラームを削除
                 for week in self.weekDay {
                     NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
                 }
@@ -56,13 +64,11 @@ final class Alarm {
             throw checkNotification.not("アラームが存在しません")
         }
         if self.isActive == true {
-            Task{
-                do{
-                    print("アラーム設置")
-                    try await NotificationManager.instance.sendNotification(id: self.id, time: self.time, sound: self.sound, weekDay: self.weekDay)
-                } catch {
-                    throw error
-                }
+            do{
+                print("アラーム設置")
+                try await NotificationManager.instance.sendNotification(id: self.id, time: self.time, sound: self.sound, weekDay: self.weekDay)
+            } catch {
+                throw error
             }
         } else {
             
@@ -74,7 +80,7 @@ final class Alarm {
                     for week in self.weekDay {
                         NotificationManager.instance.removeNotification(id: "\(self.id)-\(week)")
                         for num in [7, 14, 21, 28] {
-                            NotificationManager.instance.removeNotification(id: "\(self.id)-akip\(num)")
+                            NotificationManager.instance.removeNotification(id: "\(self.id)-skip\(num)")
                         }
                     }
                     self.skipWeek = nil
@@ -99,52 +105,50 @@ final class Alarm {
         guard  id == self.id else {
             throw checkNotification.not("アラームが存在しません")
         }
-        Task{
-            let calendar = Calendar.current
-            let today = Date()
-            let todayWeekDay = calendar.component(.weekday, from: today)
-            let (hour, minute) = await dateConversion(time: self.time)
-            
-            
-            // todayWeekDayは１〜７の整数（日〜土）
-            var i = todayWeekDay
-            if todayWeekDay == 7 {
-                i = 0
-            }
-            // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
-            while true {
-                print(i)
-                if let next = self.weekDay.firstIndex(of: i) {
-                    let weekIndex = self.weekDay[next]
-                    // 何日後がスキップされた日なのかを取得
-                    
-                    guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
-                        print("guard")
-                        return
+        let calendar = Calendar.current
+        let today = Date()
+        let todayWeekDay = calendar.component(.weekday, from: today)
+        let (hour, minute) = await dateConversion(time: self.time)
+        
+        
+        // todayWeekDayは１〜７の整数（日〜土）
+        var i = todayWeekDay
+        if todayWeekDay == 7 {
+            i = 0
+        }
+        // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
+        while true {
+            print(i)
+            if let next = self.weekDay.firstIndex(of: i) {
+                let weekIndex = self.weekDay[next]
+                // 何日後がスキップされた日なのかを取得
+                
+                guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
+                    print("guard")
+                    return
+                }
+                
+                // 一致する曜日が見つかれば削除
+                print("削除-\(weekIndex)")
+                NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
+                
+                // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
+                for i in [7, 14, 21, 28] {
+                    do{
+                        try await NotificationManager.instance.sendSkipNotification(id: self.id, time: nextWeekday, day: i, sound: self.sound)
+                    } catch{
+                        print(error)
                     }
-                    
-                    // 一致する曜日が見つかれば削除
-                    print("削除-\(weekIndex)")
-                    NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
-                    
-                    // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
-                    for i in [7, 14, 21, 28] {
-                        do{
-                            try await NotificationManager.instance.sendSkipNotification(id: self.id, time: nextWeekday, day: i, sound: self.sound)
-                        } catch{
-                          print(error)
-                        }
-                    }
-                    // スキップしている曜日時間をSwiftDataで管理する
-                    self.skipWeek = weekIndex
-                    self.skipDate = nextWeekday
-                    break
+                }
+                // スキップしている曜日時間をSwiftDataで管理する
+                self.skipWeek = weekIndex
+                self.skipDate = nextWeekday
+                break
+            } else{
+                if i == 6 {
+                    i = 0
                 } else{
-                    if i == 6 {
-                        i = 0
-                    } else{
-                        i += 1
-                    }
+                    i += 1
                 }
             }
         }

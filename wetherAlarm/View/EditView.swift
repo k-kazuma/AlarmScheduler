@@ -106,7 +106,6 @@ struct EditView: View {
                             Task{
                                 do{
                                     try await alarm.skipAlarm(id: alarm.id)
-                                    try await Task.sleep(nanoseconds: UInt64(2 * 1_000_000_000))
                                     dismiss()
                                 } catch{
                                     print(error)
@@ -144,20 +143,22 @@ struct EditView: View {
                         .buttonStyle(mainButtonStyle())
                     }
                 }
-                Button("保存する"){
-                    print("【EditView:118】アラームを編集する処理")
-                    Task{
-                        do {
-                            // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, weekDay: weekDay)
-                            // 前の画面に戻る
-                            dismiss()
-                        } catch {
-                            print(error)
+                if alarm.skipDate == nil {
+                    Button("保存する"){
+                        print("【EditView:118】アラームを編集する処理")
+                        Task{
+                            do {
+                                // SwiftDataとNotificationを更新
+                                try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, weekDay: weekDay)
+                                // 前の画面に戻る
+                                dismiss()
+                            } catch {
+                                print(error)
+                            }
                         }
                     }
+                    .buttonStyle(mainButtonStyle())
                 }
-                .buttonStyle(mainButtonStyle())
                 Button("キャンセル"){
                     dismiss()
                     print("【EditView:133】前のページに戻る処理")

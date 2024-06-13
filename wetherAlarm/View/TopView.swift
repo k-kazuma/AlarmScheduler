@@ -43,11 +43,11 @@ struct TopView: View {
                     
                     
                     // 開発用ボタン
-                    Button("getAlarm"){
-                        Task{
-                            await updateView()
-                        }
-                    }
+//                    Button("getAlarm"){
+//                        Task{
+//                            await updateView()
+//                        }
+//                    }
                     Button("reset") {
                         Task{
                             let res = await NotificationManager.instance.getPendingNotifications()
@@ -223,7 +223,7 @@ struct TopView: View {
             }.onAppear() {
                 Task {
                     try await checkSkip()
-//                    await updateView()
+                    await updateView()
                 }
             }
             
@@ -233,9 +233,15 @@ struct TopView: View {
     }
     
     func updateView () async {
+        print("update start")
         Task{
+            print("Task started")
             let res = await NotificationManager.instance.getPendingNotifications()
+            print("Fetched res:", res)
+
             let alarms:[String] = await getAlarms()
+            print("Fetched alarms:", alarms)
+            
             
             print(res)
             print(alarms)
@@ -260,6 +266,7 @@ struct TopView: View {
             
             // SwiftData上にないアラームがNotificationに登録されていれば削除
             for r in res {
+                print(r)
                 for dif in differenceB {
                     if r == dif {
                         // スキップ機能で設置したアラームを削除しないようコンティニューする
