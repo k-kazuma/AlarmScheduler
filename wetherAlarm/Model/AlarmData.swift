@@ -131,18 +131,16 @@ final class Alarm {
                 // 一致する曜日が見つかれば削除
                 print("削除-\(weekIndex)")
                 NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
-                
                 // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
                 for i in [7, 14, 21, 28] {
-                    do{
-                        try await NotificationManager.instance.sendSkipNotification(id: self.id, time: nextWeekday, day: i, sound: self.sound)
-                    } catch{
-                        print(error)
-                    }
+                    try await NotificationManager.instance.sendSkipNotification(id: self.id, time: nextWeekday, day: i, sound: self.sound)
                 }
                 // スキップしている曜日時間をSwiftDataで管理する
+                print("AlarmData139: 前回エラー発生地点")
+                print("self before setting skipWeek: \(self)")
                 self.skipWeek = weekIndex
                 self.skipDate = nextWeekday
+                print("AlarmData.swift141")
                 break
             } else{
                 if i == 6 {

@@ -57,32 +57,30 @@ final class NotificationManager {
     
     //スキップした日の翌週以降のアラームを設置　waitEdit
     func sendSkipNotification(id:UUID , time:Date, day:Int, sound: String) async throws {
+        let content = UNMutableNotificationContent()
+        content.title = "Notification Title"
+        content.body = "Local Notification Test"
+        content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
+        let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
         
-        do{
-            let content = UNMutableNotificationContent()
-            content.title = "Notification Title"
-            content.body = "Local Notification Test"
-            content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
-            let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
-            
-            let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: dateComponents), repeats: false)
-            let request = UNNotificationRequest(identifier: "\(id)-skip\(day)", content: content, trigger: trigger)
-            try await UNUserNotificationCenter.current().add(request)
-        }catch {
-        throw error
+        let trigger = UNCalendarNotificationTrigger(dateMatching: calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: dateComponents), repeats: false)
+        let request = UNNotificationRequest(identifier: "\(id)-skip\(day)", content: content, trigger: trigger)
+        print("try add")
+        try await UNUserNotificationCenter.current().add(request)
+        print("end add")
+        
+    }
+    
+    func removeNotification(id:String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
+    func getPendingNotifications() async -> [String] {
+        return await withCheckedContinuation { continuation in
+            UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                let pendingIdentifiers = requests.map { $0.identifier }
+                continuation.resume(returning: pendingIdentifiers)
+            }
         }
     }
-
-func removeNotification(id:String) {
-    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-}
-
-func getPendingNotifications() async -> [String] {
-    return await withCheckedContinuation { continuation in
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
-            let pendingIdentifiers = requests.map { $0.identifier }
-            continuation.resume(returning: pendingIdentifiers)
-        }
-    }
-}
 }

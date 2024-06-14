@@ -93,13 +93,13 @@ struct TopView: View {
                             .foregroundColor(backGroundGlay)
                     }
                     .font(.title)
-                    .onAppear(){
-                        Task{
-                            (nextTime, nextDayIndex) = await getNextAlarm()
-                            nextAlarmDay = Date()
-                            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
-                        }
-                    }
+//                    .onAppear(){
+//                        Task{
+//                            (nextTime, nextDayIndex) = await getNextAlarm()
+//                            nextAlarmDay = Date()
+//                            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+//                        }
+//                    }
                     
                     // 設定済みのアラームがあればListを返し、なければTextを返す
                     if alarts.isEmpty {
@@ -266,7 +266,6 @@ struct TopView: View {
             
             // SwiftData上にないアラームがNotificationに登録されていれば削除
             for r in res {
-                print(r)
                 for dif in differenceB {
                     if r == dif {
                         // スキップ機能で設置したアラームを削除しないようコンティニューする
