@@ -164,6 +164,16 @@ struct EditView: View {
                     print("【EditView:133】前のページに戻る処理")
                 }
                 .buttonStyle(mainButtonStyle())
+                
+                Button("削除") {
+                    do {
+                        try alarm.deleteAlarm(id: alarm.id)
+                        dismiss()
+                    } catch {
+                        print(error)
+                    }
+                }
+                .buttonStyle(delButtonStyle())
                 Spacer()
                     .frame(height: 1)
             }

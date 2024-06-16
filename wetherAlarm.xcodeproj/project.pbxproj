@@ -19,8 +19,8 @@
 		DACD34BA2BC3A1480077F923 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34B92BC3A1480077F923 /* EditView.swift */; };
 		DACD34BE2BC789EF0077F923 /* soundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34BD2BC789EF0077F923 /* soundView.swift */; };
 		DACD34C12BC8901C0077F923 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34C02BC8901C0077F923 /* Sound.swift */; };
-		DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 24ctu.mp3 */; };
-		DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */; };
+		DACD34C62BCA442D0077F923 /* 音声１.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C52BCA442D0077F923 /* 音声１.mp3 */; };
+		DACD34CA2BD216FC0077F923 /* 音声２.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DACD34C92BD216FC0077F923 /* 音声２.mp3 */; };
 		DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34CB2BD76BF60077F923 /* WeekPickView.swift */; };
 		DADD503C2BF71E0F00B270EB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD503B2BF71E0F00B270EB /* UserNotifications.framework */; };
 		DADD503E2BF71E0F00B270EB /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DADD503D2BF71E0F00B270EB /* UserNotificationsUI.framework */; };
@@ -67,8 +67,8 @@
 		DACD34B92BC3A1480077F923 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DACD34BD2BC789EF0077F923 /* soundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundView.swift; sourceTree = "<group>"; };
 		DACD34C02BC8901C0077F923 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sound.swift; path = ../Model/Sound.swift; sourceTree = "<group>"; };
-		DACD34C52BCA442D0077F923 /* 24ctu.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = 24ctu.mp3; path = ../../../../Downloads/24ctu.mp3; sourceTree = "<group>"; };
-		DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "bird-chirping-ringtone.mp3"; path = "../../../../Downloads/bird-chirping-ringtone.mp3"; sourceTree = "<group>"; };
+		DACD34C52BCA442D0077F923 /* 音声１.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "音声１.mp3"; path = "../../../../Downloads/音声１.mp3"; sourceTree = "<group>"; };
+		DACD34C92BD216FC0077F923 /* 音声２.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "音声２.mp3"; path = "../../../../Downloads/音声２.mp3"; sourceTree = "<group>"; };
 		DACD34CB2BD76BF60077F923 /* WeekPickView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPickView.swift; sourceTree = "<group>"; };
 		DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DADD503B2BF71E0F00B270EB /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -173,8 +173,8 @@
 			isa = PBXGroup;
 			children = (
 				DACD34C02BC8901C0077F923 /* Sound.swift */,
-				DACD34C92BD216FC0077F923 /* bird-chirping-ringtone.mp3 */,
-				DACD34C52BCA442D0077F923 /* 24ctu.mp3 */,
+				DACD34C92BD216FC0077F923 /* 音声２.mp3 */,
+				DACD34C52BCA442D0077F923 /* 音声１.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -280,8 +280,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5FDF0E2BB4CEAC00D091B2 /* Preview Assets.xcassets in Resources */,
-				DACD34C62BCA442D0077F923 /* 24ctu.mp3 in Resources */,
-				DACD34CA2BD216FC0077F923 /* bird-chirping-ringtone.mp3 in Resources */,
+				DACD34C62BCA442D0077F923 /* 音声１.mp3 in Resources */,
+				DACD34CA2BD216FC0077F923 /* 音声２.mp3 in Resources */,
 				DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

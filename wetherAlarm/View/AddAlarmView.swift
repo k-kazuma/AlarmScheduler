@@ -14,7 +14,7 @@ struct AddAlarmView: View {
     @Environment(\.modelContext) private var context
     
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
-    @State var sound = "24ctu"
+    @State var sound = "音声１"
     @State var weekDay: [Int] = []
     
     var body: some View {

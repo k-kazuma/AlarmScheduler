@@ -58,7 +58,7 @@ final class NotificationManager {
     //スキップした日の翌週以降のアラームを設置　waitEdit
     func sendSkipNotification(id:UUID , time:Date, day:Int, sound: String) async throws {
         let content = UNMutableNotificationContent()
-        content.title = "Notification Title"
+        content.title = "アラーム"
         content.body = "Local Notification Test"
         content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
         let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
