@@ -100,65 +100,80 @@ struct EditView: View {
                 
                 Spacer()
                 
-                if alarm.skipDate == nil {
-                    Button("スキップ"){
-                        do{
-                            try alarm.skipAlarm(id: alarm.id)
-                            dismiss()
-                        } catch{
-                            print(error)
+                if alarm.isActive && !alarm.weekDay.isEmpty {
+                    if alarm.skipDate == nil {
+                        Button("スキップ"){
+                            Task{
+                                do{
+                                    try await alarm.skipAlarm(id: alarm.id)
+                                    dismiss()
+                                } catch{
+                                    print(error)
+                                }
+                            }
                         }
+                        .buttonStyle(mainButtonStyle())
+                    } else {
+                        Button("スキップ解除"){
+                            Task{
+                                do {
+                                    // 一度全て削除して再設置する
+                                    //削除
+                                    if alarm.weekDay.isEmpty {
+                                        NotificationManager.instance.removeNotification(id: "\(alarm.id)")
+                                    } else {
+                                        for week in alarm.weekDay {
+                                            NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
+                                        }
+                                        for num in [7, 14, 21, 28] {
+                                            NotificationManager.instance.removeNotification(id: "\(alarm.id)-skip\(num)")
+                                        }
+                                    }
+                                    alarm.skipWeek = nil
+                                    alarm.skipDate = nil
+                                    
+                                    //設置
+                                    try await NotificationManager.instance.sendNotification(id: alarm.id, time: alarm.time, sound: alarm.sound, weekDay: alarm.weekDay)
+                                    dismiss()
+                                } catch {
+                                    throw error
+                                }
+                            }
+                        }
+                        .buttonStyle(mainButtonStyle())
                     }
-                    .buttonStyle(mainButtonStyle())
-                } else {
-                    Button("スキップ解除"){
+                }
+                if alarm.skipDate == nil {
+                    Button("保存する"){
+                        print("【EditView:118】アラームを編集する処理")
                         Task{
                             do {
-                                // 一度全て削除して再設置する
-                                //削除
-                                if alarm.weekDay.isEmpty {
-                                    NotificationManager.instance.removeNotification(id: "\(alarm.id)")
-                                } else {
-                                    for week in alarm.weekDay {
-                                        NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
-                                    }
-                                    for num in [7, 14, 21, 28] {
-                                        NotificationManager.instance.removeNotification(id: "\(alarm.id)-skip\(num)")
-                                    }
-                                }
-                                alarm.skipWeek = nil
-                                alarm.skipDate = nil
-                                
-                                //設置
-                                try await NotificationManager.instance.sendNotification(id: alarm.id, time: alarm.time, sound: alarm.sound, weekDay: alarm.weekDay)
+                                // SwiftDataとNotificationを更新
+                                try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, weekDay: weekDay)
+                                // 前の画面に戻る
                                 dismiss()
                             } catch {
-                                throw error
+                                print(error)
                             }
                         }
                     }
                     .buttonStyle(mainButtonStyle())
                 }
-                
-                Button("保存する"){
-                    print("【EditView:118】アラームを編集する処理")
-                    Task{
-                        do {
-                            // SwiftDataとNotificationを更新
-                            try await alarm.editAlarm(id: alarm.id, time: date, sound: sound, weekDay: weekDay)
-                            // 前の画面に戻る
-                            dismiss()
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-                .buttonStyle(mainButtonStyle())
                 Button("キャンセル"){
                     dismiss()
                     print("【EditView:133】前のページに戻る処理")
                 }
                 .buttonStyle(mainButtonStyle())
+                
+                Button("削除") {
+                    do {
+                        try alarm.deleteAlarm(id: alarm.id)
+                        dismiss()
+                    } catch {
+                        print(error)
+                    }
+                }
+                .buttonStyle(delButtonStyle())
                 Spacer()
                     .frame(height: 1)
             }

@@ -29,6 +29,21 @@ struct mainButtonStyle: ButtonStyle {
     }
 }
 
+struct delButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: width * 0.8)
+            .font(.system(size: 24))
+            .fontWeight(.bold)
+            .padding()
+            .background(backGroundGlay)
+            .foregroundColor(.red)
+            .cornerRadius(10)
+            .opacity(0.7)
+    }
+}
+
+
 struct TitleModifier: ViewModifier {
     func body(content: Content) -> some View { // カスタムモディファイアの内容
         content

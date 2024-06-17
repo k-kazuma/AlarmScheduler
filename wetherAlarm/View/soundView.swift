@@ -32,6 +32,7 @@ struct soundView: View {
                             ForEach(musicPlayer.soundList, id: \.self){ sound in
                                 HStack{
                                     Text(sound).tag(sound)
+                                        .foregroundColor(.white)
                                     Spacer()
                                     if musicPlayer.playingSoundName == sound {
                                         Button("▫️"){

@@ -19,10 +19,18 @@ struct TopView: View {
     @State var activeList: [[String : Bool]] = []
     
     let f = DateFormatter()
+    let f2 = DateFormatter()
+    let calendar = Calendar.current
+    
+    @State var nextTime: Alarm?
+    @State var nextDayIndex: Int = 0
+    @State var nextAlarmDay: Date = Date()
     
     init(){
         f.dateStyle = .none
         f.timeStyle = .short
+        
+        f2.dateFormat = "M月d日"
     }
     
     var body: some View {
@@ -35,22 +43,24 @@ struct TopView: View {
                     
                     
                     // 開発用ボタン
-                    Button("getAlarm"){
-                        updateView()
-                    }
-                    Button("reset") {
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            for r in res {
-                                NotificationManager.instance.removeNotification(id: r)
-                            }
-                            let alarmes = alarts.map {$0.id}
-                            for a in alarmes {
-                                print(alarts.first(where: {$0.id == a})!)
-                                context.delete(alarts.first(where: {$0.id == a})!)
-                            }
-                        }
-                    }
+//                    Button("getAlarm"){
+//                        Task{
+//                            await updateView()
+//                        }
+//                    }
+//                    Button("reset") {
+//                        Task{
+//                            let res = await NotificationManager.instance.getPendingNotifications()
+//                            for r in res {
+//                                NotificationManager.instance.removeNotification(id: r)
+//                            }
+//                            let alarmes = alarts.map {$0.id}
+//                            for a in alarmes {
+//                                print(alarts.first(where: {$0.id == a})!)
+//                                context.delete(alarts.first(where: {$0.id == a})!)
+//                            }
+//                        }
+//                    }
                     //                    Button("削除"){
                     //                        NotificationManager.instance.removeNotification(id: "alkfjo")
                     //                    }
@@ -64,16 +74,37 @@ struct TopView: View {
                     // 開発用ボタン
                     
                     HStack{
-                        Text("アラーム")
+                        Text("次のアラーム")
                             .modifier(TitleModifier())
                         Spacer()
                     }
+                    VStack{
+                        if let next = nextTime {
+                            HStack{
+                                Text(f2.string(from: nextAlarmDay))
+                                Text(f.string(from: next.time))
+                            }
+                        } else {
+                            Text("なし")
+                        }
+                        // 下線
+                        Rectangle()
+                            .frame(width: width*0.9, height: 2)
+                            .foregroundColor(backGroundGlay)
+                    }
+                    .font(.title)
+//                    .onAppear(){
+//                        Task{
+//                            (nextTime, nextDayIndex) = await getNextAlarm()
+//                            nextAlarmDay = Date()
+//                            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+//                        }
+//                    }
                     
                     // 設定済みのアラームがあればListを返し、なければTextを返す
                     if alarts.isEmpty {
                         Spacer()
                         Text("アラームなし")
-                            .foregroundColor(.white)
                         Spacer()
                     } else {
                         List(alarts) { alarm in
@@ -139,10 +170,15 @@ struct TopView: View {
                                         Toggle(isOn: Bindable(alarm).isActive) {}
                                             .labelsHidden()
                                             .onChange(of: alarm.isActive){
-                                                do{
-                                                    try alarm.toggleAlarm(id: alarm.id)
-                                                } catch{
-                                                    print(error)
+                                                Task{
+                                                    do{
+                                                        try await alarm.toggleAlarm(id: alarm.id)
+                                                        (nextTime, nextDayIndex) = await getNextAlarm()
+                                                        nextAlarmDay = Date()
+                                                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                                    } catch{
+                                                        print(error)
+                                                    }
                                                 }
                                             }
                                     }
@@ -150,7 +186,9 @@ struct TopView: View {
                                         HStack{
                                             Text("スキップ中")
                                         }
+                                        .frame(width: 330, height: 65)
                                         .background(Color.black)
+                                        .opacity(0.7)
                                     }
                                 }
                             }
@@ -185,18 +223,25 @@ struct TopView: View {
             }.onAppear() {
                 Task {
                     try await checkSkip()
-                    updateView()
+                    await updateView()
                 }
             }
             
             
         }
+        .foregroundColor(.white)
     }
     
-    func updateView () {
+    func updateView () async {
+        print("update start")
         Task{
+            print("Task started")
             let res = await NotificationManager.instance.getPendingNotifications()
+            print("Fetched res:", res)
+
             let alarms:[String] = await getAlarms()
+            print("Fetched alarms:", alarms)
+            
             
             print(res)
             print(alarms)
@@ -208,14 +253,18 @@ struct TopView: View {
             print("SwiftData",differenceA)
             print("Notification",differenceB)
             
+            // ActiveなアラームがUserNotificationに登録されていなければisActiveをfalseにする。
+            //繰り返しなしにのみ対応
             for alarm in alarts {
                 for dif in differenceA {
                     if "\(alarm.id)" == dif {
+                        print("isFalse")
                         alarm.isActive = false
                     }
                 }
             }
-            // なぜresをループしているかわからんあとで確認
+            
+            // SwiftData上にないアラームがNotificationに登録されていれば削除
             for r in res {
                 for dif in differenceB {
                     if r == dif {
@@ -228,6 +277,12 @@ struct TopView: View {
                     }
                 }
             }
+            // 次のアラーム時間を更新
+            
+            (nextTime, nextDayIndex) = await getNextAlarm()
+            nextAlarmDay = Date()
+            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+            
         }
     }
     
@@ -245,6 +300,75 @@ struct TopView: View {
             }
         }
         return resArray
+    }
+    
+    func getNextAlarm() async -> (Alarm?, Int) {
+        
+        //現在の曜日を取得
+        let today = Date()
+        var todayWeekDay = calendar.component(.weekday, from: today) - 1
+        // 比較用の時分を取得
+        let nowHourMinute = Date(year: 1999, month: 1, day: 1)
+        var getNextAlarm = false
+        
+        // 現在の曜日で設置されているアラームがあれば、現在時刻より後の時分か確認し値を返す
+        for alarm in alarts {
+            if alarm.skipWeek == todayWeekDay {
+                continue
+            }
+            if alarm.weekDay.contains(todayWeekDay) && alarm.isActive && nowHourMinute < alarm.time || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute < alarm.time {
+                getNextAlarm = true
+                print(f.string(from: nowHourMinute))
+                print(f.string(from: alarm.time))
+                print("return today", alarm)
+                return (alarm, 0)
+            }
+        }
+        
+        // 次の日
+        if todayWeekDay == 6 {
+            todayWeekDay = 0
+        } else {
+            todayWeekDay += 1
+        }
+        
+        for alarm in alarts {
+            if alarm.skipWeek == todayWeekDay {
+                continue
+            }
+            if alarm.weekDay.contains(todayWeekDay) && alarm.isActive || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute > alarm.time {
+                getNextAlarm = true
+                print("return tommor", alarm)
+                return (alarm, 1)
+            }
+        }
+        
+        // todayActiveAlarmがfalseなら本日アクティブなアラームは存在しない
+        if !getNextAlarm {
+            var n = 0
+            
+            // 本日のアラームはないため明日一致するか初めに一致したものが次回アラームとなる
+            while n < 7 {
+//                print(n)
+                for alarm in alarts {
+                    if alarm.skipWeek == todayWeekDay {
+                        continue
+                    }
+                    if alarm.weekDay.contains(todayWeekDay) && alarm.isActive {
+                        print("return", alarm)
+                        return (alarm, n + 1)
+                    }
+                }
+                if todayWeekDay == 6 {
+                    todayWeekDay = 0
+                } else {
+                    todayWeekDay += 1
+                }
+                n += 1
+            }
+        }
+        print("retuen nil")
+        return (nil, 0)
     }
     
     func checkSkip() async throws {
