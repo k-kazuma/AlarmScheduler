@@ -19,7 +19,7 @@
                BlueprintIdentifier = "DADD50382BF71E0F00B270EB"
                BuildableName = "NotificationContentExtension.appex"
                BlueprintName = "NotificationContentExtension"
-               ReferencedContainer = "container:wetherAlarm.xcodeproj">
+               ReferencedContainer = "container:AlarmScheduler.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,9 +31,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-               BuildableName = "wetherAlarm.app"
-               BlueprintName = "wetherAlarm"
-               ReferencedContainer = "container:wetherAlarm.xcodeproj">
+               BuildableName = "AlarmScheduler.app"
+               BlueprintName = "AlarmScheduler"
+               ReferencedContainer = "container:AlarmScheduler.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-            BuildableName = "wetherAlarm.app"
-            BlueprintName = "wetherAlarm"
-            ReferencedContainer = "container:wetherAlarm.xcodeproj">
+            BuildableName = "AlarmScheduler.app"
+            BlueprintName = "AlarmScheduler"
+            ReferencedContainer = "container:AlarmScheduler.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-            BuildableName = "wetherAlarm.app"
-            BlueprintName = "wetherAlarm"
-            ReferencedContainer = "container:wetherAlarm.xcodeproj">
+            BuildableName = "AlarmScheduler.app"
+            BlueprintName = "AlarmScheduler"
+            ReferencedContainer = "container:AlarmScheduler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
