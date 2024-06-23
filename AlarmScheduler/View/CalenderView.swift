@@ -9,8 +9,10 @@ import SwiftUI
 
 let calendar = Calendar.current
 
+
+
 struct CalendarView: View {
-    @State var pickDates:[Date] = []
+    @State var pickDates:[Int] = []
     @State var days:[calenderDay]
     @State var calenderDate: Date
     @State var year: Int
@@ -54,13 +56,26 @@ struct CalendarView: View {
                     if index >= days[0].weekday {
                         VStack{
                             Text("\(days[index - days[0].weekday].day)")
+                            if pickDates.contains(days[index - days[0].weekday].day) {
+                                Text("🔴")
+                            }
                             Spacer()
+                        }
+                        .onTapGesture {
+                            // pickDatesに値が存在すれば削除、なければ追加
+                            if pickDates.contains(days[index - days[0].weekday].day){
+                                pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                            } else {
+                                pickDates.append(days[index - days[0].weekday].day)
+                            }
+                            pickDates.sort { $0 < $1 }
+                            print(pickDates)
                         }
                     } else {
                         Spacer()
                     }
                 }
-                .frame(height: 60)
+                .frame(height: 70)
             }
         }
         .onChange(of: monthShiftNum){
@@ -69,6 +84,16 @@ struct CalendarView: View {
             month = calendar.component(.month, from: calenderDate)
             days = generateDays(year: year, month: month)
         }
+    }
+}
+
+func sendCalendarAlarm(year: Int, month: Int, day: Int, hour: Int, minutte: Int, sound: String) async {
+    do{
+        let addDate = DateComponents(year: year, month: month, day: day, hour: hour, minute: minutte)
+        let id = UUID()
+        try await NotificationManager.instance.sendCalendarNotification(id: id, date: addDate, sound: sound)
+    }catch {
+        print(error)
     }
 }
 
@@ -100,6 +125,7 @@ func generateDays(year: Int, month: Int) -> [calenderDay] {
 struct calenderDay {
     let day: Int
     let weekday: Int
+    var isActive: Bool = false
 }
 
 #Preview{
