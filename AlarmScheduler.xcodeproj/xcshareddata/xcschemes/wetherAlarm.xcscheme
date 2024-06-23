@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-               BuildableName = "wetherAlarm.app"
-               BlueprintName = "wetherAlarm"
-               ReferencedContainer = "container:wetherAlarm.xcodeproj">
+               BuildableName = "AlarmScheduler.app"
+               BlueprintName = "AlarmScheduler"
+               ReferencedContainer = "container:AlarmScheduler.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-            BuildableName = "wetherAlarm.app"
-            BlueprintName = "wetherAlarm"
-            ReferencedContainer = "container:wetherAlarm.xcodeproj">
+            BuildableName = "AlarmScheduler.app"
+            BlueprintName = "AlarmScheduler"
+            ReferencedContainer = "container:AlarmScheduler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DA5FDF022BB4CEAA00D091B2"
-            BuildableName = "wetherAlarm.app"
-            BlueprintName = "wetherAlarm"
-            ReferencedContainer = "container:wetherAlarm.xcodeproj">
+            BuildableName = "AlarmScheduler.app"
+            BlueprintName = "AlarmScheduler"
+            ReferencedContainer = "container:AlarmScheduler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

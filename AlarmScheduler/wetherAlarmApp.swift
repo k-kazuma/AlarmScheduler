@@ -10,7 +10,7 @@ import SwiftData
 import NotificationCenter
 
 @main
-struct wetherAlarmApp: App {
+struct AlarmSchedulerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
