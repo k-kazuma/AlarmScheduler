@@ -32,7 +32,6 @@ struct CalendarView: View {
             ZStack{
                 backGroundBlack
                     .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     HStack{
                         if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {

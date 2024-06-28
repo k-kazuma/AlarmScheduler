@@ -61,7 +61,7 @@ struct TitleModifier: ViewModifier {
     func body(content: Content) -> some View { // カスタムモディファイアの内容
         content
             .foregroundColor(.white)
-            .font(.system(size: 40))
+            .font(.system(size: 35))
             .padding(.leading, 20)
             .padding(.top, 50)
     }

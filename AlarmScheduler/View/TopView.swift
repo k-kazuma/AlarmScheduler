@@ -210,7 +210,7 @@ struct TopView: View {
                             }
                         }
                         .bold()
-                        .frame(width: 82, height: 82)
+                        .frame(width: 75, height: 75)
                         .font(.system(size: 55))
                         .foregroundColor(fontOrenge)
                         .background(backGroundGlay)
@@ -219,6 +219,8 @@ struct TopView: View {
                         Spacer()
                             .frame(width: 25)
                     }
+                    Spacer()
+                        .frame(height: 30)
                 }
             }.onAppear() {
                 Task {
