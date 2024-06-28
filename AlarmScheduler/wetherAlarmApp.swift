@@ -15,7 +15,7 @@ struct AlarmSchedulerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TopView()
+            ContentView()
                 .modelContainer(for: Alarm.self)
         }
     }

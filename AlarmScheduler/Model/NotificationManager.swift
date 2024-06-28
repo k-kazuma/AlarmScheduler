@@ -84,13 +84,13 @@ final class NotificationManager {
         }
     }
     
-    func sendCalendarNotification(id: UUID, date: DateComponents, sound: String) async throws {
+    func sendCalendarNotification(date: DateComponents, sound: String) async throws {
         let content = UNMutableNotificationContent()
         content.title = "アラーム"
         content.body = "Local Notification Test"
         content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
-        let request = UNNotificationRequest(identifier: "\(id)-calendar-\(date)", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "calendar-\(date)", content: content, trigger: trigger)
         print("try add")
         try await UNUserNotificationCenter.current().add(request)
         print("end add")

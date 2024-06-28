@@ -28,61 +28,77 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack{
-                if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
-                    Button("<<") {
-                        monthShiftNum -= 1
-                    }
-                }
-                Text("\(String(year))年\(month)月")
-                    .font(.largeTitle)
-                    .padding()
-                Button(">>"){
-                    monthShiftNum += 1
-                }
-            }
-                
-            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7)) {
-                Text("日")
-                Text("月")
-                Text("火")
-                Text("水")
-                Text("木")
-                Text("金")
-                Text("土")
-                ForEach(1..<days.count + days[0].weekday, id: \.self) { index in
-            
-                    if index >= days[0].weekday {
-                        VStack{
-                            Text("\(days[index - days[0].weekday].day)")
-                            if pickDates.contains(days[index - days[0].weekday].day) {
-                                Text("🔴")
+        NavigationView{
+            ZStack{
+                backGroundBlack
+                    .edgesIgnoringSafeArea(.all)
+                VStack {
+                    HStack{
+                        if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
+                            Button("<<") {
+                                monthShiftNum -= 1
                             }
-                            Spacer()
                         }
-                        .onTapGesture {
-                            // pickDatesに値が存在すれば削除、なければ追加
-                            if pickDates.contains(days[index - days[0].weekday].day){
-                                pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                        Text("\(String(year))年\(month)月")
+                            .font(.largeTitle)
+                            .padding()
+                        Button(">>"){
+                            monthShiftNum += 1
+                        }
+                    }
+                    
+                    LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7)) {
+                        Text("日")
+                        Text("月")
+                        Text("火")
+                        Text("水")
+                        Text("木")
+                        Text("金")
+                        Text("土")
+                        ForEach(1..<days.count + days[0].weekday, id: \.self) { index in
+                            
+                            if index >= days[0].weekday {
+                                VStack{
+                                    Text("\(days[index - days[0].weekday].day)")
+                                    if pickDates.contains(days[index - days[0].weekday].day) {
+                                        Text("🔴")
+                                    }
+                                    Spacer()
+                                }
+                                .onTapGesture {
+                                    // pickDatesに値が存在すれば削除、なければ追加
+                                    if pickDates.contains(days[index - days[0].weekday].day){
+                                        pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                                    } else {
+                                        pickDates.append(days[index - days[0].weekday].day)
+                                    }
+                                    pickDates.sort { $0 < $1 }
+                                    print(pickDates)
+                                }
                             } else {
-                                pickDates.append(days[index - days[0].weekday].day)
+                                Spacer()
                             }
-                            pickDates.sort { $0 < $1 }
-                            print(pickDates)
                         }
-                    } else {
-                        Spacer()
+                        .frame(height: 60)
+                    }
+                    ZStack{
+                        Button(action: {}){
+                            NavigationLink(destination: CalendarAddView()){
+                                Text(pickDates.isEmpty ? "未選択" : "追加する")
+                            }
+                        }
+                        .buttonStyle(mainButtonStyle())
+                        .disabled(pickDates.isEmpty)
                     }
                 }
-                .frame(height: 70)
+                .onChange(of: monthShiftNum){
+                    calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!
+                    year = calendar.component(.year, from: calenderDate)
+                    month = calendar.component(.month, from: calenderDate)
+                    days = generateDays(year: year, month: month)
+                }
             }
-        }
-        .onChange(of: monthShiftNum){
-            calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!
-            year = calendar.component(.year, from: calenderDate)
-            month = calendar.component(.month, from: calenderDate)
-            days = generateDays(year: year, month: month)
+            .foregroundColor(.white)
         }
     }
 }
@@ -90,8 +106,7 @@ struct CalendarView: View {
 func sendCalendarAlarm(year: Int, month: Int, day: Int, hour: Int, minutte: Int, sound: String) async {
     do{
         let addDate = DateComponents(year: year, month: month, day: day, hour: hour, minute: minutte)
-        let id = UUID()
-        try await NotificationManager.instance.sendCalendarNotification(id: id, date: addDate, sound: sound)
+        try await NotificationManager.instance.sendCalendarNotification(date: addDate, sound: sound)
     }catch {
         print(error)
     }
