@@ -55,9 +55,9 @@ struct CalendarView: View {
                         Text("木")
                         Text("金")
                         Text("土")
-                        ForEach(1..<days.count + days[0].weekday, id: \.self) { index in
+                        ForEach(1..<42, id: \.self) { index in
                             
-                            if index >= days[0].weekday {
+                            if index >= days[0].weekday && index - days[0].weekday < days.count {
                                 VStack{
                                     Text("\(days[index - days[0].weekday].day)")
                                     if pickDates.contains(days[index - days[0].weekday].day) {
@@ -77,6 +77,7 @@ struct CalendarView: View {
                                 }
                             } else {
                                 Spacer()
+                                    .frame(height: 60)
                             }
                         }
                         .frame(height: 60)
