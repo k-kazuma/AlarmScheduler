@@ -58,22 +58,34 @@ struct CalendarView: View {
                         ForEach(1..<42, id: \.self) { index in
                             
                             if index >= days[0].weekday && index - days[0].weekday < days.count {
-                                VStack{
-                                    Text("\(days[index - days[0].weekday].day)")
-                                    if pickDates.contains(days[index - days[0].weekday].day) {
-                                        Text("🔴")
+                                // UIに表示されている情報
+                                let nowDate = calendar.dateComponents([.year, .month, .day], from: Date())
+                                let calendarDate = DateComponents(year: year, month: month, day: index + 1 - days[0].weekday )
+                                if nowDate.year! >= calendarDate.year! && nowDate.month! >= calendarDate.month! && nowDate.day! > calendarDate.day! {
+                                    VStack{
+                                        Text("\(days[index - days[0].weekday].day)")
+                                            .foregroundColor(backGroundGlay)
+                                        Spacer()
                                     }
-                                    Spacer()
-                                }
-                                .onTapGesture {
-                                    // pickDatesに値が存在すれば削除、なければ追加
-                                    if pickDates.contains(days[index - days[0].weekday].day){
-                                        pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
-                                    } else {
-                                        pickDates.append(days[index - days[0].weekday].day)
+                                } else {
+                                    VStack{
+                                        
+                                        Text("\(days[index - days[0].weekday].day)")
+                                        if pickDates.contains(days[index - days[0].weekday].day) {
+                                            Text("🔴")
+                                        }
+                                        Spacer()
                                     }
-                                    pickDates.sort { $0 < $1 }
-                                    print(pickDates)
+                                    .onTapGesture {
+                                        // pickDatesに値が存在すれば削除、なければ追加
+                                        if pickDates.contains(days[index - days[0].weekday].day){
+                                            pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                                        } else {
+                                            pickDates.append(days[index - days[0].weekday].day)
+                                        }
+                                        pickDates.sort { $0 < $1 }
+                                        print(pickDates)
+                                    }
                                 }
                             } else {
                                 Spacer()
@@ -141,7 +153,6 @@ func generateDays(year: Int, month: Int) -> [calenderDay] {
 struct calenderDay {
     let day: Int
     let weekday: Int
-    var isActive: Bool = false
 }
 
 #Preview{
