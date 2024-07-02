@@ -271,7 +271,7 @@ struct TopView: View {
                 for dif in differenceB {
                     if r == dif {
                         // スキップ機能で設置したアラームを削除しないようコンティニューする
-                        if dif.contains("skip") {
+                        if dif.contains("skip") || dif.contains("calendar") {
                             continue
                         }
                         print("削除", dif)

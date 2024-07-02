@@ -39,4 +39,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: Alarm.self)
 }

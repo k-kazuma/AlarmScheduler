@@ -7,17 +7,15 @@
 
 import SwiftUI
 
-let calendar = Calendar.current
-
-
-
 struct CalendarView: View {
-    @State var pickDates:[Int] = []
+
     @State var days:[calenderDay]
     @State var calenderDate: Date
     @State var year: Int
     @State var month: Int
     @State var monthShiftNum: Int = 0
+    
+    @State var alarms: [String] = []
     
     init(){
         //今月のカレンダー取得
@@ -68,23 +66,12 @@ struct CalendarView: View {
                                         Spacer()
                                     }
                                 } else {
-                                    VStack{
-                                        
-                                        Text("\(days[index - days[0].weekday].day)")
-                                        if pickDates.contains(days[index - days[0].weekday].day) {
-                                            Text("🔴")
+                                    ZStack{
+                                        VStack{
+                                            Text("\(days[index - days[0].weekday].day)")
+                                            
+                                            Spacer()
                                         }
-                                        Spacer()
-                                    }
-                                    .onTapGesture {
-                                        // pickDatesに値が存在すれば削除、なければ追加
-                                        if pickDates.contains(days[index - days[0].weekday].day){
-                                            pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
-                                        } else {
-                                            pickDates.append(days[index - days[0].weekday].day)
-                                        }
-                                        pickDates.sort { $0 < $1 }
-                                        print(pickDates)
                                     }
                                 }
                             } else {
@@ -95,13 +82,13 @@ struct CalendarView: View {
                         .frame(height: 60)
                     }
                     ZStack{
+                        
                         Button(action: {}){
                             NavigationLink(destination: CalendarAddView()){
-                                Text(pickDates.isEmpty ? "未選択" : "追加する")
+                                Text("追加")
                             }
                         }
                         .buttonStyle(mainButtonStyle())
-                        .disabled(pickDates.isEmpty)
                     }
                 }
                 .onChange(of: monthShiftNum){
@@ -112,47 +99,20 @@ struct CalendarView: View {
                 }
             }
             .foregroundColor(.white)
+            .onAppear(){
+                Task{
+                    alarms = await seachAlarm()
+                }
+            }
         }
     }
-}
-
-func sendCalendarAlarm(year: Int, month: Int, day: Int, hour: Int, minutte: Int, sound: String) async {
-    do{
-        let addDate = DateComponents(year: year, month: month, day: day, hour: hour, minute: minutte)
-        try await NotificationManager.instance.sendCalendarNotification(date: addDate, sound: sound)
-    }catch {
-        print(error)
+    
+    func seachAlarm() async -> [String] {
+        let res = await NotificationManager.instance.getPendingNotifications()
+        let newArray = res.filter{$0.contains("calendar")}
+        print("設定済みアラーム", newArray)
+        return newArray
     }
-}
-
-func generateDays(year: Int, month: Int) -> [calenderDay] {
-    var days = [calenderDay]()
-    
-    // カレンダーと日付コンポーネントを設定
-    let calendar = Calendar.current
-    let dateComponents = DateComponents(year: year, month: month)
-    
-    // 指定された年月の最初の日付を取得
-    guard let startDate = calendar.date(from: dateComponents) else {
-        fatalError("Invalid date components")
-    }
-    
-    // 指定された年月の全ての日にちを取得
-    let range = calendar.range(of: .day, in: .month, for: startDate)!
-    
-    for day in range {
-        let date = calendar.date(byAdding: .day, value: day - 1, to: startDate)!
-        let weekday = calendar.component(.weekday, from: date)
-        days.append(calenderDay(day: day, weekday: weekday))
-    }
-    
-    return days
-}
-
-
-struct calenderDay {
-    let day: Int
-    let weekday: Int
 }
 
 #Preview{

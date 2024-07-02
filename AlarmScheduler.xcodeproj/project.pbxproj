@@ -10,6 +10,7 @@
 		DA1FF6572C23EE68000C9768 /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF6562C23EE68000C9768 /* CalenderView.swift */; };
 		DA1FF6592C2D2AA9000C9768 /* CalendarAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF6582C2D2AA9000C9768 /* CalendarAddView.swift */; };
 		DA1FF65B2C2D2D2E000C9768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF65A2C2D2D2E000C9768 /* ContentView.swift */; };
+		DA1FF65F2C33A2BD000C9768 /* CalendarAddTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF65E2C33A2BD000C9768 /* CalendarAddTimeView.swift */; };
 		DA5FDF072BB4CEAA00D091B2 /* wetherAlarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF062BB4CEAA00D091B2 /* wetherAlarmApp.swift */; };
 		DA5FDF092BB4CEAA00D091B2 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF082BB4CEAA00D091B2 /* TopView.swift */; };
 		DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5FDF0A2BB4CEAC00D091B2 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		DA1FF6562C23EE68000C9768 /* CalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderView.swift; sourceTree = "<group>"; };
 		DA1FF6582C2D2AA9000C9768 /* CalendarAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAddView.swift; sourceTree = "<group>"; };
 		DA1FF65A2C2D2D2E000C9768 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DA1FF65E2C33A2BD000C9768 /* CalendarAddTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAddTimeView.swift; sourceTree = "<group>"; };
 		DA5FDF032BB4CEAA00D091B2 /* AlarmScheduler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmScheduler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5FDF062BB4CEAA00D091B2 /* wetherAlarmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wetherAlarmApp.swift; sourceTree = "<group>"; };
 		DA5FDF082BB4CEAA00D091B2 /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				DACD34B92BC3A1480077F923 /* EditView.swift */,
 				DACD34BD2BC789EF0077F923 /* soundView.swift */,
 				DA1FF6582C2D2AA9000C9768 /* CalendarAddView.swift */,
+				DA1FF65E2C33A2BD000C9768 /* CalendarAddTimeView.swift */,
 				DA1FF6562C23EE68000C9768 /* CalenderView.swift */,
 			);
 			path = View;
@@ -312,6 +315,7 @@
 			files = (
 				DACD34CC2BD76BF60077F923 /* WeekPickView.swift in Sources */,
 				DA5FDF1D2BB677C500D091B2 /* AddAlarmView.swift in Sources */,
+				DA1FF65F2C33A2BD000C9768 /* CalendarAddTimeView.swift in Sources */,
 				DA1FF65B2C2D2D2E000C9768 /* ContentView.swift in Sources */,
 				DA1FF6572C23EE68000C9768 /* CalenderView.swift in Sources */,
 				DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */,
