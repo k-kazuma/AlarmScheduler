@@ -153,6 +153,26 @@ final class Alarm {
     }
 }
 
+@Model
+final class calendarAlarm{
+    var id: UUID
+    var year: Int
+    var month: Int
+    var day: Int
+    var time: Date
+    var sound: String
+    
+    init(year: Int, month: Int, day: Int, time:Date, sound:String ) {
+        self.id = UUID()
+        self.year = year
+        self.month = month
+        self.day = day
+        self.time = time
+        self.sound = sound
+    }
+    
+}
+
 enum checkNotification: Error {
     case not(String)
 }
