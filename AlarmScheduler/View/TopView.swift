@@ -48,19 +48,19 @@ struct TopView: View {
 //                            await updateView()
 //                        }
 //                    }
-//                    Button("reset") {
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            for r in res {
-//                                NotificationManager.instance.removeNotification(id: r)
-//                            }
-//                            let alarmes = alarts.map {$0.id}
-//                            for a in alarmes {
-//                                print(alarts.first(where: {$0.id == a})!)
-//                                context.delete(alarts.first(where: {$0.id == a})!)
-//                            }
-//                        }
-//                    }
+                    Button("reset") {
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            for r in res {
+                                NotificationManager.instance.removeNotification(id: r)
+                            }
+                            let alarmes = alarts.map {$0.id}
+                            for a in alarmes {
+                                print(alarts.first(where: {$0.id == a})!)
+                                context.delete(alarts.first(where: {$0.id == a})!)
+                            }
+                        }
+                    }
                     //                    Button("削除"){
                     //                        NotificationManager.instance.removeNotification(id: "alkfjo")
                     //                    }
@@ -412,8 +412,8 @@ struct TopView: View {
     
 }
 
-#Preview {
-    TopView()
-        .modelContainer(for: Alarm.self)
-}
+//#Preview {
+//    TopView()
+//        .modelContainer(for: Alarm.self)
+//}
 

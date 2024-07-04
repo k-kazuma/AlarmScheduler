@@ -10,6 +10,7 @@ import SwiftUI
 struct CalendarAddTimeView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var context
     var year: Int
     var month: Int
     var days: [Int]
@@ -57,7 +58,10 @@ struct CalendarAddTimeView: View {
                 Button("追加する") {
                     Task{
                         do {
-                            try await NotificationManager.instance.sendCalendarNotification(year: year, month: month, days: days, time: date, sound: sound)
+                            for day in days {
+                                let alarm = try await CalendarAlarm(id: UUID(), year: year, month: month, day: day, time: date, sound: sound)
+                                context.insert(alarm)
+                            }
                         } catch{
                             print(error)
                         }
@@ -76,6 +80,6 @@ struct CalendarAddTimeView: View {
     }
 }
 
-#Preview {
-    CalendarAddTimeView(year: 1, month: 1, days: [1])
-}
+//#Preview {
+//    CalendarAddTimeView(year: 1, month: 1, days: [1])
+//}

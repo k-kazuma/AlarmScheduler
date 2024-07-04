@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalendarView: View {
+    
+    @Environment(\.modelContext) private var context
+    @Query() private var calendarAlarts: [CalendarAlarm]
 
     @State var days:[calenderDay]
     @State var calenderDate: Date
@@ -69,7 +73,10 @@ struct CalendarView: View {
                                     ZStack{
                                         VStack{
                                             Text("\(days[index - days[0].weekday].day)")
-                                            
+                                            let newArray = calendarAlarts.filter { $0.year == year && $0.month == month && $0.day == days[index - days[0].weekday].day}
+                                            if !newArray.isEmpty{
+                                                Text("\(newArray[0].time)")
+                                            }
                                             Spacer()
                                         }
                                     }
@@ -115,6 +122,6 @@ struct CalendarView: View {
     }
 }
 
-#Preview{
-    CalendarView()
-}
+//#Preview{
+//    CalendarView()
+//}
