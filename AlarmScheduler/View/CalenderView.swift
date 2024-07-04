@@ -20,8 +20,11 @@ struct CalendarView: View {
     @State var monthShiftNum: Int = 0
     
     @State var alarms: [String] = []
+    let f = DateFormatter()
     
     init(){
+        f.dateStyle = .none
+        f.timeStyle = .short
         //今月のカレンダー取得
         calenderDate = calendar.date(byAdding: .month, value: 0, to: Date())!
         year = calendar.component(.year, from: Date())
@@ -75,7 +78,9 @@ struct CalendarView: View {
                                             Text("\(days[index - days[0].weekday].day)")
                                             let newArray = calendarAlarts.filter { $0.year == year && $0.month == month && $0.day == days[index - days[0].weekday].day}
                                             if !newArray.isEmpty{
-                                                Text("\(newArray[0].time)")
+                                                Text(f.string(from: newArray[0].time ))
+                                            } else {
+                                                Text("--")
                                             }
                                             Spacer()
                                         }
