@@ -7,23 +7,58 @@
 
 import SwiftUI
 import SwiftData
-import NotificationCenter
+import UserNotifications
 
 @main
 struct AlarmSchedulerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Alarm.self,
+            CalendarAlarm.self
+        ])
+        
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
+    
+    init(){
+        AppEnvironment.sharedModelContainer = initializeModelContainer()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: Alarm.self)
+                .modelContainer(sharedModelContainer)
         }
     }
     
+    private func initializeModelContainer() -> ModelContainer {
+        let schema = Schema([
+            Alarm.self,
+            CalendarAlarm.self
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+        
+    }
+}
+class AppEnvironment {
+    static var sharedModelContainer: ModelContainer!
 }
 
-
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, _) in
             if granted {
@@ -32,15 +67,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return true
     }
-}
-extension AppDelegate: UNUserNotificationCenterDelegate {
+    
     func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            _ center: UNUserNotificationCenter,
+            willPresent notification: UNNotification,
+            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             completionHandler([[.banner, .list, .sound]])
         }
 }
+    
 
 extension Date {
     init(hour: Int, minute: Int) {
