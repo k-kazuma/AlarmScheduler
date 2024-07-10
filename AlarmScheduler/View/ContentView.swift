@@ -25,14 +25,12 @@ struct ContentView: View {
                             .foregroundColor(.white)
                     }
                     .tag(1)
-                    .modelContainer(for: Alarm.self)
                 
                 CalendarView()   // Viewファイル②
                     .tabItem {
                         Image(systemName: "calendar.badge.plus")
                     }
                     .tag(2)
-                    .modelContainer(for: CalendarAlarm.self)
             }
             .accentColor(fontOrenge)
         }
