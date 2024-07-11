@@ -19,6 +19,9 @@ struct CalendarAddView: View {
     @State var month: Int
     @State var monthShiftNum: Int = 0
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State var isNext: Bool = false
+    
     init(){
         //今月のカレンダー取得
         calenderDate = calendar.date(byAdding: .month, value: 0, to: Date())!
@@ -102,7 +105,7 @@ struct CalendarAddView: View {
                     ZStack{
                         
                         Button(action: {}){
-                            NavigationLink(destination: CalendarAddTimeView(year: year, month: month, days: pickDates)){
+                            NavigationLink(destination: CalendarAddTimeView(year: year, month: month, days: pickDates, comp: $isNext)){
                                 Text(pickDates.isEmpty ? "未選択" : "追加する")
                             }
                         }
@@ -118,6 +121,9 @@ struct CalendarAddView: View {
                 }
             }
             .foregroundColor(.white)
+        }
+        .onChange(of: isNext) {
+            presentationMode.wrappedValue.dismiss()
         }
     }
 }
@@ -152,6 +158,6 @@ struct calenderDay {
     let weekday: Int
 }
 
-#Preview{
-    CalendarAddView()
-}
+//#Preview{
+//    CalendarAddView()
+//}

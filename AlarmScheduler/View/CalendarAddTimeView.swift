@@ -18,10 +18,13 @@ struct CalendarAddTimeView: View {
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = MusicPlayer().soundList[0]
     
-    init(year: Int, month: Int, days: [Int]){
+    @Binding var comp: Bool
+    
+    init(year: Int, month: Int, days: [Int], comp: Binding<Bool>){
         self.year = year
         self.month = month
         self.days = days
+        self._comp = comp
     }
     
     var body: some View {
@@ -66,6 +69,7 @@ struct CalendarAddTimeView: View {
                             print(error)
                         }
                         dismiss()
+                        comp = true
                     }
                 }
                 .buttonStyle(mainButtonStyle())
