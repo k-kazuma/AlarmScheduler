@@ -12,7 +12,7 @@ struct CalendarView: View {
     
     @Environment(\.modelContext) private var context
     @Query() private var calendarAlarts: [CalendarAlarm]
-
+    
     @State var days:[calenderDay]
     @State var calenderDate: Date
     @State var year: Int
@@ -33,11 +33,29 @@ struct CalendarView: View {
     }
     
     var body: some View {
+        
         NavigationView{
             ZStack{
                 backGroundBlack
                     .edgesIgnoringSafeArea(.all)
                 VStack {
+                    
+                    // 開発用ボタン
+                    Button("reset") {
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            for r in res {
+                                NotificationManager.instance.removeNotification(id: r)
+                            }
+                            let alarmes = calendarAlarts.map {$0.id}
+                            for a in alarmes {
+                                print(calendarAlarts.first(where: {$0.id == a})!)
+                                context.delete(calendarAlarts.first(where: {$0.id == a})!)
+                            }
+                        }
+                    }
+                    
+                    
                     HStack{
                         if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
                             Button("<<") {
@@ -51,7 +69,7 @@ struct CalendarView: View {
                             monthShiftNum += 1
                         }
                     }
-                    
+                    Spacer()
                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7)) {
                         Text("日")
                         Text("月")
@@ -93,15 +111,29 @@ struct CalendarView: View {
                         }
                         .frame(height: 60)
                     }
-                    ZStack{
-                        
-                        Button(action: {}){
+                    
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            print("Button")
+                            
+                        }) {
                             NavigationLink(destination: CalendarAddView()){
-                                Text("追加")
+                                Text("+")
                             }
                         }
-                        .buttonStyle(mainButtonStyle())
+                        .bold()
+                        .frame(width: 75, height: 75)
+                        .font(.system(size: 55))
+                        .foregroundColor(fontOrenge)
+                        .background(backGroundGlay)
+                        .clipShape(Circle())
+                        .buttonStyle(.plain)
+                        Spacer()
+                            .frame(width: 25)
                     }
+                    Spacer()
+                        .frame(height: 30)
                 }
                 .onChange(of: monthShiftNum){
                     calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!
