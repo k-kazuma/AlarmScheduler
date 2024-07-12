@@ -46,6 +46,7 @@ struct CalendarAddView: View {
                             .font(.largeTitle)
                             .padding()
                         Button(">>"){
+                            pickDates = []
                             monthShiftNum += 1
                         }
                     }
@@ -75,13 +76,16 @@ struct CalendarAddView: View {
                                         VStack{
                                             Text("\(days[index - days[0].weekday].day)")
                                             Spacer()
-                                        }
-                                        if pickDates.contains(days[index - days[0].weekday].day) {
-                                            VStack{
-                                                Image(systemName: "checkmark")
-                                                    .foregroundColor(fontOrenge)
-                                                Spacer()
+                                            ZStack{
+                                                Text("⬜︎")
+                                                if pickDates.contains(days[index - days[0].weekday].day) {
+                                                    VStack{
+                                                        Image(systemName: "checkmark")
+                                                            .foregroundColor(fontOrenge)
+                                                    }
+                                                }
                                             }
+                                            Spacer()
                                         }
                                     }
                                     .onTapGesture {
@@ -158,6 +162,6 @@ struct calenderDay {
     let weekday: Int
 }
 
-//#Preview{
-//    CalendarAddView()
-//}
+#Preview{
+    CalendarAddView()
+}

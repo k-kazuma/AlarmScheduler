@@ -78,12 +78,14 @@ struct CalendarView: View {
                         Text("木")
                         Text("金")
                         Text("土")
+                        // 月によってレイアウトが崩れないよう　７x６　で作成
                         ForEach(1..<42, id: \.self) { index in
-                            
+                            // １日の開始位置を調整するために曜日のインデックス分空欄を作る。
                             if index >= days[0].weekday && index - days[0].weekday < days.count {
                                 // UIに表示されている情報
                                 let nowDate = calendar.dateComponents([.year, .month, .day], from: Date())
                                 let calendarDate = DateComponents(year: year, month: month, day: index + 1 - days[0].weekday )
+                                // 過去日がどうかで条件分岐
                                 if nowDate.year! >= calendarDate.year! && nowDate.month! >= calendarDate.month! && nowDate.day! > calendarDate.day! {
                                     VStack{
                                         Text("\(days[index - days[0].weekday].day)")
@@ -96,7 +98,7 @@ struct CalendarView: View {
                                             Text("\(days[index - days[0].weekday].day)")
                                             let newArray = calendarAlarts.filter { $0.year == year && $0.month == month && $0.day == days[index - days[0].weekday].day}
                                             if !newArray.isEmpty{
-                                                Text(f.string(from: newArray[0].time ))
+                                                    Text(f.string(from: newArray[0].time ))
                                             } else {
                                                 Text("--")
                                             }
@@ -109,7 +111,7 @@ struct CalendarView: View {
                                     .frame(height: 60)
                             }
                         }
-                        .frame(height: 60)
+                        .frame(height: 70)
                     }
                     
                     HStack{
@@ -133,7 +135,7 @@ struct CalendarView: View {
                             .frame(width: 25)
                     }
                     Spacer()
-                        .frame(height: 30)
+                        .frame(height: 35)
                 }
                 .onChange(of: monthShiftNum){
                     calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!
@@ -159,6 +161,6 @@ struct CalendarView: View {
     }
 }
 
-//#Preview{
-//    CalendarView()
-//}
+#Preview{
+    CalendarView()
+}
