@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 let calendar = Calendar.current
 
 
 
 struct CalendarAddView: View {
+    @Query() private var calendarAlarts: [CalendarAlarm]
     @State var pickDates:[Int] = []
     @State var days:[calenderDay]
     @State var calenderDate: Date
@@ -72,7 +74,10 @@ struct CalendarAddView: View {
                                         Spacer()
                                     }
                                 } else {
-                                    ZStack{
+                                    let newArray = calendarAlarts.filter { $0.year == year && $0.month == month && $0.day == days[index - days[0].weekday].day}
+                                    if !newArray.isEmpty{
+                                        Text("設定済み")
+                                    } else {
                                         VStack{
                                             Text("\(days[index - days[0].weekday].day)")
                                             Spacer()
@@ -87,16 +92,16 @@ struct CalendarAddView: View {
                                             }
                                             Spacer()
                                         }
-                                    }
-                                    .onTapGesture {
-                                        // pickDatesに値が存在すれば削除、なければ追加
-                                        if pickDates.contains(days[index - days[0].weekday].day){
-                                            pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
-                                        } else {
-                                            pickDates.append(days[index - days[0].weekday].day)
+                                        .onTapGesture {
+                                            // pickDatesに値が存在すれば削除、なければ追加
+                                            if pickDates.contains(days[index - days[0].weekday].day){
+                                                pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                                            } else {
+                                                pickDates.append(days[index - days[0].weekday].day)
+                                            }
+                                            pickDates.sort { $0 < $1 }
+                                            print(pickDates)
                                         }
-                                        pickDates.sort { $0 < $1 }
-                                        print(pickDates)
                                     }
                                 }
                             } else {
