@@ -20,11 +20,8 @@ struct CalendarView: View {
     @State var monthShiftNum: Int = 0
     
     @State var alarms: [String] = []
-    let f = DateFormatter()
     
     init(){
-        f.dateStyle = .none
-        f.timeStyle = .short
         //今月のカレンダー取得
         calenderDate = calendar.date(byAdding: .month, value: 0, to: Date())!
         year = calendar.component(.year, from: Date())

@@ -21,6 +21,7 @@ struct CalendarAddView: View {
     @State var month: Int
     @State var monthShiftNum: Int = 0
     
+    @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var isNext: Bool = false
     
@@ -76,7 +77,12 @@ struct CalendarAddView: View {
                                 } else {
                                     let newArray = calendarAlarts.filter { $0.year == year && $0.month == month && $0.day == days[index - days[0].weekday].day}
                                     if !newArray.isEmpty{
-                                        Text("設定済み")
+                                        VStack{
+                                            Text("\(days[index - days[0].weekday].day)")
+                                            Text(f.string(from: newArray[0].time ))
+                                            Spacer()
+                                        }
+                                        .foregroundColor(backGroundGlay)
                                     } else {
                                         VStack{
                                             Text("\(days[index - days[0].weekday].day)")
@@ -111,7 +117,7 @@ struct CalendarAddView: View {
                         }
                         .frame(height: 60)
                     }
-                    ZStack{
+                    VStack{
                         
                         Button(action: {}){
                             NavigationLink(destination: CalendarAddTimeView(year: year, month: month, days: pickDates, comp: $isNext)){
@@ -120,6 +126,10 @@ struct CalendarAddView: View {
                         }
                         .buttonStyle(mainButtonStyle())
                         .disabled(pickDates.isEmpty)
+                        Button("キャンセル"){
+                            dismiss()
+                        }
+                        .buttonStyle(mainButtonStyle())
                     }
                 }
                 .onChange(of: monthShiftNum){
@@ -134,6 +144,7 @@ struct CalendarAddView: View {
         .onChange(of: isNext) {
             presentationMode.wrappedValue.dismiss()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 import UserNotifications
 
+let f = DateFormatter()
+
 @main
 struct AlarmSchedulerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -30,6 +32,8 @@ struct AlarmSchedulerApp: App {
     
     init(){
         AppEnvironment.sharedModelContainer = initializeModelContainer()
+        f.dateStyle = .none
+        f.timeStyle = .short
     }
     
     var body: some Scene {
