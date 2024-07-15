@@ -11,9 +11,14 @@ import UserNotifications
 
 let f = DateFormatter()
 
+final class toggleTabBar: ObservableObject {
+    @Published  var tabHidden: Bool = false
+}
+
 @main
 struct AlarmSchedulerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject var tabHidden = toggleTabBar()
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -40,6 +45,7 @@ struct AlarmSchedulerApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(sharedModelContainer)
+                .environmentObject(tabHidden)
         }
     }
     

@@ -12,6 +12,7 @@ struct CalendarView: View {
     
     @Environment(\.modelContext) private var context
     @Query() private var calendarAlarts: [CalendarAlarm]
+    @EnvironmentObject var tabHidden: toggleTabBar
     
     @State var days:[calenderDay]
     @State var calenderDate: Date
@@ -114,8 +115,6 @@ struct CalendarView: View {
                     HStack{
                         Spacer()
                         Button(action: {
-                            print("Button")
-                            
                         }) {
                             NavigationLink(destination: CalendarAddView()){
                                 Text("+")
@@ -145,6 +144,7 @@ struct CalendarView: View {
             .onAppear(){
                 Task{
                     alarms = await seachAlarm()
+                    tabHidden.tabHidden = false
                 }
             }
         }
@@ -156,8 +156,4 @@ struct CalendarView: View {
         print("設定済みアラーム", newArray)
         return newArray
     }
-}
-
-#Preview{
-    CalendarView()
 }

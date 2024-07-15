@@ -12,6 +12,7 @@ struct AddAlarmView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var tabHidden: toggleTabBar
     
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = MusicPlayer().soundList[0]
@@ -113,6 +114,11 @@ struct AddAlarmView: View {
                 Spacer()
                     .frame(height: 1)
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear(){
+                tabHidden.tabHidden = true
+        }
+        
     }
 }

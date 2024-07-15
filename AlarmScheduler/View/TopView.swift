@@ -14,9 +14,11 @@ import UserNotifications
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var tabHidden: toggleTabBar
     @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
     @State var activeList: [[String : Bool]] = []
+    
     
     let f = DateFormatter()
     let f2 = DateFormatter()
@@ -41,13 +43,6 @@ struct TopView: View {
                 
                 VStack(spacing: 0) {
                     
-                    
-                    // 開発用ボタン
-//                    Button("getAlarm"){
-//                        Task{
-//                            await updateView()
-//                        }
-//                    }
                     Button("reset") {
                         Task{
                             let res = await NotificationManager.instance.getPendingNotifications()
@@ -61,17 +56,6 @@ struct TopView: View {
                             }
                         }
                     }
-                    //                    Button("削除"){
-                    //                        NotificationManager.instance.removeNotification(id: "alkfjo")
-                    //                    }
-                    //
-                    //
-                    //                    Button("paths"){
-                    //                        Task{
-                    //                            print(try await getSoundList())
-                    //                        }
-                    //                    }
-                    // 開発用ボタン
                     
                     HStack{
                         Text("次のアラーム")
@@ -226,6 +210,7 @@ struct TopView: View {
                 Task {
                     try await checkSkip()
                     await updateView()
+                    tabHidden.tabHidden = false
                 }
             }
             

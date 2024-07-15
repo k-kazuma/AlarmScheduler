@@ -24,6 +24,7 @@ struct CalendarAddView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var isNext: Bool = false
+    @EnvironmentObject var tabHidden: toggleTabBar
     
     init(){
         //今月のカレンダー取得
@@ -145,6 +146,9 @@ struct CalendarAddView: View {
             presentationMode.wrappedValue.dismiss()
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            tabHidden.tabHidden = true
+        }
     }
 }
 
@@ -177,7 +181,7 @@ struct calenderDay {
     let day: Int
     let weekday: Int
 }
-
-#Preview{
-    CalendarAddView()
-}
+//
+//#Preview{
+//    CalendarAddView()
+//}

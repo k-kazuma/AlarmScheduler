@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA0D8D6D2C4501CD00FEB737 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = DA0D8D6C2C4501CD00FEB737 /* SwiftUIIntrospect */; };
 		DA1FF6572C23EE68000C9768 /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF6562C23EE68000C9768 /* CalenderView.swift */; };
 		DA1FF6592C2D2AA9000C9768 /* CalendarAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF6582C2D2AA9000C9768 /* CalendarAddView.swift */; };
 		DA1FF65B2C2D2D2E000C9768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1FF65A2C2D2D2E000C9768 /* ContentView.swift */; };
@@ -91,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0D8D6D2C4501CD00FEB737 /* SwiftUIIntrospect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +230,9 @@
 				DADD50472BF71E0F00B270EB /* PBXTargetDependency */,
 			);
 			name = AlarmScheduler;
+			packageProductDependencies = (
+				DA0D8D6C2C4501CD00FEB737 /* SwiftUIIntrospect */,
+			);
 			productName = wetherAlarm;
 			productReference = DA5FDF032BB4CEAA00D091B2 /* AlarmScheduler.app */;
 			productType = "com.apple.product-type.application";
@@ -276,6 +281,9 @@
 				Base,
 			);
 			mainGroup = DA5FDEFA2BB4CEAA00D091B2;
+			packageReferences = (
+				DAA728402C44FF2B00B646A6 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+			);
 			productRefGroup = DA5FDF042BB4CEAA00D091B2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -623,6 +631,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DAA728402C44FF2B00B646A6 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DA0D8D6C2C4501CD00FEB737 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DAA728402C44FF2B00B646A6 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DA5FDEFB2BB4CEAA00D091B2 /* Project object */;
 }
