@@ -171,7 +171,6 @@ final class CalendarAlarm{
         self.time = time
         self.sound = sound
     }
-    
 }
 
 enum checkNotification: Error {

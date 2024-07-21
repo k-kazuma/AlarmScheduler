@@ -101,9 +101,16 @@ final class NotificationManager {
         content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
         let request = UNNotificationRequest(identifier: "calendar-\(id)", content: content, trigger: trigger)
-        print("try add")
-        try await UNUserNotificationCenter.current().add(request)
-        print("end add")
+        
+        do {
+            print("try add")
+            try await UNUserNotificationCenter.current().add(request)
+            print(await getPendingNotifications())
+            print("end add")
+        } catch {
+            print("NotificationError",error)
+        }
+        
         
         
     }

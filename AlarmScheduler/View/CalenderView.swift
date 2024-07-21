@@ -53,7 +53,6 @@ struct CalendarView: View {
                         }
                     }
                     
-                    
                     HStack{
                         if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
                             Button("<<") {
@@ -144,6 +143,7 @@ struct CalendarView: View {
             .onAppear(){
                 Task{
                     alarms = await seachAlarm()
+                    await deleteAlarm()
                     tabHidden.tabHidden = false
                 }
             }
@@ -155,5 +155,30 @@ struct CalendarView: View {
         let newArray = res.filter{$0.contains("calendar")}
         print("設定済みアラーム", newArray)
         return newArray
+    }
+    
+    //過去のアラームを削除
+    func deleteAlarm() async {
+        print("deleteStart")
+        for alarm in calendarAlarts {
+            print(alarm)
+            let (hour, minute) = await dateConversion(time: alarm.time)
+            if let date: Date = createDateFromComponents(year: alarm.year, month: alarm.month, day: alarm.day, hour: hour, minute: minute) {
+                if Date() > date {
+                    print("削除", alarm)
+                    context.delete(alarm)
+                }
+            }
+        }
+    }
+    
+    func createDateFromComponents(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        return calendar.date(from: dateComponents)
     }
 }

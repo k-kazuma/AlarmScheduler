@@ -68,8 +68,9 @@ struct CalendarAddTimeView: View {
                         } catch{
                             print(error)
                         }
-                        dismiss()
+                        
                         comp = true
+                        dismiss()
                     }
                 }
                 .buttonStyle(mainButtonStyle())

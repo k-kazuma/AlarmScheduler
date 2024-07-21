@@ -10,8 +10,6 @@ import SwiftData
 
 let calendar = Calendar.current
 
-
-
 struct CalendarAddView: View {
     @Query() private var calendarAlarts: [CalendarAlarm]
     @State var pickDates:[Int] = []
@@ -68,7 +66,7 @@ struct CalendarAddView: View {
                             if index >= days[0].weekday && index - days[0].weekday < days.count {
                                 // UIに表示されている情報
                                 let nowDate = calendar.dateComponents([.year, .month, .day], from: Date())
-                                let calendarDate = DateComponents(year: year, month: month, day: index + 1 - days[0].weekday )
+                                let calendarDate = DateComponents(year: year, month: month, day: index - days[0].weekday )
                                 if nowDate.year! >= calendarDate.year! && nowDate.month! >= calendarDate.month! && nowDate.day! > calendarDate.day! {
                                     VStack{
                                         Text("\(days[index - days[0].weekday].day)")
