@@ -23,7 +23,7 @@ class MusicPlayer: ObservableObject {
         }
     }
 
-    func PlaySound (fileName: String) async throws {
+    func PlaySound (fileName: String) throws {
         if let path = Bundle.main.path(forResource: fileName, ofType: "mp3") {
                 let url = URL(fileURLWithPath: path)
                 do {

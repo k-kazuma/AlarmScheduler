@@ -1,18 +1,17 @@
 //
-//  CalenderView.swift
+//  CalendarTrashView.swift
 //  AlarmScheduler
 //
-//  Created by 熊谷知馬 on 2024/06/20.
+//  Created by 熊谷知馬 on 2024/07/22.
 //
 
 import SwiftUI
 import SwiftData
 
-let calendar = Calendar.current
-
-struct CalendarAddView: View {
+struct CalendarTrashView: View {
+    
     @Query() private var calendarAlarts: [CalendarAlarm]
-    @State var pickDates:[Int] = []
+    @State var pickAlarm:[CalendarAlarm] = []
     @State var days:[calenderDay]
     @State var calenderDate: Date
     @State var year: Int
@@ -21,6 +20,8 @@ struct CalendarAddView: View {
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.modelContext) private var context
+    
     @State var isNext: Bool = false
     @EnvironmentObject var tabHidden: toggleTabBar
     
@@ -48,7 +49,7 @@ struct CalendarAddView: View {
                             .font(.largeTitle)
                             .padding()
                         Button(">>"){
-                            pickDates = []
+                            pickAlarm = []
                             monthShiftNum += 1
                         }
                     }
@@ -80,20 +81,16 @@ struct CalendarAddView: View {
                                     if !newArray.isEmpty{
                                         VStack{
                                             Text("\(days[index - days[0].weekday].day)")
-                                            Text(f.string(from: newArray[0].time ))
-                                            Spacer()
-                                        }
-                                        .foregroundColor(backGroundGlay)
-                                    } else {
-                                        VStack{
-                                            Text("\(days[index - days[0].weekday].day)")
-                                            Spacer()
-                                            ZStack{
-                                                Text("⬜︎")
-                                                if pickDates.contains(days[index - days[0].weekday].day) {
-                                                    VStack{
-                                                        Image(systemName: "checkmark")
-                                                            .foregroundColor(fontOrenge)
+                                            VStack{
+                                                Text(f.string(from: newArray[0].time ))
+                                                ZStack{
+                                                    Text("⬜︎")
+                                                    if pickAlarm.contains(newArray[0]) {
+                                                        VStack{
+                                                            
+                                                            Image(systemName: "checkmark")
+                                                                .foregroundColor(fontOrenge)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -101,14 +98,19 @@ struct CalendarAddView: View {
                                         }
                                         .onTapGesture {
                                             // pickDatesに値が存在すれば削除、なければ追加
-                                            if pickDates.contains(days[index - days[0].weekday].day){
-                                                pickDates.removeAll(where: {$0 == days[index - days[0].weekday].day })
+                                            if pickAlarm.contains(newArray[0]){
+                                                pickAlarm.removeAll(where: {$0 == newArray[0] })
                                             } else {
-                                                pickDates.append(days[index - days[0].weekday].day)
+                                                pickAlarm.append(newArray[0])
                                             }
-                                            pickDates.sort { $0 < $1 }
-                                            print(pickDates)
+                                            print(pickAlarm)
                                         }
+                                    } else {
+                                        VStack{
+                                            Text("\(days[index - days[0].weekday].day)")
+                                            Spacer()
+                                        }
+                                        .foregroundColor(backGroundGlay)
                                     }
                                 }
                             } else {
@@ -120,13 +122,17 @@ struct CalendarAddView: View {
                     }
                     VStack{
                         
-                        Button(action: {}){
-                            NavigationLink(destination: CalendarAddTimeView(year: year, month: month, days: pickDates, comp: $isNext)){
-                                Text(pickDates.isEmpty ? "未選択" : "追加する")
+                        Button(action: {
+                            for alarm in pickAlarm {
+                                context.delete(alarm)
+                                NotificationManager.instance.removeNotification(id: alarm.id)
                             }
+                            dismiss()
+                        }){
+                            Text(pickAlarm.isEmpty ? "未選択" : "削除")
                         }
                         .buttonStyle(mainButtonStyle())
-                        .disabled(pickDates.isEmpty)
+                        .disabled(pickAlarm.isEmpty)
                         Button("キャンセル"){
                             dismiss()
                         }
@@ -152,36 +158,6 @@ struct CalendarAddView: View {
     }
 }
 
-func generateDays(year: Int, month: Int) -> [calenderDay] {
-    var days = [calenderDay]()
-    
-    // カレンダーと日付コンポーネントを設定
-    let calendar = Calendar.current
-    let dateComponents = DateComponents(year: year, month: month)
-    
-    // 指定された年月の最初の日付を取得
-    guard let startDate = calendar.date(from: dateComponents) else {
-        fatalError("Invalid date components")
-    }
-    
-    // 指定された年月の全ての日にちを取得
-    let range = calendar.range(of: .day, in: .month, for: startDate)!
-    
-    for day in range {
-        let date = calendar.date(byAdding: .day, value: day - 1, to: startDate)!
-        let weekday = calendar.component(.weekday, from: date)
-        days.append(calenderDay(day: day, weekday: weekday))
-    }
-    
-    return days
+#Preview {
+    CalendarTrashView()
 }
-
-
-struct calenderDay {
-    let day: Int
-    let weekday: Int
-}
-//
-//#Preview{
-//    CalendarAddView()
-//}

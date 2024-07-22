@@ -67,6 +67,7 @@ struct CalendarView: View {
                         }
                     }
                     Spacer()
+                    // カレンダーUI
                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7)) {
                         Text("日")
                         Text("月")
@@ -126,6 +127,19 @@ struct CalendarView: View {
                         .background(backGroundGlay)
                         .clipShape(Circle())
                         .buttonStyle(.plain)
+                        Button(action: {
+                        }) {
+                            NavigationLink(destination: CalendarTrashView()){
+                                Image(systemName: "trash")
+                            }
+                        }
+                        .bold()
+                        .frame(width: 75, height: 75)
+                        .font(.system(size: 35))
+                        .foregroundColor(fontOrenge)
+                        .background(backGroundGlay)
+                        .clipShape(Circle())
+                        .buttonStyle(.plain)
                         Spacer()
                             .frame(width: 25)
                     }
@@ -142,31 +156,69 @@ struct CalendarView: View {
             .foregroundColor(.white)
             .onAppear(){
                 Task{
-                    alarms = await seachAlarm()
-                    await deleteAlarm()
+                    await updateAlarm(notification: await seachNotification(), data: await seachAlarmData() )
                     tabHidden.tabHidden = false
                 }
             }
         }
     }
     
-    func seachAlarm() async -> [String] {
+    // Notificationに登録されているCalendar Alarmを取得
+    func seachNotification() async -> [String] {
         let res = await NotificationManager.instance.getPendingNotifications()
         let newArray = res.filter{$0.contains("calendar")}
-        print("設定済みアラーム", newArray)
         return newArray
     }
     
-    //過去のアラームを削除
-    func deleteAlarm() async {
-        print("deleteStart")
+    //SwiftDataに登録されている情報を取得
+    func seachAlarmData() async -> [String] {
+        var resArray: [String] = []
         for alarm in calendarAlarts {
-            print(alarm)
+            resArray.append("\(alarm.id)")
+        }
+        return resArray
+    }
+    
+    //過去アラームの削除とデータに差分があれば更新
+    func updateAlarm(notification: [String], data: [String]) async {
+        print("calendarUpdateStart")
+        //過去のアラームを削除
+        for alarm in calendarAlarts {
             let (hour, minute) = await dateConversion(time: alarm.time)
             if let date: Date = createDateFromComponents(year: alarm.year, month: alarm.month, day: alarm.day, hour: hour, minute: minute) {
                 if Date() > date {
                     print("削除", alarm)
                     context.delete(alarm)
+                    print("通知済みのアラームデータを削除")
+                }
+            }
+        }
+        // dataとNotificationに差がないか確認
+        if notification != data {
+            print("データに差分が発生差分を削除します")
+            // 差分を取得
+            let differenceNotification = notification.filter {!data.contains($0)}
+            let differenceData = data.filter {!notification.contains($0)}
+            
+            //差分を削除
+            for alarm in calendarAlarts {
+                if !differenceNotification.isEmpty {
+                    for dif in differenceNotification {
+                        if "\(alarm.id)" == dif {
+                            context.delete(alarm)
+                        }
+                        NotificationManager.instance.removeNotification(id: dif)
+                    }
+                    
+                }
+                
+                if !differenceData.isEmpty{
+                    for dif in differenceData {
+                        if "\(alarm.id)" == dif {
+                            context.delete(alarm)
+                        }
+                        NotificationManager.instance.removeNotification(id: dif)
+                    }
                 }
             }
         }
