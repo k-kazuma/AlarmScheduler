@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+@_spi(Advanced) import SwiftUIIntrospect
 
 struct ContentView: View {
     
     @State var selection = 1
+    @EnvironmentObject var tabHidden: toggleTabBar
     
     init () {
         UITabBar.appearance().unselectedItemTintColor = .gray
@@ -25,18 +27,24 @@ struct ContentView: View {
                             .foregroundColor(.white)
                     }
                     .tag(1)
+                    .environmentObject(tabHidden)
                 
                 CalendarView()   // Viewファイル②
                     .tabItem {
                         Image(systemName: "calendar.badge.plus")
                     }
                     .tag(2)
+                    .environmentObject(tabHidden)
             }
             .accentColor(fontOrenge)
+            .introspect(.tabView, on: .iOS(.v13, .v14, .v15, .v16, .v17)) { tabView in
+                tabView.tabBar.isHidden = tabHidden.tabHidden
+                    }
         }
     }
 }
-
-#Preview {
-    ContentView()
-}
+//
+//#Preview {
+//    ContentView()
+//        .modelContainer(for: Alarm.self)
+//}

@@ -153,6 +153,26 @@ final class Alarm {
     }
 }
 
+@Model
+final class CalendarAlarm{
+    var id: UUID
+    var year: Int
+    var month: Int
+    var day: Int
+    var time: Date
+    var sound: String
+    
+    init(id: UUID, year: Int, month: Int, day: Int, time:Date, sound:String )async throws {
+        try await NotificationManager.instance.sendCalendarNotification(id: id, year: year, month: month, day: day, time: time, sound: sound)
+        self.id = UUID()
+        self.year = year
+        self.month = month
+        self.day = day
+        self.time = time
+        self.sound = sound
+    }
+}
+
 enum checkNotification: Error {
     case not(String)
 }

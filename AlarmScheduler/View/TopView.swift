@@ -14,9 +14,11 @@ import UserNotifications
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var tabHidden: toggleTabBar
     @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
     @State var activeList: [[String : Bool]] = []
+    
     
     let f = DateFormatter()
     let f2 = DateFormatter()
@@ -41,37 +43,19 @@ struct TopView: View {
                 
                 VStack(spacing: 0) {
                     
-                    
-                    // 開発用ボタン
-//                    Button("getAlarm"){
-//                        Task{
-//                            await updateView()
-//                        }
-//                    }
-//                    Button("reset") {
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            for r in res {
-//                                NotificationManager.instance.removeNotification(id: r)
-//                            }
-//                            let alarmes = alarts.map {$0.id}
-//                            for a in alarmes {
-//                                print(alarts.first(where: {$0.id == a})!)
-//                                context.delete(alarts.first(where: {$0.id == a})!)
-//                            }
-//                        }
-//                    }
-                    //                    Button("削除"){
-                    //                        NotificationManager.instance.removeNotification(id: "alkfjo")
-                    //                    }
-                    //
-                    //
-                    //                    Button("paths"){
-                    //                        Task{
-                    //                            print(try await getSoundList())
-                    //                        }
-                    //                    }
-                    // 開発用ボタン
+                    Button("reset") {
+                        Task{
+                            let res = await NotificationManager.instance.getPendingNotifications()
+                            for r in res {
+                                NotificationManager.instance.removeNotification(id: r)
+                            }
+                            let alarmes = alarts.map {$0.id}
+                            for a in alarmes {
+                                print(alarts.first(where: {$0.id == a})!)
+                                context.delete(alarts.first(where: {$0.id == a})!)
+                            }
+                        }
+                    }
                     
                     HStack{
                         Text("次のアラーム")
@@ -226,6 +210,7 @@ struct TopView: View {
                 Task {
                     try await checkSkip()
                     await updateView()
+                    tabHidden.tabHidden = false
                 }
             }
             
@@ -271,7 +256,7 @@ struct TopView: View {
                 for dif in differenceB {
                     if r == dif {
                         // スキップ機能で設置したアラームを削除しないようコンティニューする
-                        if dif.contains("skip") {
+                        if dif.contains("skip") || dif.contains("calendar") {
                             continue
                         }
                         print("削除", dif)
@@ -412,8 +397,8 @@ struct TopView: View {
     
 }
 
-#Preview {
-    TopView()
-        .modelContainer(for: Alarm.self)
-}
+//#Preview {
+//    TopView()
+//        .modelContainer(for: Alarm.self)
+//}
 
