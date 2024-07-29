@@ -105,6 +105,7 @@ struct EditView: View {
                         Button("スキップ"){
                             Task{
                                 do{
+                                    print("Push is skipButton")
                                     try await alarm.skipAlarm(id: alarm.id)
                                     dismiss()
                                 } catch{

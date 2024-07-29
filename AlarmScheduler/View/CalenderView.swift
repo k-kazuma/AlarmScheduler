@@ -52,6 +52,7 @@ struct CalendarView: View {
                             }
                         }
                     }
+                    Spacer()
                     
                     HStack{
                         if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
@@ -114,19 +115,7 @@ struct CalendarView: View {
                     
                     HStack{
                         Spacer()
-                        Button(action: {
-                        }) {
-                            NavigationLink(destination: CalendarAddView()){
-                                Text("+")
-                            }
-                        }
-                        .bold()
-                        .frame(width: 75, height: 75)
-                        .font(.system(size: 55))
-                        .foregroundColor(fontOrenge)
-                        .background(backGroundGlay)
-                        .clipShape(Circle())
-                        .buttonStyle(.plain)
+                            .frame(width: 25)
                         Button(action: {
                         }) {
                             NavigationLink(destination: CalendarTrashView()){
@@ -136,6 +125,21 @@ struct CalendarView: View {
                         .bold()
                         .frame(width: 75, height: 75)
                         .font(.system(size: 35))
+                        .foregroundColor(fontOrenge)
+                        .background(backGroundGlay)
+                        .clipShape(Circle())
+                        .buttonStyle(.plain)
+                        .disabled(calendarAlarts.isEmpty)
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            NavigationLink(destination: CalendarAddView()){
+                                Text("+")
+                            }
+                        }
+                        .bold()
+                        .frame(width: 75, height: 75)
+                        .font(.system(size: 55))
                         .foregroundColor(fontOrenge)
                         .background(backGroundGlay)
                         .clipShape(Circle())
@@ -184,7 +188,7 @@ struct CalendarView: View {
         print("calendarUpdateStart")
         //過去のアラームを削除
         for alarm in calendarAlarts {
-            let (hour, minute) = await dateConversion(time: alarm.time)
+            let (hour, minute) = dateConversion(time: alarm.time)
             if let date: Date = createDateFromComponents(year: alarm.year, month: alarm.month, day: alarm.day, hour: hour, minute: minute) {
                 if Date() > date {
                     print("削除", alarm)
@@ -194,11 +198,13 @@ struct CalendarView: View {
             }
         }
         // dataとNotificationに差がないか確認
-        if notification != data {
+        if Set(notification) != Set(data) {
             print("データに差分が発生差分を削除します")
+            print(notification, data)
             // 差分を取得
             let differenceNotification = notification.filter {!data.contains($0)}
             let differenceData = data.filter {!notification.contains($0)}
+            print(differenceNotification, differenceData)
             
             //差分を削除
             for alarm in calendarAlarts {

@@ -108,25 +108,32 @@ final class Alarm {
         let calendar = Calendar.current
         let today = Date()
         let todayWeekDay = calendar.component(.weekday, from: today)
-        let (hour, minute) = await dateConversion(time: self.time)
+        let (hour, minute) = dateConversion(time: self.time)
         
         
         // todayWeekDayは１〜７の整数（日〜土）
         var i = todayWeekDay
+        print("本日の曜日のインデックス\(todayWeekDay)")
         if todayWeekDay == 7 {
-            i = 0
+            i = 6
         }
         // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
         while true {
             print(i)
             if let next = self.weekDay.firstIndex(of: i) {
+                
                 let weekIndex = self.weekDay[next]
+                print("\(weekIndex)をスキップ")
                 // 何日後がスキップされた日なのかを取得
                 
                 guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
                     print("guard")
                     return
                 }
+                
+                // スキップしている曜日時間をSwiftDataで管理する
+                self.skipWeek = weekIndex
+                self.skipDate = nextWeekday
                 
                 // 一致する曜日が見つかれば削除
                 print("削除-\(weekIndex)")
@@ -135,12 +142,6 @@ final class Alarm {
                 for i in [7, 14, 21, 28] {
                     try await NotificationManager.instance.sendSkipNotification(id: self.id, time: nextWeekday, day: i, sound: self.sound)
                 }
-                // スキップしている曜日時間をSwiftDataで管理する
-                print("AlarmData139: 前回エラー発生地点")
-                print("self before setting skipWeek: \(self)")
-                self.skipWeek = weekIndex
-                self.skipDate = nextWeekday
-                print("AlarmData.swift141")
                 break
             } else{
                 if i == 6 {
@@ -162,8 +163,7 @@ final class CalendarAlarm{
     var time: Date
     var sound: String
     
-    init(id: UUID, year: Int, month: Int, day: Int, time:Date, sound:String )async throws {
-        try await NotificationManager.instance.sendCalendarNotification(id: id, year: year, month: month, day: day, time: time, sound: sound)
+    init(id: UUID, year: Int, month: Int, day: Int, time:Date, sound:String ) {        
         self.id = "calendar-\(id)"
         self.year = year
         self.month = month
