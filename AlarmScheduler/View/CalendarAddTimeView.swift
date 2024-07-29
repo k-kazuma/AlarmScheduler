@@ -17,7 +17,6 @@ struct CalendarAddTimeView: View {
     
     @State var date = Date(year: 1999, month: 1, day: 1, hour: 7)
     @State var sound = MusicPlayer().soundList[0]
-    
     @Binding var comp: Bool
     
     init(year: Int, month: Int, days: [Int], comp: Binding<Bool>){
@@ -59,19 +58,18 @@ struct CalendarAddTimeView: View {
                 Spacer()
                 
                 Button("追加する") {
-                    Task{
-                        do {
-                            for day in days {
-                                let alarm = try await CalendarAlarm(id: UUID(), year: year, month: month, day: day, time: date, sound: sound)
-                                context.insert(alarm)
-                            }
-                        } catch{
-                            print(error)
+                    do {
+                        for day in days {
+                            let id = UUID()
+                            let alarm =  CalendarAlarm(id: id, year: year, month: month, day: day, time: date, sound: sound)
+                            context.insert(alarm)
+                            try NotificationManager.instance.sendCalendarNotification(id: id, year: year, month: month, day: day, time: date, sound: sound)
                         }
-                        
-                        comp = true
-                        dismiss()
+                    } catch{
+                        print(error)
                     }
+                    comp = true
+                    dismiss()
                 }
                 .buttonStyle(mainButtonStyle())
                 Button("キャンセル"){
@@ -81,7 +79,8 @@ struct CalendarAddTimeView: View {
                 Spacer()
                     .frame(height: 1)
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

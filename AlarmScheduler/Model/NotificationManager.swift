@@ -24,14 +24,14 @@ final class NotificationManager {
         
         do{
             let content = UNMutableNotificationContent()
-            content.title = "Notification Title"
-            content.body = "Local Notification Test"
+            content.title = "アラーム"
+            content.body = "おはようございます"
             content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
             
             if !weekDay.isEmpty {
                 for week in weekDay{
                     var dateComponents = DateComponents()
-                    let (hour, minute) = await dateConversion(time: time)
+                    let (hour, minute) = dateConversion(time: time)
                     dateComponents.weekday = week
                     dateComponents.hour = hour
                     dateComponents.minute = minute
@@ -42,7 +42,7 @@ final class NotificationManager {
                 }
             } else {
                 var dateComponents = DateComponents()
-                let (hour, minute) = await dateConversion(time: time)
+                let (hour, minute) = dateConversion(time: time)
                 dateComponents.hour = hour
                 dateComponents.minute = minute
                 
@@ -59,7 +59,7 @@ final class NotificationManager {
     func sendSkipNotification(id:UUID , time:Date, day:Int, sound: String) async throws {
         let content = UNMutableNotificationContent()
         content.title = "アラーム"
-        content.body = "Local Notification Test"
+        content.body = "おはようございます"
         content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
         let dateComponents = calendar.date(byAdding: .day, value: day, to: time)!
         
@@ -84,10 +84,8 @@ final class NotificationManager {
         }
     }
     
-    func sendCalendarNotification(id: UUID, year: Int, month: Int, day: Int, time: Date, sound: String) async throws {
-        let (hour, minute) = await dateConversion(time: time)
-        
-        
+    func sendCalendarNotification(id: UUID, year: Int, month: Int, day: Int, time: Date, sound: String) throws {
+        let (hour, minute) = dateConversion(time: time)
         let content = UNMutableNotificationContent()
         var date = DateComponents()
         date.year = year
@@ -97,21 +95,20 @@ final class NotificationManager {
         date.minute = minute
         
         content.title = "アラーム"
-        content.body = "Local Notification Test"
+        content.body = "おはようございます"
         content.sound = UNNotificationSound.init(named: UNNotificationSoundName(rawValue: sound + ".mp3"))
         let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: false)
         let request = UNNotificationRequest(identifier: "calendar-\(id)", content: content, trigger: trigger)
         
-        do {
-            print("try add")
-            try await UNUserNotificationCenter.current().add(request)
-            print(await getPendingNotifications())
-            print("end add")
-        } catch {
-            print("NotificationError",error)
+        Task{
+            do {
+                print("try add")
+                try await UNUserNotificationCenter.current().add(request)
+                print(await getPendingNotifications())
+                print("end add")
+            } catch {
+                print("NotificationError",error)
+            }
         }
-        
-        
-        
     }
 }

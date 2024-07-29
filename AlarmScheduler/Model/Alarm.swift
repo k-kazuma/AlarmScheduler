@@ -9,7 +9,7 @@ import Foundation
 
 
 
-func dateConversion(time: Date) async ->  (Int, Int)  {
+func dateConversion(time: Date) ->  (Int, Int)  {
     
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "ja_JP")

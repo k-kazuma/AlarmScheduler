@@ -10,7 +10,7 @@ import AVFoundation
 
 struct soundView: View {
     
-//    let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
+    //    let paths = Bundle.main.paths(forResourcesOfType: "mp3", inDirectory: nil)
     @Environment(\.dismiss) var dismiss
     @Binding var pickSound: String
     @StateObject var musicPlayer = MusicPlayer()
@@ -40,16 +40,15 @@ struct soundView: View {
                                         }
                                     } else {
                                         Button("▶︎"){
-                                            Task{
-                                                do{
-                                                    musicPlayer.stopMusic()
-                                                    try await musicPlayer.PlaySound(fileName: sound)
-                                                    pickSound = sound
-                                                } catch{
-                                                    print(error)
-                                                }
+                                            do{
+                                                musicPlayer.stopMusic()
+                                                try musicPlayer.PlaySound(fileName: sound)
+                                                pickSound = sound
+                                            } catch{
+                                                print(error)
                                             }
                                         }
+                                        
                                     }
                                     
                                 }
@@ -64,14 +63,14 @@ struct soundView: View {
                         .font(.system(size: 25))
                         .pickerStyle(.inline)
                         .onChange(of: pickSound) {
-                            Task{
-                                do{
-                                    musicPlayer.stopMusic()
-                                    try await musicPlayer.PlaySound(fileName: pickSound)
-                                } catch{
-                                    print(error)
-                                }
+                            
+                            do{
+                                musicPlayer.stopMusic()
+                                try musicPlayer.PlaySound(fileName: pickSound)
+                            } catch{
+                                print(error)
                             }
+                            
                         }
                     }
                     .padding(0)
