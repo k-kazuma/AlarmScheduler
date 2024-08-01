@@ -43,19 +43,21 @@ struct TopView: View {
                 
                 VStack(spacing: 0) {
                     
-                    Button("reset") {
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            for r in res {
-                                NotificationManager.instance.removeNotification(id: r)
-                            }
-                            let alarmes = alarts.map {$0.id}
-                            for a in alarmes {
-                                print(alarts.first(where: {$0.id == a})!)
-                                context.delete(alarts.first(where: {$0.id == a})!)
-                            }
-                        }
-                    }
+                    
+//                    //開発用リセットボタン
+//                    Button("reset") {
+//                        Task{
+//                            let res = await NotificationManager.instance.getPendingNotifications()
+//                            for r in res {
+//                                NotificationManager.instance.removeNotification(id: r)
+//                            }
+//                            let alarmes = alarts.map {$0.id}
+//                            for a in alarmes {
+//                                print(alarts.first(where: {$0.id == a})!)
+//                                context.delete(alarts.first(where: {$0.id == a})!)
+//                            }
+//                        }
+//                    }
                     
                     HStack{
                         Text("次のアラーム")
@@ -291,7 +293,7 @@ struct TopView: View {
     
     func getNextAlarm() async -> (Alarm?, Int) {
         
-        //現在の曜日を取得
+        //現在の曜日を0-6で取得
         let today = Date()
         var todayWeekDay = calendar.component(.weekday, from: today) - 1
         // 比較用の時分を取得
@@ -355,6 +357,24 @@ struct TopView: View {
             }
         }
         print("retuen nil")
+        
+        //　alarm.weekDay.count == 1 の条件分岐をここに追記する
+        for alarm in alarts {
+            var n = 0
+            
+            while n < 7 {
+                if alarm.skipWeek != nil {
+                    print("skip")
+                    if alarm.weekDay.count < 2 {
+                        print("skip2")
+                        return(alarm, n+7+1)
+                    }
+                    
+                }
+                
+                n += 1
+            }
+        }
         return (nil, 0)
     }
     
