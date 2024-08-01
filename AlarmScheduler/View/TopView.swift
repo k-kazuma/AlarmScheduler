@@ -291,6 +291,7 @@ struct TopView: View {
         return resArray
     }
     
+    // 次回アラーム日時を取得
     func getNextAlarm() async -> (Alarm?, Int) {
         
         //現在の曜日を0-6で取得
@@ -364,20 +365,23 @@ struct TopView: View {
             
             while n < 7 {
                 if alarm.skipWeek != nil {
-                    print("skip")
-                    if alarm.weekDay.count < 2 {
-                        print("skip2")
+                    if  alarm.weekDay.contains(todayWeekDay) && alarm.isActive && alarm.weekDay.count < 2 {
+                        print(alarm.weekDay)
                         return(alarm, n+7+1)
                     }
-                    
                 }
-                
+                if todayWeekDay == 6 {
+                    todayWeekDay = 0
+                } else {
+                    todayWeekDay += 1
+                }
                 n += 1
             }
         }
         return (nil, 0)
     }
     
+    // スキップ中のアラームが有無確認、スキップ中アラームあればスキップした日時を超えているか確認、超えていればスキップ解除
     func checkSkip() async throws {
         for alarm in alarts {
             if let skipDate = alarm.skipDate {
