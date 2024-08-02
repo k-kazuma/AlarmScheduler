@@ -167,6 +167,13 @@ struct TopView: View {
                                                     }
                                                 }
                                             }
+                                            .onChange(of: alarts){
+                                                Task{
+                                                        (nextTime, nextDayIndex) = await getNextAlarm()
+                                                        nextAlarmDay = Date()
+                                                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                                }
+                                            }
                                     }
                                     if alarm.skipWeek != nil {
                                         HStack{
@@ -358,25 +365,30 @@ struct TopView: View {
             }
         }
         print("retuen nil")
-        
+        //todayWeekDayを初期化
+        todayWeekDay = calendar.component(.weekday, from: today) - 1
         //　alarm.weekDay.count == 1 の条件分岐をここに追記する
-        for alarm in alarts {
-            var n = 0
+        
+        var n = 0
             
-            while n < 7 {
+        while n < 7 {
+            for alarm in alarts {
+                print(alarm.skipWeek!, todayWeekDay)
+                // スキップ中のアラーム有無確認
                 if alarm.skipWeek != nil {
-                    if  alarm.weekDay.contains(todayWeekDay) && alarm.isActive && alarm.weekDay.count < 2 {
+                    //スキップ中のアラームをtodayWeekDayと比較
+                    if alarm.skipWeek == todayWeekDay && alarm.isActive && alarm.weekDay.count < 2 {
                         print(alarm.weekDay)
-                        return(alarm, n+7+1)
+                        return(alarm, n+7)
                     }
                 }
-                if todayWeekDay == 6 {
-                    todayWeekDay = 0
-                } else {
-                    todayWeekDay += 1
-                }
-                n += 1
             }
+            if todayWeekDay == 6 {
+                todayWeekDay = 0
+            } else {
+                todayWeekDay += 1
+            }
+            n += 1
         }
         return (nil, 0)
     }
