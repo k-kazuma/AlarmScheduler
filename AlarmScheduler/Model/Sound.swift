@@ -22,32 +22,32 @@ class MusicPlayer: ObservableObject {
             print(error)
         }
     }
-
+    
     func PlaySound (fileName: String) throws {
         if let path = Bundle.main.path(forResource: fileName, ofType: "mp3") {
-                let url = URL(fileURLWithPath: path)
-                do {
-                    musicPlayer = try AVAudioPlayer(contentsOf: url)
-                    musicPlayer.play()
-                    playingSoundName = getPlayingSound()
-                } catch {
-                    print("音楽ファイルの再生に失敗しました")
-                }
+            let url = URL(fileURLWithPath: path)
+            do {
+                musicPlayer = try AVAudioPlayer(contentsOf: url)
+                musicPlayer.play()
+                playingSoundName = getPlayingSound()
+            } catch {
+                print("音楽ファイルの再生に失敗しました")
             }
+        }
     }
-
+    
     func stopMusic() {
         if musicPlayer.isPlaying {
             musicPlayer.stop()
             playingSoundName = getPlayingSound()
         }
     }
-
+    
     func getSoundList() throws -> [String] {
         let fileManager = FileManager()
         // ファイル一覧の場所であるpathを文字列で取得
         let path = Bundle.main.bundlePath
-
+        
         do {
             // pathにあるファイル名文字列で全て取得
             let files = try fileManager.contentsOfDirectory(atPath: path)
@@ -55,12 +55,26 @@ class MusicPlayer: ObservableObject {
             let mp3FileURLs = files.filter { $0.hasSuffix(".mp3") }
             let fileNamesWithoutExtension = mp3FileURLs.map { $0.replacingOccurrences(of: ".mp3", with: "") }
             
-            return fileNamesWithoutExtension
+            let predefinedOrder = ["目覚まし時計１", "目覚まし時計２", "コンガ"]
+            
+            let sortedFileNames = fileNamesWithoutExtension.sorted { (first, second) -> Bool in
+                if let firstIndex = predefinedOrder.firstIndex(of: first), let secondIndex = predefinedOrder.firstIndex(of: second) {
+                    return firstIndex < secondIndex
+                } else if predefinedOrder.contains(first) {
+                    return true
+                } else if predefinedOrder.contains(second) {
+                    return false
+                } else {
+                    return first < second
+                }
+            }
+            
+            return sortedFileNames
         } catch {
             throw error
         }
     }
-
+    
     func getPlayingSound() -> String {
         guard musicPlayer.isPlaying else {
             return ""
@@ -70,7 +84,7 @@ class MusicPlayer: ObservableObject {
         }
         return ""
     }
-
+    
     
 }
 

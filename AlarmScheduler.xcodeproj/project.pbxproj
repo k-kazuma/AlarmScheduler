@@ -21,8 +21,6 @@
 		DA5FDF202BB910BD00D091B2 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF1F2BB910BD00D091B2 /* Style.swift */; };
 		DA5FDF222BBA65D300D091B2 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF212BBA65D300D091B2 /* Alarm.swift */; };
 		DA5FDF242BBBFCFF00D091B2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */; };
-		DAC1E2E02C4E4647000A8B38 /* 目覚まし時計１.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DAC1E2DF2C4E4647000A8B38 /* 目覚まし時計１.mp3 */; };
-		DAC1E2E22C4E467C000A8B38 /* 目覚まし時計２.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DAC1E2E12C4E467C000A8B38 /* 目覚まし時計２.mp3 */; };
 		DAC1E2E42C4E4AEB000A8B38 /* CalendarTrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC1E2E32C4E4AEB000A8B38 /* CalendarTrashView.swift */; };
 		DACD34BA2BC3A1480077F923 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34B92BC3A1480077F923 /* EditView.swift */; };
 		DACD34BE2BC789EF0077F923 /* soundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD34BD2BC789EF0077F923 /* soundView.swift */; };
@@ -33,6 +31,9 @@
 		DADD50412BF71E0F00B270EB /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADD50402BF71E0F00B270EB /* NotificationViewController.swift */; };
 		DADD50442BF71E0F00B270EB /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DADD50432BF71E0F00B270EB /* Base */; };
 		DADD50482BF71E0F00B270EB /* NotificationContentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DADD50392BF71E0F00B270EB /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DAF73F4B2C6187A000411B0B /* コンガ.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DAF73F4A2C6187A000411B0B /* コンガ.mp3 */; };
+		DAF73F532C618CD800411B0B /* 目覚まし時計１.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DAF73F522C618CD800411B0B /* 目覚まし時計１.mp3 */; };
+		DAF73F552C618CDE00411B0B /* 目覚まし時計２.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DAF73F542C618CDE00411B0B /* 目覚まし時計２.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,8 +75,6 @@
 		DA5FDF1F2BB910BD00D091B2 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		DA5FDF212BBA65D300D091B2 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		DA5FDF232BBBFCFF00D091B2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		DAC1E2DF2C4E4647000A8B38 /* 目覚まし時計１.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計１.mp3"; path = "../../../../Desktop/chormeから保存/Clock-Alarm05-mp3/目覚まし時計１.mp3"; sourceTree = "<group>"; };
-		DAC1E2E12C4E467C000A8B38 /* 目覚まし時計２.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計２.mp3"; path = "../../../../Desktop/chormeから保存/Clock-Alarm03-mp3/目覚まし時計２.mp3"; sourceTree = "<group>"; };
 		DAC1E2E32C4E4AEB000A8B38 /* CalendarTrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTrashView.swift; sourceTree = "<group>"; };
 		DACD34B92BC3A1480077F923 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		DACD34BD2BC789EF0077F923 /* soundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soundView.swift; sourceTree = "<group>"; };
@@ -87,6 +86,9 @@
 		DADD50402BF71E0F00B270EB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		DADD50432BF71E0F00B270EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		DADD50452BF71E0F00B270EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAF73F4A2C6187A000411B0B /* コンガ.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "コンガ.mp3"; path = "../../../../Desktop/chormeから保存/コンガ.mp3"; sourceTree = "<group>"; };
+		DAF73F522C618CD800411B0B /* 目覚まし時計１.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計１.mp3"; path = "../../../../Desktop/chormeから保存/目覚まし時計１.mp3"; sourceTree = "<group>"; };
+		DAF73F542C618CDE00411B0B /* 目覚まし時計２.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計２.mp3"; path = "../../../../Desktop/chormeから保存/目覚まし時計２.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				DACD34C02BC8901C0077F923 /* Sound.swift */,
-				DAC1E2DF2C4E4647000A8B38 /* 目覚まし時計１.mp3 */,
-				DAC1E2E12C4E467C000A8B38 /* 目覚まし時計２.mp3 */,
+				DAF73F522C618CD800411B0B /* 目覚まし時計１.mp3 */,
+				DAF73F542C618CDE00411B0B /* 目覚まし時計２.mp3 */,
+				DAF73F4A2C6187A000411B0B /* コンガ.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -302,8 +305,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAC1E2E02C4E4647000A8B38 /* 目覚まし時計１.mp3 in Resources */,
-				DAC1E2E22C4E467C000A8B38 /* 目覚まし時計２.mp3 in Resources */,
+				DAF73F4B2C6187A000411B0B /* コンガ.mp3 in Resources */,
+				DAF73F552C618CDE00411B0B /* 目覚まし時計２.mp3 in Resources */,
+				DAF73F532C618CD800411B0B /* 目覚まし時計１.mp3 in Resources */,
 				DA5FDF0E2BB4CEAC00D091B2 /* Preview Assets.xcassets in Resources */,
 				DA5FDF0B2BB4CEAC00D091B2 /* Assets.xcassets in Resources */,
 			);
