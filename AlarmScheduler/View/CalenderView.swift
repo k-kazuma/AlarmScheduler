@@ -39,19 +39,19 @@ struct CalendarView: View {
                 VStack {
                     
                     // 開発用ボタン
-                    Button("reset") {
-                        Task{
-                            let res = await NotificationManager.instance.getPendingNotifications()
-                            for r in res {
-                                NotificationManager.instance.removeNotification(id: r)
-                            }
-                            let alarmes = calendarAlarts.map {$0.id}
-                            for a in alarmes {
-                                print(calendarAlarts.first(where: {$0.id == a})!)
-                                context.delete(calendarAlarts.first(where: {$0.id == a})!)
-                            }
-                        }
-                    }
+//                    Button("reset") {
+//                        Task{
+//                            let res = await NotificationManager.instance.getPendingNotifications()
+//                            for r in res {
+//                                NotificationManager.instance.removeNotification(id: r)
+//                            }
+//                            let alarmes = calendarAlarts.map {$0.id}
+//                            for a in alarmes {
+//                                print(calendarAlarts.first(where: {$0.id == a})!)
+//                                context.delete(calendarAlarts.first(where: {$0.id == a})!)
+//                            }
+//                        }
+//                    }
                     Spacer()
                     
                     HStack{
