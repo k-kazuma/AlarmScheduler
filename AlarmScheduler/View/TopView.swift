@@ -14,6 +14,7 @@ import UserNotifications
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var tabHidden: toggleTabBar
     @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
@@ -213,12 +214,23 @@ struct TopView: View {
                     Spacer()
                         .frame(height: 30)
                 }
-            }.onAppear() {
+            }
+            .onAppear() {
                 Task {
                     try await checkSkip()
                     await updateView()
                     tabHidden.tabHidden = false
                 }
+            }
+            .onChange(of: scenePhase) {
+                if scenePhase == .active {
+                    Task {
+                        try await checkSkip()
+                        await updateView()
+                        tabHidden.tabHidden = false
+                    }
+                }
+                
             }
             
             
