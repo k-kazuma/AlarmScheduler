@@ -44,20 +44,20 @@ struct TopView: View {
                 VStack(spacing: 0) {
                     
                     
-//                    //開発用リセットボタン
-//                    Button("reset") {
-//                        Task{
-//                            let res = await NotificationManager.instance.getPendingNotifications()
-//                            for r in res {
-//                                NotificationManager.instance.removeNotification(id: r)
-//                            }
-//                            let alarmes = alarts.map {$0.id}
-//                            for a in alarmes {
-//                                print(alarts.first(where: {$0.id == a})!)
-//                                context.delete(alarts.first(where: {$0.id == a})!)
-//                            }
-//                        }
-//                    }
+                    //                    //開発用リセットボタン
+                    //                    Button("reset") {
+                    //                        Task{
+                    //                            let res = await NotificationManager.instance.getPendingNotifications()
+                    //                            for r in res {
+                    //                                NotificationManager.instance.removeNotification(id: r)
+                    //                            }
+                    //                            let alarmes = alarts.map {$0.id}
+                    //                            for a in alarmes {
+                    //                                print(alarts.first(where: {$0.id == a})!)
+                    //                                context.delete(alarts.first(where: {$0.id == a})!)
+                    //                            }
+                    //                        }
+                    //                    }
                     
                     HStack{
                         Text("次のアラーム")
@@ -79,13 +79,13 @@ struct TopView: View {
                             .foregroundColor(backGroundGlay)
                     }
                     .font(.title)
-//                    .onAppear(){
-//                        Task{
-//                            (nextTime, nextDayIndex) = await getNextAlarm()
-//                            nextAlarmDay = Date()
-//                            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
-//                        }
-//                    }
+                    //                    .onAppear(){
+                    //                        Task{
+                    //                            (nextTime, nextDayIndex) = await getNextAlarm()
+                    //                            nextAlarmDay = Date()
+                    //                            nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                    //                        }
+                    //                    }
                     
                     // 設定済みのアラームがあればListを返し、なければTextを返す
                     if alarts.isEmpty {
@@ -102,13 +102,11 @@ struct TopView: View {
                                                 Text(f.string(from: alarm.time))
                                                     .swipeActions(edge: .trailing) {
                                                         Button(action: {
-                                                            Task{
-                                                                do{
-                                                                    print("選択したアラームを削除")
-                                                                    try alarm.deleteAlarm(id: alarm.id)
-                                                                } catch{
-                                                                    print(error)
-                                                                }
+                                                            do{
+                                                                print("選択したアラームを削除")
+                                                                try alarm.deleteAlarm(id: alarm.id)
+                                                            } catch{
+                                                                print(error)
                                                             }
                                                         }){
                                                             Text("削除")
@@ -169,9 +167,9 @@ struct TopView: View {
                                             }
                                             .onChange(of: alarts){
                                                 Task{
-                                                        (nextTime, nextDayIndex) = await getNextAlarm()
-                                                        nextAlarmDay = Date()
-                                                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                                    (nextTime, nextDayIndex) = await getNextAlarm()
+                                                    nextAlarmDay = Date()
+                                                    nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
                                                 }
                                             }
                                     }
@@ -234,7 +232,7 @@ struct TopView: View {
             print("Task started")
             let res = await NotificationManager.instance.getPendingNotifications()
             print("Fetched res:", res)
-
+            
             let alarms:[String] = await getAlarms()
             print("Fetched alarms:", alarms)
             
@@ -346,7 +344,7 @@ struct TopView: View {
             
             // 本日のアラームはないため明日一致するか初めに一致したものが次回アラームとなる
             while n < 7 {
-//                print(n)
+                //                print(n)
                 for alarm in alarts {
                     if alarm.skipWeek == todayWeekDay {
                         continue
@@ -370,10 +368,9 @@ struct TopView: View {
         //　alarm.weekDay.count == 1 の条件分岐をここに追記する
         
         var n = 0
-            
+        
         while n < 7 {
             for alarm in alarts {
-                print(alarm.skipWeek!, todayWeekDay)
                 // スキップ中のアラーム有無確認
                 if alarm.skipWeek != nil {
                     //スキップ中のアラームをtodayWeekDayと比較

@@ -35,69 +35,80 @@ struct EditView: View {
                     .colorInvert()
                     .colorMultiply(.white)
                     .padding(.top, 100)
+                    .disabled(alarm.skipWeek != nil)
                 
                 Spacer()
                 
-                VStack{
-                    NavigationLink(destination: soundView(pickSound: $sound)){
-                        HStack{
-                            Text("サウンド")
-                            Spacer()
-                            Text(sound)
-                        }
-                        .padding(10)
-                        
-                    }
-                    
-                    Rectangle()
-                          .frame(height: 1)
-                          .foregroundColor(backGroundBlack)
-                          .opacity(0.8)
-                    
-                    NavigationLink(destination: WeekPickView(weeks: $weekDay)){
-                        HStack{
-                            Text("繰り返し")
-                            Spacer()
+                ZStack{
+                    VStack{
+                        NavigationLink(destination: soundView(pickSound: $sound)){
+                            HStack{
+                                Text("サウンド")
+                                Spacer()
+                                Text(sound)
+                            }
+                            .padding(10)
                             
-                            if weekDay.isEmpty {
-                                Text("しない")
+                        }
+                        
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(backGroundBlack)
+                            .opacity(0.8)
+                        
+                        NavigationLink(destination: WeekPickView(weeks: $weekDay)){
+                            HStack{
+                                Text("繰り返し")
+                                Spacer()
                                 
-                            }else if weekDay == [0,1,2,3,4,5,6] {
-                                Text("毎日")
-                            } else if weekDay == [1,2,3,4,5] {
-                                Text("平日")
-                            } else {
-                                ForEach(weekDay, id: \.self) { week in
-                                    switch week {
-                                    case 0:
-                                        Text("日")
-                                    case 1:
-                                        Text("月")
-                                    case 2:
-                                        Text("火")
-                                    case 3:
-                                        Text("水")
-                                    case 4:
-                                        Text("木")
-                                    case 5:
-                                        Text("金")
-                                    case 6:
-                                        Text("土")
-                                    default:
-                                        Text("?")
+                                if weekDay.isEmpty {
+                                    Text("しない")
+                                    
+                                }else if weekDay == [0,1,2,3,4,5,6] {
+                                    Text("毎日")
+                                } else if weekDay == [1,2,3,4,5] {
+                                    Text("平日")
+                                } else {
+                                    ForEach(weekDay, id: \.self) { week in
+                                        switch week {
+                                        case 0:
+                                            Text("日")
+                                        case 1:
+                                            Text("月")
+                                        case 2:
+                                            Text("火")
+                                        case 3:
+                                            Text("水")
+                                        case 4:
+                                            Text("木")
+                                        case 5:
+                                            Text("金")
+                                        case 6:
+                                            Text("土")
+                                        default:
+                                            Text("?")
+                                        }
                                     }
                                 }
                             }
+                            .padding(10)
                         }
-                        .padding(10)
+                    }
+                    .frame(width: width*0.9)
+                    .foregroundColor(.white)
+                    .font(.system(size: 24))
+                    .background(backGroundGlay)
+                    .cornerRadius(10)
+                    // 編集中
+                    if alarm.skipWeek != nil {
+                        HStack{
+                            Text("スキップ中")
+                        }
+                        .frame(width: width*0.9, height: 160)
+                        .background(Color.black)
+                        .opacity(0.8)
                     }
                 }
-                .frame(width: width*0.9)
-                .foregroundColor(.white)
-                .font(.system(size: 24))
-                .background(backGroundGlay)
-                .cornerRadius(10)
-                
                 Spacer()
                 
                 if alarm.isActive && !alarm.weekDay.isEmpty {
