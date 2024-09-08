@@ -10,11 +10,12 @@ import SwiftUI
 struct EditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var tabHidden: toggleTabBar
     @State var date: Date
     @State var sound: String
     @State var repeats = false
     @State var weekDay: [Int] = []
-        
+    
     var alarm: Alarm
     
     init(alarm: Alarm) {
@@ -119,6 +120,7 @@ struct EditView: View {
                                     print("Push is skipButton")
                                     try await alarm.skipAlarm(id: alarm.id)
                                     dismiss()
+                                    
                                 } catch{
                                     print(error)
                                 }
@@ -189,6 +191,10 @@ struct EditView: View {
                 Spacer()
                     .frame(height: 1)
             }
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            tabHidden.tabHidden = true
+        }
     }
 }

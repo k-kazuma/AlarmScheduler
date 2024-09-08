@@ -122,6 +122,24 @@ struct CalendarAddView: View {
                 }
                 VStack{
                     
+                    Button(pickDates.isEmpty ? "全選択" : "全選択解除"){
+                        let nowDate = calendar.dateComponents([.year, .month, .day], from: Date())
+                        
+                        if pickDates.isEmpty{
+                            for day in days {
+                                if let nowDay = nowDate.day {
+                                    if day.day < nowDay+1 {
+                                        continue
+                                    }
+                                }
+                                pickDates.append(day.day)
+                            }
+                        } else {
+                            pickDates = []
+                        }
+                    }
+                    .buttonStyle(mainButtonStyle())
+                    
                     Button(action: {}){
                         NavigationLink(destination: CalendarAddTimeView(year: year, month: month, days: pickDates, comp: $isNext)){
                             Text(pickDates.isEmpty ? "未選択" : "追加する")

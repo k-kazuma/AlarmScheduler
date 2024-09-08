@@ -148,7 +148,7 @@ struct CalendarView: View {
                             .frame(width: 25)
                     }
                     Spacer()
-                        .frame(height: 35)
+                        .frame(height: 30)
                 }
                 .onChange(of: monthShiftNum){
                     calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!

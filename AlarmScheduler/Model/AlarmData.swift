@@ -47,6 +47,7 @@ final class Alarm {
                 // スキップ時に設置したアラームがあれば削除
                 if self.skipWeek != nil {
                     for num in [7, 14, 21, 28] {
+                        print("スキップ中のアラームのためスキップ用アラームの削除：\(self.id)-skip\(num)")
                         NotificationManager.instance.removeNotification(id: "\(self.id)-skip\(num)")
                     }
                 }
@@ -115,7 +116,7 @@ final class Alarm {
         var i = todayWeekDay
         print("本日の曜日のインデックス\(todayWeekDay)")
         if todayWeekDay == 7 {
-            i = 6
+            i = 0
         }
         // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
         while true {
@@ -126,7 +127,7 @@ final class Alarm {
                 print("\(weekIndex)をスキップ")
                 // 何日後がスキップされた日なのかを取得
                 
-                guard let nextWeekday = getNextWeekday(nextIndex: weekIndex, hour: hour, minute: minute) else {
+                guard let nextWeekday = getNextWeekday(nextIndex: weekIndex+1, hour: hour, minute: minute) else {
                     print("guard")
                     return
                 }

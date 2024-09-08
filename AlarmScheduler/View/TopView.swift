@@ -14,6 +14,7 @@ import UserNotifications
 struct TopView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var tabHidden: toggleTabBar
     @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
@@ -44,20 +45,20 @@ struct TopView: View {
                 VStack(spacing: 0) {
                     
                     
-                    //                    //開発用リセットボタン
-                    //                    Button("reset") {
-                    //                        Task{
-                    //                            let res = await NotificationManager.instance.getPendingNotifications()
-                    //                            for r in res {
-                    //                                NotificationManager.instance.removeNotification(id: r)
-                    //                            }
-                    //                            let alarmes = alarts.map {$0.id}
-                    //                            for a in alarmes {
-                    //                                print(alarts.first(where: {$0.id == a})!)
-                    //                                context.delete(alarts.first(where: {$0.id == a})!)
-                    //                            }
-                    //                        }
-                    //                    }
+                    //開発用リセットボタン
+                    //                                        Button("reset") {
+                    //                                            Task{
+                    //                                                let res = await NotificationManager.instance.getPendingNotifications()
+                    //                                                for r in res {
+                    //                                                    NotificationManager.instance.removeNotification(id: r)
+                    //                                                }
+                    //                                                let alarmes = alarts.map {$0.id}
+                    //                                                for a in alarmes {
+                    //                                                    print(alarts.first(where: {$0.id == a})!)
+                    //                                                    context.delete(alarts.first(where: {$0.id == a})!)
+                    //                                                }
+                    //                                            }
+                    //                                        }
                     
                     HStack{
                         Text("次のアラーム")
@@ -185,6 +186,16 @@ struct TopView: View {
                             }
                             .modifier(ListStyle())
                             .font(.system(size: 30))
+                            .onAppear(){
+                                if let skipweek = alarm.skipWeek {
+                                    print(alarm.skipDate!)
+                                    print("スキップしてるよ")
+                                    print(skipweek)
+                                } else {
+                                    print(alarm)
+                                    print("スキップしてないよ")
+                                }
+                            }
                         }
                         .scrollContentBackground(.hidden)
                     }
@@ -213,12 +224,23 @@ struct TopView: View {
                     Spacer()
                         .frame(height: 30)
                 }
-            }.onAppear() {
+            }
+            .onAppear() {
                 Task {
                     try await checkSkip()
                     await updateView()
                     tabHidden.tabHidden = false
                 }
+            }
+            .onChange(of: scenePhase) {
+                if scenePhase == .active {
+                    Task {
+                        try await checkSkip()
+                        await updateView()
+                        tabHidden.tabHidden = false
+                    }
+                }
+                
             }
             
             
@@ -395,10 +417,14 @@ struct TopView: View {
         for alarm in alarts {
             if let skipDate = alarm.skipDate {
                 let now = Date()
+                print("今とスキップ日時を比較")
+                print(now)
+                print(skipDate)
                 
                 if skipDate < now {
                     
                     do {
+                        print("スキップ削除")
                         // 一度全て削除して再設置する
                         //削除
                         if alarm.weekDay.isEmpty {
