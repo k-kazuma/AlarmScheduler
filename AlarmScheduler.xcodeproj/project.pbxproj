@@ -86,9 +86,9 @@
 		DADD50402BF71E0F00B270EB /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		DADD50432BF71E0F00B270EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		DADD50452BF71E0F00B270EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DAF73F4A2C6187A000411B0B /* コンガ.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "コンガ.mp3"; path = "../../../../Desktop/chormeから保存/コンガ.mp3"; sourceTree = "<group>"; };
-		DAF73F522C618CD800411B0B /* 目覚まし時計１.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計１.mp3"; path = "../../../../Desktop/chormeから保存/目覚まし時計１.mp3"; sourceTree = "<group>"; };
-		DAF73F542C618CDE00411B0B /* 目覚まし時計２.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計２.mp3"; path = "../../../../Desktop/chormeから保存/目覚まし時計２.mp3"; sourceTree = "<group>"; };
+		DAF73F4A2C6187A000411B0B /* コンガ.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "コンガ.mp3"; path = "../Assets.xcassets/コンガ.dataset/コンガ.mp3"; sourceTree = "<group>"; };
+		DAF73F522C618CD800411B0B /* 目覚まし時計１.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計１.mp3"; path = "../Assets.xcassets/目覚まし時計１.dataset/目覚まし時計１.mp3"; sourceTree = "<group>"; };
+		DAF73F542C618CDE00411B0B /* 目覚まし時計２.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "目覚まし時計２.mp3"; path = "../Assets.xcassets/目覚まし時計２.dataset/目覚まし時計２.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,7 +268,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					DA5FDF022BB4CEAA00D091B2 = {
 						CreatedOnToolsVersion = 15.3;
@@ -499,7 +499,6 @@
 		DA5FDF172BB4CEAC00D091B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -520,16 +519,19 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		DA5FDF182BB4CEAC00D091B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -550,9 +552,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.webseisakumonkey.wetherAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -19,6 +19,7 @@ struct TopView: View {
     @Query(sort: \Alarm.time) private var alarts: [Alarm]
     @State var on = true
     @State var activeList: [[String : Bool]] = []
+    @State var swipeAction = false
     
     
     let f = DateFormatter()
@@ -66,13 +67,29 @@ struct TopView: View {
                         Spacer()
                     }
                     VStack{
-                        if let next = nextTime {
-                            HStack{
-                                Text(f2.string(from: nextAlarmDay))
-                                Text(f.string(from: next.time))
+                        if swipeAction {
+                            Button(action:{
+                                Task{
+                                    (nextTime, nextDayIndex) = await getNextAlarm()
+                                    nextAlarmDay = Date()
+                                    nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                    swipeAction = false
+                                }
+                            }){
+                                Image(systemName: "clock.arrow.circlepath")
                             }
+                            .foregroundColor(fontOrenge)
+                            .padding(3)
+
                         } else {
-                            Text("なし")
+                            if let next = nextTime {
+                                HStack{
+                                    Text(f2.string(from: nextAlarmDay))
+                                    Text(f.string(from: next.time))
+                                }
+                            } else {
+                                Text("なし")
+                            }
                         }
                         // 下線
                         Rectangle()
@@ -103,6 +120,7 @@ struct TopView: View {
                                                 Text(f.string(from: alarm.time))
                                                     .swipeActions(edge: .trailing) {
                                                         Button(action: {
+                                                            swipeAction = true
                                                             do{
                                                                 print("選択したアラームを削除")
                                                                 try alarm.deleteAlarm(id: alarm.id)

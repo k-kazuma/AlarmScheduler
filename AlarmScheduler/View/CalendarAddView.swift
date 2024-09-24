@@ -41,18 +41,10 @@ struct CalendarAddView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 HStack{
-                    if calendar.date(byAdding: .month, value: 0, to: Date())! < calenderDate {
-                        Button("<<") {
-                            monthShiftNum -= 1
-                        }
-                    }
                     Text("\(String(year))年\(month)月")
                         .font(.largeTitle)
                         .padding()
-                    Button(">>"){
-                        pickDates = []
-                        monthShiftNum += 1
-                    }
+                    
                 }
                 
                 LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7)) {

@@ -26,6 +26,9 @@ class MusicPlayer: ObservableObject {
     func PlaySound (fileName: String) throws {
         if let path = Bundle.main.path(forResource: fileName, ofType: "mp3") {
             let url = URL(fileURLWithPath: path)
+            
+            print("path:",path)
+            print("url:",url)
             do {
                 musicPlayer = try AVAudioPlayer(contentsOf: url)
                 musicPlayer.play()
