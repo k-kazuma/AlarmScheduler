@@ -206,7 +206,6 @@ struct TopView: View {
                             .font(.system(size: 30))
                             .onAppear(){
                                 if let skipweek = alarm.skipWeek {
-                                    print(alarm.skipDate!)
                                     print("スキップしてるよ")
                                     print(skipweek)
                                 } else {
