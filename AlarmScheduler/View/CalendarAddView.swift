@@ -14,25 +14,22 @@ struct CalendarAddView: View {
     @Query() private var calendarAlarts: [CalendarAlarm]
     @State var pickDates:[Int]
     @State var days:[calenderDay]
-    @State var calenderDate: Date
+//    @State var calenderDate: Date
     @State var year: Int
     @State var month: Int
-    @State var monthShiftNum: Int
     @State var isNext: Bool
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var tabHidden: toggleTabBar
     
-    init(){
+    init(month: State<Int>, year: State<Int>, days: State<[calenderDay]>){
         //今月のカレンダー取得
-        calenderDate = calendar.date(byAdding: .month, value: 0, to: Date())!
         pickDates = []
-        monthShiftNum = 0
         isNext = false
-        year = calendar.component(.year, from: Date())
-        month = calendar.component(.month, from: Date())
-        days = generateDays(year: calendar.component(.year, from: Date()), month: calendar.component(.month, from: Date()))
+        _year = year
+        _month = month
+        _days = days
     }
     
     var body: some View {
@@ -119,13 +116,19 @@ struct CalendarAddView: View {
                         
                         if pickDates.isEmpty{
                             for day in days {
-                                if let nowDay = nowDate.day {
-                                    if day.day < nowDay+1 {
-                                        continue
+//                                if let now = nowDate {
+                                    if nowDate.month == month{
+                                        if let nowDay = nowDate.day {
+                                            if day.day < nowDay+1 {
+                                                continue
+                                            }
+                                        }
                                     }
-                                }
+//                                }
+                                
                                 pickDates.append(day.day)
                             }
+                            print(pickDates)
                         } else {
                             pickDates = []
                         }
@@ -144,12 +147,6 @@ struct CalendarAddView: View {
                     }
                     .buttonStyle(mainButtonStyle())
                 }
-            }
-            .onChange(of: monthShiftNum){
-                calenderDate = calendar.date(byAdding: .month, value: monthShiftNum, to: Date())!
-                year = calendar.component(.year, from: calenderDate)
-                month = calendar.component(.month, from: calenderDate)
-                days = generateDays(year: year, month: month)
             }
         }
         .foregroundColor(.white)

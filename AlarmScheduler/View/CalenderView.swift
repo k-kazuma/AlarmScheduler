@@ -133,7 +133,7 @@ struct CalendarView: View {
                         Spacer()
                         Button(action: {
                         }) {
-                            NavigationLink(destination: CalendarAddView()){
+                            NavigationLink(destination: CalendarAddView(month: _month, year: _year, days: _days)){
                                 Text("+")
                             }
                         }
@@ -155,6 +155,11 @@ struct CalendarView: View {
                     year = calendar.component(.year, from: calenderDate)
                     month = calendar.component(.month, from: calenderDate)
                     days = generateDays(year: year, month: month)
+                    
+                    for day in days {
+                        print(day.day)
+                    }
+                    
                 }
             }
             .foregroundColor(.white)

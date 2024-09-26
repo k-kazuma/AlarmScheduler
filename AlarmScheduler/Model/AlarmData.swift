@@ -113,11 +113,9 @@ final class Alarm {
         
         
         // todayWeekDayは１〜７の整数（日〜土）
-        var i = todayWeekDay
-        print("本日の曜日のインデックス\(todayWeekDay)")
-        if todayWeekDay == 7 {
-            i = 0
-        }
+        var i = todayWeekDay - 1
+        print("本日の曜日のインデックス\(i)")
+    
         // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
         while true {
             print(i)
@@ -137,7 +135,7 @@ final class Alarm {
                 self.skipDate = nextWeekday
                 
                 // 一致する曜日が見つかれば削除
-                print("削除-\(weekIndex)")
+                print("削除-\(self.id)-\(weekIndex)")
                 NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
                 // 翌週以降のアラームを日付指定で設置（一月分）waitEdit 曜日とスキップしたDateを渡して翌週以降の日付を取得する。
                 for i in [7, 14, 21, 28] {
