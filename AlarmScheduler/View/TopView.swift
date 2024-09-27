@@ -120,12 +120,19 @@ struct TopView: View {
                                                 Text(f.string(from: alarm.time))
                                                     .swipeActions(edge: .trailing) {
                                                         Button(action: {
-                                                            swipeAction = true
-                                                            do{
-                                                                print("選択したアラームを削除")
-                                                                try alarm.deleteAlarm(id: alarm.id)
-                                                            } catch{
-                                                                print(error)
+                                                            Task{
+                                                                do{
+                                                                    print("選択したアラームを削除")
+                                                                    try alarm.deleteAlarm(id: alarm.id)
+                                                                    (nextTime, nextDayIndex) = await getNextAlarm()
+                                                                    nextAlarmDay = Date()
+                                                                    nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                                                } catch{
+                                                                    print(error)
+                                                                }
+                                                                if alarts.count <= 1{
+                                                                    swipeAction = true
+                                                                }
                                                             }
                                                         }){
                                                             Text("削除")
@@ -244,6 +251,7 @@ struct TopView: View {
             }
             .onAppear() {
                 Task {
+                    swipeAction = false
                     try await checkSkip()
                     await updateView()
                     tabHidden.tabHidden = false
