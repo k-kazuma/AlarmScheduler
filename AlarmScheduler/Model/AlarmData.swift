@@ -111,10 +111,20 @@ final class Alarm {
         let todayWeekDay = calendar.component(.weekday, from: today)
         let (hour, minute) = dateConversion(time: self.time)
         
+        var i = todayWeekDay
+        print("本日の曜日のインデックス\(i)")
         
         // todayWeekDayは１〜７の整数（日〜土）
-        var i = todayWeekDay - 1
-        print("本日の曜日のインデックス\(i)")
+        if self.time > Date(year: 1999, month: 1, day: 1) {
+            print("アラーム時刻を超えていないためマイナス１")
+            i -= 1
+        }
+        
+        if i == 7 {
+            print("今日は土曜日")
+            i = 0
+        }
+        
     
         // 条件を満たすまでループ　次回通知予定アラームを検索、削除　スキップ中の処理
         while true {
@@ -134,6 +144,8 @@ final class Alarm {
                 self.skipWeek = weekIndex
                 self.skipDate = nextWeekday
                 
+                print(weekIndex)
+                print(nextWeekday)
                 // 一致する曜日が見つかれば削除
                 print("削除-\(self.id)-\(weekIndex)")
                 NotificationManager.instance.removeNotification(id: "\(self.id)-\(weekIndex)")
