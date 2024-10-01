@@ -32,7 +32,7 @@ final class NotificationManager {
                 for week in weekDay{
                     var dateComponents = DateComponents()
                     let (hour, minute) = dateConversion(time: time)
-                    dateComponents.weekday = week
+                    dateComponents.weekday = week + 1
                     dateComponents.hour = hour
                     dateComponents.minute = minute
                     

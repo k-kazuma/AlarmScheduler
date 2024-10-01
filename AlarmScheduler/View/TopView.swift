@@ -80,7 +80,7 @@ struct TopView: View {
                             }
                             .foregroundColor(fontOrenge)
                             .padding(3)
-
+                            
                         } else {
                             if let next = nextTime {
                                 HStack{
@@ -284,8 +284,7 @@ struct TopView: View {
             print("Fetched alarms:", alarms)
             
             
-            print(res)
-            print(alarms)
+            
             print("#########################")
             
             let differenceA = alarms.filter{ !res.contains($0)}
@@ -452,16 +451,13 @@ struct TopView: View {
                         print("スキップ削除")
                         // 一度全て削除して再設置する
                         //削除
-                        if alarm.weekDay.isEmpty {
-                            NotificationManager.instance.removeNotification(id: "\(alarm.id)")
-                        } else {
-                            for week in alarm.weekDay {
-                                NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
-                            }
-                            for num in [7, 14, 21, 28] {
-                                NotificationManager.instance.removeNotification(id: "\(alarm.id)-akip\(num)")
-                            }
+                        for week in alarm.weekDay {
+                            NotificationManager.instance.removeNotification(id: "\(alarm.id)-\(week)")
                         }
+                        for num in [7, 14, 21, 28] {
+                            NotificationManager.instance.removeNotification(id: "\(alarm.id)-skip\(num)")
+                        }
+                        
                         alarm.skipWeek = nil
                         alarm.skipDate = nil
                         
