@@ -70,7 +70,7 @@ struct CalendarTrashView: View {
                                 let calendarDate = DateComponents(year: year, month: month, day: index - days[0].weekday )
                                 
                                 // 過去日かどうかを比較
-                                if nowDate.year! >= calendarDate.year! && nowDate.month! >= calendarDate.month! && nowDate.day! > calendarDate.day! {
+                                if nowDate.year! >= calendarDate.year! && nowDate.month! >= calendarDate.month! && nowDate.day! > calendarDate.day! + 1 {
                                     VStack{
                                         Text("\(days[index - days[0].weekday].day)")
                                             .foregroundColor(backGroundGlay)
@@ -156,8 +156,4 @@ struct CalendarTrashView: View {
             tabHidden.tabHidden = true
         }
     }
-}
-
-#Preview {
-    CalendarTrashView()
 }

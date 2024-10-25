@@ -206,6 +206,19 @@ struct TopView: View {
                                         .frame(width: 330, height: 65)
                                         .background(Color.black)
                                         .opacity(0.7)
+                                        .onAppear(){
+                                            if let skip = alarm.skipWeek{
+                                                print(skip)
+                                            } else{
+                                                print("skipweekなし")
+                                            }
+                                            if let date = alarm.skipDate{
+                                                print(date)
+                                            }else{
+                                                print("skipDateなし")
+                                            }
+                                            
+                                        }
                                     }
                                 }
                             }
