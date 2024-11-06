@@ -114,19 +114,19 @@ struct EditView: View {
                 
                 if alarm.isActive && !alarm.weekDay.isEmpty {
                     if alarm.skipDate == nil {
-                        Button("スキップ"){
-                            Task{
-                                do{
-                                    print("Push is skipButton")
-                                    try await alarm.skipAlarm(id: alarm.id)
-                                    dismiss()
-                                    
-                                } catch{
-                                    print(error)
-                                }
-                            }
-                        }
-                        .buttonStyle(mainButtonStyle())
+//                        Button("スキップ"){
+//                            Task{
+//                                do{
+//                                    print("Push is skipButton")
+//                                    try await alarm.skipAlarm(id: alarm.id)
+//                                    dismiss()
+//                                    
+//                                } catch{
+//                                    print(error)
+//                                }
+//                            }
+//                        }
+//                        .buttonStyle(mainButtonStyle())
                     } else {
                         Button("スキップ解除"){
                             Task{

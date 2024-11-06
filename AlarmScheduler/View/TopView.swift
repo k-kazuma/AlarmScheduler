@@ -21,7 +21,6 @@ struct TopView: View {
     @State var activeList: [[String : Bool]] = []
     @State var swipeAction = false
     
-    
     let f = DateFormatter()
     let f2 = DateFormatter()
     let calendar = Calendar.current
@@ -176,7 +175,30 @@ struct TopView: View {
                                             
                                         }
                                         Spacer()
-                                        
+                                        if alarm.isActive && !alarm.weekDay.isEmpty {
+                                            Button(action:{
+                                                Task{
+                                                    do{
+                                                        print(alarm.id)
+                                                        try await alarm.skipAlarm(id: alarm.id)
+                                                        (nextTime, nextDayIndex) = await getNextAlarm()
+                                                        nextAlarmDay = Date()
+                                                        nextAlarmDay = calendar.date(byAdding: .day, value: nextDayIndex, to: nextAlarmDay)!
+                                                    } catch{
+                                                        print(error)
+                                                    }
+                                                }
+                                            }) {
+                                                Text("skip")
+                                            }
+                                            .bold()
+                                            .frame(width: 50, height: 50)
+                                            .font(.system(size: 15))
+                                            .foregroundColor(fontOrenge)
+                                            .background(backGroundGlay)
+                                            .clipShape(Circle())
+                                            .buttonStyle(.plain)
+                                        }
                                         Toggle(isOn: Bindable(alarm).isActive) {}
                                             .labelsHidden()
                                             .onChange(of: alarm.isActive){
@@ -353,6 +375,19 @@ struct TopView: View {
             }
         }
         return resArray
+    }
+    
+    func getSkipDay(alarm: Alarm) -> Date {
+        //現在の曜日を0-6で取得
+        let today = Date()
+        var todayWeekDay = calendar.component(.weekday, from: today) - 1
+        let nowHourMinute = Date(year: 1999, month: 1, day: 1)
+        
+        if alarm.weekDay.contains(todayWeekDay) && alarm.isActive && nowHourMinute < alarm.time || alarm.weekDay.isEmpty && alarm.isActive && nowHourMinute < alarm.time {
+            
+        }
+        
+        return Date()
     }
     
     // 次回アラーム日時を取得
